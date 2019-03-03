@@ -3,14 +3,15 @@ import psycopg2
 from config import PASSWORD, PASSWORD_ATLAS, HOST
 
 #a mettre en parametre
-id_espece=argv[1]
-year = argv[2]
+id_espece = argv[1]
+from_year = argv[2]
+to_year = argv[3]
 
 #TODO filter les obs invalide ou negatives
 #TODO recuperer aussi les obs des autres espaces + traitement des polygones (cf commission des reseaux)
 
 query="""SELECT e.taxref_inpn_especes as cd_nom,o.date_observation as date,
-string_agg(u.prenom ||' ' || u.nom,',') AS observateurs,
+string_agg(u.prenom ||' ' || upper(u.nom),', ') AS observateurs,
 ST_AsEWKT(st_transform(espace.the_geom,3857)) as geom
 FROM citations c
 JOIN observations o ON o.id_observation = c.id_observation
@@ -19,7 +20,7 @@ JOIN observations_observateurs oo ON oo.id_observation = o.id_observation
 JOIN utilisateur u ON u.id_utilisateur = oo.id_utilisateur
 JOIN espace_point espace ON o.espace_table='espace_point' AND o.id_espace=espace.id_espace
 WHERE e.id_espece=%s AND
-date_part('year',o.date_observation) = %s
+date_part('year',o.date_observation) >= %s AND date_part('year',o.date_observation) <= %s
 GROUP BY cd_nom, date,geom
 """
 
@@ -30,7 +31,7 @@ conn = psycopg2.connect(dbname="clicnat", user="jb", host=HOST, password=PASSWOR
 
 #conn.rollback()
 cur = conn.cursor()
-cur.execute(query,(id_espece,year))
+cur.execute(query,(id_espece,from_year,to_year))
 
 conn_atlas = psycopg2.connect(dbname="geonatureatlas", user="geonatuser", host='127.0.0.1', password=PASSWORD_ATLAS)
 cur_atlas = conn_atlas.cursor()
@@ -45,7 +46,10 @@ for r in cur:
     q="""INSERT INTO synthese.syntheseff(cd_nom,dateobs,observateurs,altitude_retenue,supprime,the_geom_point,effectif_total,diffusable) 
         VALUES (%s,%s,%s,0,False,ST_GeomFromEWKT(%s),1,True);
         """
-    cur_atlas.execute(q,(r))
+    try :
+        cur_atlas.execute(q,(r))
+    except :
+        pass
     if 1000%i == 0:
         conn_atlas.commit()
         print(i)
