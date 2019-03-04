@@ -44,7 +44,7 @@ def import_obs(id_espece,from_year,to_year):
     conn_atlas = psycopg2.connect(dbname="geonatureatlas", user="geonatuser", host='127.0.0.1', password=PASSWORD_ATLAS)
     cur_atlas = conn_atlas.cursor()
     cur.execute(query,(id_espece,from_year,to_year))
-    
+    #TODO voir pour inserer plusieurs enregistrement dans un INSERT
     i=0
     for r in cur:
         i+=1
@@ -59,7 +59,7 @@ def import_obs(id_espece,from_year,to_year):
             cur_atlas.execute(q,(r))
         except :
             pass
-        if 1000%i == 0:
+        if i%1000 == 0:
             conn_atlas.commit()
             print(i)
         #print(q)

@@ -15,3 +15,14 @@ cur.execute('SELECT DISTINCT taxref_inpn_especes,id_espece FROM especes WHERE ta
 for e in cur :
     imp.import_obs(e[1],from_year,to_year)
     print('Imported {} ({} to {})'.format(e[1],from_year,to_year))
+
+
+#Pour les fiches communes :
+"""
+UPDATE synthese.syntheseff SET
+insee = atlas.l_communes.insee
+FROM atlas.l_communes
+WHERE 
+	syntheseff.insee is NULL
+	AND st_contains(atlas.l_communes.the_geom,synthese.syntheseff.the_geom_point)
+"""
