@@ -1,6 +1,6 @@
 
 // alti graph
-Morris.Bar({
+/*Morris.Bar({
             element:"altiChart",
             data : dataset,
             xkey: "altitude",
@@ -13,7 +13,7 @@ Morris.Bar({
             gridIntegers: true
             /*yLabelFormat: function(y){return y != Math.round(y)?'':y;}*/
 /*            horizontal: true
-*/        });
+*/      //  });
 
 
 
