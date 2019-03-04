@@ -33,9 +33,10 @@ function generateMap() {
      $(document).ready(function()
           {
               $.getJSON(url_limit_territory, function(json) {
-                  L.geoJson(json, {
+                  var layerTerritory = L.geoJson(json, {
                   	style: territoryStyle
                   }).addTo(map);
+                    layerTerritory.bringToBack();
               });
           });
 
