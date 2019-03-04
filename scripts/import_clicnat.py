@@ -63,7 +63,8 @@ def import_obs(id_espece,from_year,to_year):
             conn_atlas.commit()
             print(i)
         #print(q)
-
+    print(i)
+    conn_atlas.commit()
     cur.close()
     conn.close()
     cur_atlas.close()
