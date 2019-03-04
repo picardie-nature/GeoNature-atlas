@@ -111,7 +111,7 @@ then
 			  cd_nom integer,
 			  insee character(5),
 			  dateobs date NOT NULL DEFAULT now(),
-			  observateurs character varying(255),
+			  observateurs text,
 			  altitude_retenue integer,
 			  supprime boolean DEFAULT false,
 			  the_geom_point geometry('POINT',3857),
