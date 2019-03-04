@@ -2,6 +2,7 @@
 tests/*
 config/settings.ini
 config/config.py
+config.py
 log/*
 static/conf/custom.js
 main/debug.py
