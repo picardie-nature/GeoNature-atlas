@@ -1,6 +1,7 @@
 from sys import argv
 import psycopg2
-from config import PASSWORD, PASSWORD_ATLAS, HOST
+#from config import PASSWORD, PASSWORD_ATLAS, HOST
+from config import Hyla, Aves, GnAtlas
 
 #a mettre en parametre
 #id_espece = argv[1]
@@ -36,12 +37,18 @@ date_part('year',o.date_observation) >= %s AND date_part('year',o.date_observati
 GROUP BY cd_nom, date,geom
 """
 
-
+#######
+#     #
+# DB  #
+#     #
+#######
+db=Hyla()
+db_atlas=GnAtlas()
 
 def import_obs(id_espece,from_year,to_year):
-    conn = psycopg2.connect(dbname="clicnat", user="jb", host=HOST, password=PASSWORD)
+    conn = psycopg2.connect(db.url)
     cur = conn.cursor()
-    conn_atlas = psycopg2.connect(dbname="geonatureatlas", user="geonatuser", host='127.0.0.1', password=PASSWORD_ATLAS)
+    conn_atlas = psycopg2.connect(db_atlas.url)
     cur_atlas = conn_atlas.cursor()
     cur.execute(query,(id_espece,from_year,to_year))
     #TODO voir pour inserer plusieurs enregistrement dans un INSERT
