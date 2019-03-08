@@ -1,7 +1,7 @@
 from sys import argv
 import psycopg2
 #from config import PASSWORD, PASSWORD_ATLAS, HOST
-from config import Hyla, Aves, GnAtlas
+from config import Hyla, Aves, GnAtlas, GeoNature
 
 #a mettre en parametre
 #id_espece = argv[1]
@@ -43,7 +43,7 @@ GROUP BY cd_nom, date,geom
 #     #
 #######
 db=Hyla()
-db_atlas=GnAtlas()
+db_atlas=GeoNature()
 
 def import_obs(id_espece,from_year,to_year):
     conn = psycopg2.connect(db.url)
