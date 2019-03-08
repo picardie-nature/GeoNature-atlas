@@ -1,9 +1,11 @@
 import import_clicnat as imp
 import psycopg2
 from sys import argv
-from config import PASSWORD, PASSWORD_ATLAS, HOST
+from config import Hyla, Aves, GnAtlas, GeoNature
 
-conn = psycopg2.connect(dbname="clicnat", user="jb", host=HOST, password=PASSWORD)
+db=Hyla()
+
+conn = psycopg2.connect(db.url)
 cur = conn.cursor()
 
 from_year = argv[1]
