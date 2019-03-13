@@ -11,8 +11,17 @@ cur = conn.cursor()
 from_year = argv[1]
 to_year = argv[2]
 
+try:
+    classe_filter = argv[3]
+except IndexError:
+    classe_filter = None
 
-cur.execute('SELECT DISTINCT taxref_inpn_especes,id_espece FROM especes WHERE taxref_inpn_especes IS NOT NULL')
+q = 'SELECT DISTINCT taxref_inpn_especes,id_espece FROM especes WHERE taxref_inpn_especes IS NOT NULL'
+if classe_filter :
+    q+=" AND classe ='{}'".format(classe_filter)
+
+#print(cur.mogrify(q))
+cur.execute(q)
 
 for e in cur :
     imp.import_obs(e[1],from_year,to_year)
