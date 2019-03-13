@@ -1,0 +1,142 @@
+<!-- Réalisée à partir de https://startbootstrap.com/template-overviews/one-page-wonder/ et http://getbootstrap.com/examples/carousel/ -->
+<!DOCTYPE html>
+<html>
+   <head>
+        <meta charset="utf-8" />
+        <title>Présentation de l'atlas | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+
+        <!-- Jquery -->
+        <script type=text/javascript src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
+		<script type=text/javascript src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/jquery-ui.css') }}" />
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}"></link>
+        <script type=text/javascript src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
+
+        <!-- Atlas -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/static_pages.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}" />
+
+   </head>
+   <body  data-spy="scroll" data-target="#sommaire">
+    {% include 'templates/navbar.html' %}
+
+		<div id="sideBar">
+			{% include 'templates/sideBar.html' %}
+		</div>
+		<div class="container-fluid" id="page">
+
+
+            <!-- Carousel
+            ================================================== -->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top: -15px; margin-bottom: 0px;">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+              </ol>
+              <div class="carousel-inner" role="listbox">
+                <div class="item active" style="background-image: url(http://biodiversite.ecrins-parcnational.fr/medias/60686_364_Hermine_blanche_en_pelage_dhiver.jpg) ; background-size: cover; background-position: center center;">
+                  <div class="container">
+                    <div class="carousel-caption">
+                      <h1>Faune de Picardie</h1>
+                      <p>Découvrez plus de 1,4 millions d'observations de 6 000 espèces</p>
+					  <p><a class="btn btn-lg btn-default" href="#faune" role="button">En savoir plus</a></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="item" style="background-image: url(http://biodiversite.ecrins-parcnational.fr/medias/92486_712_Lis_de_Pompone.jpg) ; background-size: cover; background-position: center center;">
+                  <div class="container">
+                    <div class="carousel-caption">
+                      <h1>Etudier</h1>
+                      <p>Description 1</p>
+                      <p><a class="btn btn-lg btn-default" href="#flore" role="button">En savoir plus</a></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="item" style="background-image: url({{url_for('static', filename='custom/images/01-observateurs.jpg') }}) ; background-size: cover; background-position: top center;">
+                  <div class="container">
+                    <div class="carousel-caption">
+                      <h1>Sensibiliser</h1>
+                      <p>Description 2</p>
+                      <p><a class="btn btn-lg btn-default" href="#scientifique" role="button">En savoir plus</a></p>
+                    </div>
+                  </div>
+                </div>
+                 <div class="item" style="background-image: url({{url_for('static', filename='custom/images/02-photographes.jpg') }}) ; background-size: cover; background-position: bottom center;">
+                  <div class="container">
+                    <div class="carousel-caption">
+                      <h1>Agir</h1>
+                      <p>Description 3</p>
+                      <p><a class="btn btn-lg btn-default" href="{{url_for('main.photos')}}" role="button">En savoir plus</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Précédent</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Suivant</span>
+              </a>
+            </div><!-- /.carousel -->
+
+
+            <!--<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="500" id="sommaire">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#general">Général</a></li>
+				<li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                <li><a href="#faune">Faune</a></li>
+                <li><a href="#flore">Flore</a></li>
+                <li><a href="#scientifique">Scientifique</a></li>
+                <li><a href="#opensource">Open source</a></li>
+                <li><a href="#reseaux">Réseaux</a></li>
+              </ul>
+            </nav>-->
+
+            <div class="container presentation">
+              <div class="col-lg-8">
+                  <!-- Texte de présentation général -->
+
+                  <h2 id="general">Clicnat</h2>
+                  <p class="lead">
+                    Cette connaissance de la faune sauvage est obtenue grâce essentiellement aux observateurs bénévoles. C'est pourquoi afin d'améliorer la précision de ces informations, et compléter les connaissances sur les espèces picardes, chacun d’entre vous peut contribuer et fournir des données, quels que soient son niveau de connaissance et la fréquence à laquelle il observe !
+                    </p>
+                     <p class="lead">
+Merci de noter que certaines données d'espèces, même communes, peuvent être manquantes car, soit elles ne nous ont pas été transmises, soit elles sont en cours de validation.
+                    </p>
+                     <p class="lead">
+Aussi n'hésitez pas à nous contacter pour toute remarque ou demande de précision.
+                  </p>
+ 
+              </div>
+              <div class="col-lg-4" style="background:#f4f4f4; border-radius: 15px; margin-top:20px; padding: 20px; text-align:left;">
+                <p>Encart
+				</p>
+              </div>
+              <div style="clear: both;"></div>
+
+              <hr class="featurette-divider">
+
+              
+
+		{% if configuration.AFFICHAGE_FOOTER %}
+			{% include 'static/custom/templates/footer.html' %}
+		{% endif %}
+
+        <script type="text/javascript">
+        var communesSearch = {{communesSearch|tojson}},
+            configuration = {{configuration|tojson}};
+        </script>
+
+        <script src="{{url_for('static', filename='main.js') }}"></script>
+
+   </body>
+</html>

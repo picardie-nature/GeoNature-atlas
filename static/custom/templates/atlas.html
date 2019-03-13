@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+   <head>
+        <meta charset="utf-8" />
+        <title>Atlas thématiques | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+
+        <!-- Jquery -->
+        <script type=text/javascript src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
+		<script type=text/javascript src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/jquery-ui.css') }}" />
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}"></link>
+        <script type=text/javascript src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
+
+        <!-- Atlas -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/static_pages.css') }}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}" />
+
+   </head>
+    <body>
+    {% include 'templates/navbar.html' %}
+
+		<div id="sideBar">
+			{% include 'templates/sideBar.html' %}
+		</div>
+		<div class="container-fluid" id="page">
+        Soon.. Carte d'atlas par réseau
+        </div>
+    </body>
+
+</html>
