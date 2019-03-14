@@ -31,9 +31,9 @@ for e in cur :
 #Pour les fiches communes :
 """
 UPDATE synthese.syntheseff SET
-insee = atlas.l_communes.insee
-FROM atlas.l_communes
+insee = atlas.vm_communes.insee
+FROM atlas.vm_communes
 WHERE 
 	syntheseff.insee is NULL
-	AND st_contains(atlas.l_communes.the_geom,synthese.syntheseff.the_geom_point)
+	AND st_contains(atlas.vm_communes.the_geom,synthese.syntheseff.the_geom_point)
 """
