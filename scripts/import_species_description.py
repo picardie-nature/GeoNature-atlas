@@ -1,11 +1,11 @@
 import psycopg2
 
-from config import Hyla, Aves, GnAtlas
+from config import Hyla, Aves, GnAtlas, GeoNature
 
 
 ############ CONFIG ################
 db = Hyla()
-db_atlas = GnAtlas()
+db_atlas = GeoNature()
 DRY_RUN = True
 ############ END CONFIG ############
 
@@ -15,8 +15,10 @@ cur = conn.cursor()
 conn_atlas = psycopg2.connect(db_atlas.url)
 cur_atlas = conn_atlas.cursor()
 
-query="""SELECT id_espece, taxref_inpn_especes, habitat, menace, action_conservation,commentaire_statut_menace
-  FROM especes WHERE habitat is not null AND taxref_inpn_especes is not null"""
+query="""SELECT id_espece, taxref.cd_ref, e.habitat, menace, action_conservation,commentaire_statut_menace
+  FROM especes e
+  JOIN taxref_v12 taxref ON taxref.cd_nom = taxref_inpn_especes
+WHERE e.habitat is not null AND taxref_inpn_especes is not null"""
 
 cur.execute(query)
 
@@ -29,6 +31,7 @@ for espece in cur: #TODO check cd_ref + autres champs
             cur_atlas.execute(query,params)
         except psycopg2.IntegrityError :
             conn_atlas.rollback()
+            print('Integrity error')
             continue
         conn_atlas.commit()
 

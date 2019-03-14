@@ -31,10 +31,12 @@ JOIN observations_observateurs oo ON oo.id_observation = o.id_observation
 JOIN utilisateur u ON u.id_utilisateur = oo.id_utilisateur
 LEFT JOIN espace_point point ON o.espace_table='espace_point' AND o.id_espace=point.id_espace
 LEFT JOIN espace_chiro chiro ON o.espace_table='espace_chiro' AND o.id_espace=chiro.id_espace
-WHERE c.id_citation NOT IN (SELECT id_citation FROM cit_filter) AND
-e.id_espece=%s AND
-date_part('year',o.date_observation) >= %s AND date_part('year',o.date_observation) <= %s
-GROUP BY cd_nom, date,geom
+WHERE 
+    c.id_citation NOT IN (SELECT id_citation FROM cit_filter) AND
+    e.id_espece=%s AND
+    date_part('year',o.date_observation) >= %s AND date_part('year',o.date_observation) <= %s
+    AND coalesce(point.the_geom,chiro.the_geom) is not null
+GROUP BY cd_nom, date,geom,c.id_citation
 """
 
 #######
@@ -58,11 +60,12 @@ def import_obs(id_espece,from_year,to_year):
         q="""INSERT INTO synthese.syntheseff(cd_nom,dateobs,observateurs,altitude_retenue,supprime,the_geom_point,effectif_total,diffusable) 
             VALUES ({},'{}','{}',0,False,ST_GeomFromEWKT('{}'),1,True);
             """.format(*r)
-
+        
         q="""INSERT INTO synthese.syntheseff(cd_nom,dateobs,observateurs,altitude_retenue,supprime,the_geom_point,effectif_total,diffusable) 
             VALUES (%s,%s,%s,0,False,ST_GeomFromEWKT(%s),1,True);
             """
         try :
+            #cur_atlas.mogrify(q,(r))
             cur_atlas.execute(q,(r))
         except :
             pass
