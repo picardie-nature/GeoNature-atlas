@@ -267,7 +267,7 @@
                             {% else %}
                             <li class="active"><a data-toggle="tab" href="#communes"> <b>{{communes|length}}</b> {{ 'communes' if communes|length > 1 else 'commune' }}</a></li>
                             {% endif %}
-                            <li><a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> {{ 'observateurs' if observers|length > 1 else 'observateur' }}</a></li>
+                            {# Masquer les observateurs (attente de consentement) <li><a data-toggle="tab" href="#observateurs"> <b>{{observers|length}} </b> {{ 'observateurs' if observers|length > 1 else 'observateur' }}</a></li> #}
                           </ul>
 
                         <div class="tab-content" style="width:100%;">
