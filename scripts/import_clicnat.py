@@ -1,5 +1,6 @@
 from sys import argv
 import psycopg2
+import re
 #from config import PASSWORD, PASSWORD_ATLAS, HOST
 from config import Hyla, Aves, GnAtlas, GeoNature
 
@@ -21,7 +22,8 @@ WITH cit_filter AS (
 		OR o.brouillard=True
 	
 	)
-SELECT e.taxref_inpn_especes as cd_nom,o.date_observation as date,
+SELECT e.taxref_inpn_especes as cd_nom,
+o.date_observation as date,
 string_agg(u.prenom ||' ' || upper(u.nom),', ') AS observateurs,
 ST_AsEWKT(st_transform(coalesce(point.the_geom,chiro.the_geom),3857)) as geom
 FROM citations c
@@ -47,6 +49,9 @@ GROUP BY cd_nom, date,geom,c.id_citation
 db=Hyla()
 db_atlas=GeoNature()
 
+def remove_parenthesis(string):
+    return ' '.join(re.sub(r'\([^)]*\)', '', string).strip().split()).lower()
+
 def import_obs(id_espece,from_year,to_year):
     conn = psycopg2.connect(db.url)
     cur = conn.cursor()
@@ -56,6 +61,7 @@ def import_obs(id_espece,from_year,to_year):
     #TODO voir pour inserer plusieurs enregistrement dans un INSERT
     i=0
     for r in cur:
+        observateurs=remove_parenthesis(r[2] or '')
         i+=1
         q="""INSERT INTO synthese.syntheseff(cd_nom,dateobs,observateurs,altitude_retenue,supprime,the_geom_point,effectif_total,diffusable) 
             VALUES ({},'{}','{}',0,False,ST_GeomFromEWKT('{}'),1,True);
@@ -66,7 +72,7 @@ def import_obs(id_espece,from_year,to_year):
             """
         try :
             #cur_atlas.mogrify(q,(r))
-            cur_atlas.execute(q,(r))
+            cur_atlas.execute(q,(r[0],r[1],observateurs,r[3]))
         except :
             pass
         if i%1000 == 0:

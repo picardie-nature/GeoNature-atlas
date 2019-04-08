@@ -37,3 +37,14 @@ WHERE
 	syntheseff.insee is NULL
 	AND st_contains(atlas.vm_communes.the_geom,synthese.syntheseff.the_geom_point)
 """
+
+#Rafraichir les vues :
+"""
+REFRESH MATERIALIZED VIEW CONCURRENTLY atlas.vm_observations ;
+REFRESH MATERIALIZED VIEW CONCURRENTLY atlas.vm_taxons ;
+REFRESH MATERIALIZED VIEW CONCURRENTLY atlas.vm_medias ;
+REFRESH MATERIALIZED VIEW CONCURRENTLY atlas.vm_mois ;
+REFRESH MATERIALIZED VIEW CONCURRENTLY atlas.vm_taxons_plus_observes ;
+REFRESH MATERIALIZED VIEW CONCURRENTLY atlas.vm_search_taxon ;
+REFRESH MATERIALIZED VIEW CONCURRENTLY atlas.vm_observatuibs_mailles ;
+"""
