@@ -22,7 +22,7 @@ def searchEspece(connection, cd_ref):
             cd_ref in (SELECT * FROM atlas.find_all_taxons_childs(:thiscdref))
             OR cd_ref = :thiscdref
     )
-    SELECT taxref.*, l.*, t2.patrimonial, t2.protection_stricte
+    SELECT taxref.*, l.*, t2.patrimonial, t2.protection_stricte, t2.code_lr
     FROM atlas.vm_taxref taxref
     JOIN limit_obs l
     ON l.cd_ref = taxref.cd_nom
@@ -45,7 +45,8 @@ def searchEspece(connection, cd_ref):
             'yearmax': r.yearmax,
             'nb_obs': r.nb_obs,
             'patrimonial': r.patrimonial,
-            'protection': r.protection_stricte
+            'protection': r.protection_stricte,
+            'liste_rouge':r.code_lr
         }
 
     sql = """
