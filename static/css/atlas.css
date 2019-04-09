@@ -439,3 +439,48 @@ li.sidebar-brand {
 
 /* END Galerie photos */
 
+
+
+.redlistBadge{
+    padding:10px;
+    font-size:28px;
+}
+.redlistLC {
+    color:#FFFFFF;
+    background-color:#78b74a;
+}
+
+.redlistNT {
+    color:#000000;
+    background-color:#fbf2ca;
+}
+
+.redlistVU {
+    color:#000000;
+    background-color:#ffed00;
+}
+
+.redlistEN {
+    color:#000000;
+    background-color:#fbbf00;
+}
+
+.redlistCR {
+    color:#FFFFFF;
+    background-color:#d3001b;
+}
+
+.redlistRE {
+    color:#FFFFFF;
+    background-color:#5a1a63;
+}
+
+.redlistEX {
+    color:#FFFFFF;
+    background-color:#000000;
+}
+
+.redlistDD {
+    color:#FFFFFF;
+    background-color:#d3d4d5;
+}
