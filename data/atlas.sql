@@ -51,7 +51,15 @@ CREATE MATERIALIZED VIEW atlas.vm_taxons AS
             COUNT(vm_observations.id_observation) AS nb_obs
            FROM atlas.vm_observations
           GROUP BY vm_observations.cd_ref
-        ), tx_ref AS (
+        ), 
+        lr_ref AS(
+          SELECT taxref.cd_ref, array_agg(statuts.code_statut) as code_lr
+            FROM taxonomie.taxref_bdc_statuts statuts
+            JOIN atlas.vm_taxref taxref on statuts.cd_nom = taxref.cd_nom 
+            WHERE statuts.cd_doc=185529 --LR Picadie
+            GROUP BY taxref.cd_ref
+        ), 
+        tx_ref AS (
          SELECT tx_1.cd_ref,
             tx_1.regne,
             tx_1.phylum,
@@ -103,10 +111,12 @@ CREATE MATERIALIZED VIEW atlas.vm_taxons AS
     t.protection_stricte,
     omt.yearmin,
     omt.yearmax,
-    omt.nb_obs
+    omt.nb_obs,
+    lr_ref.code_lr
    FROM tx_ref tx
      LEFT JOIN obs_min_taxons omt ON omt.cd_ref = tx.cd_ref
      LEFT JOIN my_taxons t ON t.cd_ref = tx.cd_ref
+     LEFT JOIN lr_ref ON lr_ref.cd_ref = tx.cd_ref
 WITH DATA;
 CREATE UNIQUE INDEX ON atlas.vm_taxons (cd_ref);
 
