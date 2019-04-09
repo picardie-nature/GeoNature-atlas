@@ -46,7 +46,7 @@ def searchEspece(connection, cd_ref):
             'nb_obs': r.nb_obs,
             'patrimonial': r.patrimonial,
             'protection': r.protection_stricte,
-            'liste_rouge':r.code_lr
+            'liste_rouge':r.code_lr or list()
         }
 
     sql = """
