@@ -81,6 +81,9 @@ TEXT_LAST_OBS = u'Les observations des agents ces 7 derniers jours |'
 # Carte de la fiche commune: nombre des 'x' dernières observations affichées
 NB_LAST_OBS=100
 
+#Afficher la carte sur la fiche commune
+AFFICHAGE_CARTE_FICHE_COMMUNE=False
+
 ###########################
 ###### PAGE ACCUEIL #######
 ###########################

@@ -43,7 +43,7 @@
 		</div>
 		<div class="container-fluid" id="page">
 
-            <div class="col-sm-7">
+            <div class="col-sm-{{ '7' if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE else '12' }}">
                  <div class="panel panel-default" id="parent">
 					          <div class="row">
                         <h4><b>Commune de {{referenciel.communeName}}</b></h4>
@@ -61,13 +61,13 @@
                         </div>
                 </div>
             </div>
-
+            {% if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE %}
             <div class="col-sm-5" id="mapWrapper">
 				<div  class="panel panel-default" id="mapContainer">
 					<div class="row ">
 						<img id ="loadingGif" src="">
 						<div class="panel-heading"><strong>
-							 <h4 id="titleMap"> {{configuration.NB_LAST_OBS}} dernières observations sur la commune de <i>{{referenciel.communeName}}</i></h4> </strong>
+							 <h4 id="titleMap"> Commune de <i>{{referenciel.communeName}}</i></h4> </strong>
 						</div>
 						<div class="panel-body">
 							 <div id="map"> </div>
@@ -75,7 +75,7 @@
 					</div>
 				</div>
             </div>
-
+                {% endif %}
         </div>
 
         {% if configuration.AFFICHAGE_FOOTER %}
