@@ -89,9 +89,10 @@
             var communeGeoJson = {{referenciel.communeGeoJson|tojson}};
             var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
             //calcul du nb de colonnes pour le fonctionnement de dataTables.js
-            var nbColumn = 7;
+            var nbColumn = 6;
             {% if configuration.PATRIMONIALITE %} nbColumn = nbColumn+1;{% endif %}
             {% if configuration.PROTECTION %} nbColumn = nbColumn+1;{% endif %}
+            {% if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE %} nbColumn = nbColumn+1; {% endif %}
             var noSordedColumns=[nbColumn-2,nbColumn-1]; //var for dataTables js lib
             var defaultSortedColumn=nbColumn-4; //var for dataTables js lib
         </script>
