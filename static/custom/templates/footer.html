@@ -1,4 +1,60 @@
-    <footer class="footer">
+<footer role="contentinfo" class="footer container-fluid">
+<div class="panel panel-default">
+<div class="row pied" style="bgcolor:#FFFFFF">
+<span title="v2.pied.droit"></span></p>
+	</div>
+
+<!-- JBH Logos -->
+  <div  id="logos" class="row">
+		<div class="col-xs-1">
+		</div>
+      <div class="col-xs-2">
+				<p style="padding-left: 20px; padding-right: 20px;">
+						" L'observatoire faune & l'opération faune et bâti " sont cofinancés par le FEDER dans le cadre du programme opérationnel FEDER-FSE pour la Picardie.
+				</p>
+			</div>
+			<div class="col-xs-1">
+          <a href="http://www.europa.eu" target="_blank" title="Union européenne"><div id="logo_europe" class="hoverscroll"></div></a>
+
+      </div>
+      <div class="col-xs-1">
+          <a href="http://www.europe-en-picardie.eu/" target="_blank" title="Union européenne"><div id="logo_europe_eng" class="hoverscroll"></div></a>
+      </div>
+			<div class="col-xs-3">
+					<a href="http://www.hautsdefrance.fr/" target="_blank"><div id="logo_cr" class="hoverscroll"></div></a>
+			</div>
+      <div class="col-xs-1">
+          <a href="http://www.developpement-durable.gouv.fr/" target="_blank"><div id="logo_dreal" class="hoverscroll"></div></a>
+					<p style="padding-left: 20px; padding-right: 20px;">
+							DREAL
+					</p>
+      </div>
+      <div class="col-xs-1">
+          <a href="http://www.cg02.fr" target="_blank"><div id="logo_cg02" class="hoverscroll"></div></a>
+      </div>
+      <div class="col-xs-1">
+          <a href="http://www.oise.fr" target="_blank"><div id="logo_cg60" class="hoverscroll"></div></a>
+      </div>
+	</div>
+	<div  id="logos2" class="row">
+			<div class="col-xs-3">
+			</div>
+      <div class="col-xs-3">
+				<p style="padding-left: 20px; padding-right: 20px;">
+						Les actions menées par Picardie Nature sont permises par le soutien et la participation des adhérents, des donateurs et des bénévoles ainsi que par la collaboration et l'aide de différents partenaires.
+				</p>
+      </div>
+      <div class="col-xs-2">
+          <a href="http://www.eau-seine-normandie.fr" target="_blank"><div id="logo_eau_h" class="hoverscroll"></div></a>
+      </div>
+      <div class="col-xs-2">
+          <a href="http://www.eau-artois-picardie.fr/" target="_blank"><div id="logo_agence_eau_artois" class="hoverscroll"></div></a>
+      </div>
+  </div>
+</div>
+
+
+
         <p>
             <a href="{{url_for('main.index')}}">Accueil</a> | 
             <a href="http://www.ecrins-parcnational.fr" target="_blank">Site du {{configuration.STRUCTURE}}</a> | 
@@ -8,7 +64,7 @@
 
         <div id="clear"> 
             <p class="text-muted">
-                {{configuration.NOM_APPLICATION}} - Atlas de la faune et de la flore du {{configuration.STRUCTURE}}, 2016
+                {{configuration.NOM_APPLICATION}} - Atlas de la faune de {{configuration.STRUCTURE}}, 2016
                 <br/>
                 Réalisé avec <a href="https://github.com/PnEcrins/GeoNature-atlas" target="_blank">GeoNature-atlas</a>, développé par le <a href="http://www.ecrins-parcnational.fr" target="_blank">Parc national des Ecrins</a>
             </p>
