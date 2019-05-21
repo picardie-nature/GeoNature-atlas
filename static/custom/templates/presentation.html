@@ -41,7 +41,7 @@
                 <li data-target="#myCarousel" data-slide-to="3"></li>
               </ol>
               <div class="carousel-inner" role="listbox">
-                <div class="item active" style="background-image: url(http://biodiversite.ecrins-parcnational.fr/medias/60686_364_Hermine_blanche_en_pelage_dhiver.jpg) ; background-size: cover; background-position: center center;">
+                <div class="item active" style="background-image:  url({{url_for('static', filename='custom/images/Bandeau-PN23.jpg') }}) ; background-size: cover; background-position: center center;">
                   <div class="container">
                     <div class="carousel-caption">
                       <h1>Faune de Picardie</h1>
@@ -50,7 +50,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="item" style="background-image: url(http://biodiversite.ecrins-parcnational.fr/medias/92486_712_Lis_de_Pompone.jpg) ; background-size: cover; background-position: center center;">
+                <div class="item" style="background-image: url({{url_for('static', filename='custom/images/Bandeau-PN4.jpg') }}) ; background-size: cover; background-position: center center;">
                   <div class="container">
                     <div class="carousel-caption">
                       <h1>Etudier</h1>
@@ -59,7 +59,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="item" style="background-image: url({{url_for('static', filename='custom/images/01-observateurs.jpg') }}) ; background-size: cover; background-position: top center;">
+                <div class="item" style="background-image: url({{url_for('static', filename='custom/images/Bandeau-PN32.jpg') }}) ; background-size: cover; background-position: top center;">
                   <div class="container">
                     <div class="carousel-caption">
                       <h1>Sensibiliser</h1>
@@ -68,7 +68,7 @@
                     </div>
                   </div>
                 </div>
-                 <div class="item" style="background-image: url({{url_for('static', filename='custom/images/02-photographes.jpg') }}) ; background-size: cover; background-position: bottom center;">
+                 <div class="item" style="background-image: url({{url_for('static', filename='custom/images/Bandeau-PN4.jpg') }}) ; background-size: cover; background-position: bottom center;">
                   <div class="container">
                     <div class="carousel-caption">
                       <h1>Agir</h1>
@@ -105,20 +105,33 @@
               <div class="col-lg-8">
                   <!-- Texte de présentation général -->
 
-                  <h2 id="general">Clicnat</h2>
-                  <p class="lead">
-                    Cette connaissance de la faune sauvage est obtenue grâce essentiellement aux observateurs bénévoles. C'est pourquoi afin d'améliorer la précision de ces informations, et compléter les connaissances sur les espèces picardes, chacun d’entre vous peut contribuer et fournir des données, quels que soient son niveau de connaissance et la fréquence à laquelle il observe !
+                  <h1 id="general">Clicnat <small><p>La faune sauvage en un clic !</p></small></h1>
+
+                    <p class="lead">
+                        Clicnat est une base de données faunistique collaborative. Elle permet à tous les picards de saisirs, gérer et valoriser leurs observations de faune sauvage.
                     </p>
-                     <p class="lead">
-Merci de noter que certaines données d'espèces, même communes, peuvent être manquantes car, soit elles ne nous ont pas été transmises, soit elles sont en cours de validation.
-                    </p>
-                     <p class="lead">
-Aussi n'hésitez pas à nous contacter pour toute remarque ou demande de précision.
-                  </p>
- 
+
+                <div class="featurette">
+                    <h2> La faune sauvage en Picardie </h2>
+                    <img class="featurette-image img-circle img-responsive pull-left" style="max-width:250px" src="{{url_for('static', filename='custom/images/paysage_1.jpg')}}">
+                  <p class="lead"><mark><i>Contexte écologique, particularité, menace, etc.. Mot du président ?</i></mark>
+                </div>  
+
+                <div class="featurette">
+                    <h2> Une base de données faunistiques, pour quoi faire ? </h2>
+                    <img class="featurette-image img-circle img-responsive pull-left" style="max-width:250px" src="{{url_for('static', filename='custom/images/paysage_1.jpg')}}">
+                  <p class="lead"><mark><i>Connaissance, protection.</i></mark>
+                </div>  
+
+                <div class="featurette">
+                   <h2> Le projet Clicnat </h2>
+                    <p class="lead"><mark><i>Lancement, principales évolutions, perspectives. #Geonature #opensource #observatoire #SINP</i></mark></p>
+                </div>
+
               </div>
               <div class="col-lg-4" style="background:#f4f4f4; border-radius: 15px; margin-top:20px; padding: 20px; text-align:left;">
-                <p>Encart
+                <img src="{{url_for('static',filename='custom/images/24-10-11_-_Femina_-_Avec_le_site_picard_Clicnat_devenez_observateur_nature.jpg') }}" width='100%'>
+                <p><small>Article dans Fémina le 24 octobre 2011 pour le lancement de Clicnat</small>
 				</p>
               </div>
               <div style="clear: both;"></div>
