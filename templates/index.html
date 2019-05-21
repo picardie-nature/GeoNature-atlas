@@ -4,6 +4,9 @@
         <meta charset="utf-8" />
         <title>{{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
 
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
         <!-- Jquery -->
         <script type=text/javascript src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
 		    <script type=text/javascript src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
@@ -48,7 +51,7 @@
 						<div class="panel-heading"><strong><h3>En quelques chiffres</h3></strong></div>
 						<div class ="col-lg-3 col-md-3 col-sm-6 col-xs-12 stat-object">
 							<div class="thumbnail stat-thumbnail">
-								<span class="glyphicon glyphicon-search"></span>
+								<span class="fa fa-binoculars"></span>
 								<h1>{{stat.nbTotalObs | pretty}}</h1>
 								<h4> {{ 'observations' if stat.nbTotalObs > 1 else 'observation'}}</h4>
 								<p><a id="localScroll" href="#DernieresObservations" class="btn btn-default" role="button">Voir les dernières observations</a></p>
@@ -56,7 +59,7 @@
 						</div>
 						<div class = "col-lg-3 col-md-3 col-sm-6 col-xs-12 stat-object">
 							<div class="thumbnail stat-thumbnail">
-								<span class="glyphicon glyphicon-leaf"></span>
+								<span class="fa fa-paw"></span>
 								<h1>{{stat.nbTotalTaxons | pretty}}</h1>
 								<h4> {{ 'espèces' if stat.nbTotalTaxons > 1 else 'espèce' }}</h4>
 								<form method="POST" id="searchFormTaxonsStat" class="navbar-form" role="search">
@@ -70,7 +73,8 @@
 						</div>
 						<div class ="col-lg-3 col-md-3 col-sm-6 col-xs-12 stat-object">
 							<div class="thumbnail stat-thumbnail">
-								<img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}">
+								<!--<img id="picto" src="{{url_for('static', filename='images/commune-icone.png')}}">-->
+                                <span class="fa fa-city"></span>
 								<h1>{{stat.town | pretty}}</h1>
 								<h4> {{ 'communes' if stat.town > 1 else 'commune' }}</h4>
 								<form method="POST" onsubmit="completeAction('#searchFormCommunesStat', hiddenInputCommunesStat)" id='searchFormCommunesStat' action=""  class="navbar-form" role="search">
@@ -84,7 +88,7 @@
 						</div>
 						<div class ="col-lg-3 col-md-3 col-sm-6 col-xs-12 stat-object">
 							<div class="thumbnail stat-thumbnail">
-								<span class="glyphicon glyphicon-camera"></span>
+								<span class="fa fa-camera"></span>
 								<h1>{{stat.photo | pretty}}</h1>
 								<h4> {{ 'photos' if stat.photo > 1 else 'photo' }}</h4>
 								<p><a href="{{url_for('main.photos')}}" class="btn btn-default" role="button">Galerie photos</a></p>
@@ -113,7 +117,7 @@
 							<h3>{{configuration.RANG_STAT_FR[i]}} </h3>
 							<span class="higlight">{{customStat[i].nb_obs | pretty}}</span> observations | <span class="higlight">{{customStat[i].nb_taxons| pretty}}</span> espèces
 						</div>
-						<h5><span class="glyphicon glyphicon-eye-open"></span> Espèces à découvrir</h5>
+						<h5><span class="fa fa-paw"></span> Espèces à découvrir</h5>
 					{% for j in range(2) %}
 						{% if loop.index <= customStatMedias[i] | length %}
 								<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-stat-medias">
