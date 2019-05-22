@@ -9,7 +9,7 @@ def getAtlasReseau(connection,id_reseau, type_maille='l93_5'):
     Retourne les data pour les cartes de richesses specifique et occurences par maille
     """
     sql = """SELECT
-	        id_maille, id_reseau, n_sp,n_occ, st_asgeojson(the_geom) as geojson_maille
+	        id_maille, id_reseau, n_sp,n_occ, st_asgeojson(st_transform(the_geom,4326)) as geojson_maille
         FROM atlas.maille_richesse_sp
         WHERE id_reseau=(:thisidreseau)
         """
