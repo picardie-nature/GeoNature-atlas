@@ -6,7 +6,7 @@ from werkzeug.wrappers import Response
 from . import utils
 from modeles.repositories import (
     vmSearchTaxonRepository, vmObservationsRepository,
-    vmObservationsMaillesRepository, vmMedias
+    vmObservationsMaillesRepository, vmMedias, vmMaillesRichesse
 )
 from configuration import config
 
@@ -69,6 +69,12 @@ def getObservationsCommuneTaxonMailleAPI(insee, cd_ref):
     connection.close()
     return Response(json.dumps(observations), mimetype='application/json')
 
+@api.route('/atlasReseau/<id_reseau>',methods=['GET'])
+def getAtlasReseau(id_reseau):
+    connection = utils.engine.connect()
+    data = vmMaillesRichesse.getAtlasReseau(connection,id_reseau)
+    connection.close()
+    return Response(json.dumps(data),mimetype='application/json')
 
 @api.route('/photoGroup/<group>', methods=['GET'])
 def getPhotosGroup(group):
