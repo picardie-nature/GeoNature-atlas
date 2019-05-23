@@ -4,17 +4,17 @@ from .. import utils
 from sqlalchemy.sql import text
 import ast
 
-def getAtlasReseau(connection,id_reseau, type_maille='l93_5'):
+def getAtlasReseau(connection,id_liste, type_maille='l93_5'):
     """
     Retourne les data pour les cartes de richesses specifique et occurences par maille
     """
     sql = """SELECT
-	        id_maille, id_reseau, n_sp,n_occ, st_asgeojson(st_transform(the_geom,4326)) as geojson_maille
-        FROM atlas.maille_richesse_sp
-        WHERE id_reseau=(:thisidreseau)
+	        id_maille, id_liste, n_sp,n_occ, st_asgeojson(st_transform(the_geom,4326)) as geojson_maille
+        FROM atlas.vm_atlas_thematique
+        WHERE id_liste=(:thisidliste)
         """
     
-    data = connection.execute(text(sql), thisidreseau=id_reseau)
+    data = connection.execute(text(sql), thisidliste=id_liste)
     tab=list()
     for e in data:
         tab.append({

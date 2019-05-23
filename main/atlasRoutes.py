@@ -329,6 +329,9 @@ def get_staticpages(page):
     static_page = config.STATIC_PAGES[page]
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     configuration = base_configuration
+    configuration.update({
+      'MAP': config.MAP
+    })
     session.close()
     return render_template(
         static_page['template'],
