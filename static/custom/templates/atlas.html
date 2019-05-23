@@ -19,7 +19,42 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/static_pages.css') }}" />
         <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}" />
 
+          <!-- Leaflet -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet.css') }}" />
+        <script src="{{url_for('static', filename='lib/leaflet/leaflet.js') }}"></script>
+        <script src="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.css') }}" />
+		    <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.Default.css') }}" />
+        <script src="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.min.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.css') }}" />
+
    </head>
+    <style>
+        .info {
+        padding: 6px 8px;
+        font: 14px/16px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+        .nav-pills li.active a{
+            background-color: #467e19;
+        }
+        .nav-pills li.active a:hover{
+            background-color: #467e19;
+        }
+        .nav-pills li.active a:focus{
+            background-color: #467e19;
+        }
+        a {
+            color:#6f6f6f;
+        }
+    </style>
     <body>
     {% include 'templates/navbar.html' %}
 
@@ -27,8 +62,38 @@
 			{% include 'templates/sideBar.html' %}
 		</div>
 		<div class="container-fluid" id="page">
-        Soon.. Carte d'atlas par réseau
+
+            <div class="panel panel-default" id="mapPanel">
+                <div class ="row">
+                    <div class="col-sm-10" style='height:800px' id="mapContainer">
+
+
+                        <ul class="nav nav-pills">  
+                            <li class="active"><a href="#" data-toggle="tab" onclick=changeLayer(3)>Micro-mammifères</a></li>  
+                             <li><a data-toggle="tab" onclick=changeLayer(4) href="#">Chiroptère</a></li> 
+                             <li><a data-toggle="tab" onclick=changeLayer(6) href="#">Odonates</a></li> 
+                        </ul>
+
+                        <div id="map" style='height:800px'>
+                            <img id ="loadingGif" src="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+
+
+        <script>
+            var configuration = {{configuration|tojson}};
+            var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
+        </script>
+
+        <script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
+        <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
+        <script src="{{url_for('static', filename='main.js') }}"></script>
+        <script src="{{url_for('static', filename='mapAtlasReseau.js') }}"></script>
     </body>
 
 </html>
