@@ -76,6 +76,12 @@ def getAtlasReseau(id_reseau):
     connection.close()
     return Response(json.dumps(data),mimetype='application/json')
 
+@api.route('/atlasReseau/mailles/<int:id_maille>/<id_reseau>',methods=['GET'])
+def getEspecesMaille(id_maille,id_reseau):
+    connection = utils.engine.connect()
+    data = vmMaillesRichesse.getEspecesMaille(connection,id_maille,id_reseau)
+    return Response(json.dumps(data),mimetype='application/json')
+
 @api.route('/photoGroup/<group>', methods=['GET'])
 def getPhotosGroup(group):
     connection = utils.engine.connect()
