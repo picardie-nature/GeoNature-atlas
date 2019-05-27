@@ -37,7 +37,8 @@ def getEspecesMaille(connection, id_maille, id_liste):
         JOIN taxonomie.bib_noms bib_noms ON bib_noms.cd_ref = vm_observations_mailles.cd_ref
         JOIN taxonomie.taxref taxref ON taxref.cd_nom = vm_observations_mailles.cd_ref
         JOIN taxonomie.cor_nom_liste liste ON liste.id_nom=bib_noms.id_nom
-        WHERE taxref.id_rang='ES' and id_maille=(:thisidmaille) and liste.id_liste = (:thisidliste)"""
+        WHERE taxref.id_rang='ES' and id_maille=(:thisidmaille) and liste.id_liste = (:thisidliste)
+        ORDER BY nom_vern"""
     data = connection.execute(text(sql), thisidmaille=id_maille,thisidliste=id_liste )
     tab=list()
     for e in data:
