@@ -100,7 +100,8 @@ function changeLayer(id_reseau){
                         var str_list_sp='<ul style="columns:'+n_col+';">';
                         data.features.forEach(function(item,index){
                             str_list_sp+='<li><i>'
-                            str_list_sp+='<a href=/atlas/espece/'+item.properties.cd_nom+'>';
+                            str_list_sp+='<a data-toggle="tooltip" href=/atlas/espece/'+item.properties.cd_nom+' ';
+                            str_list_sp+='title="'+item.properties.nom_vern+'">'
                             str_list_sp+=item.properties.lb_nom
                             str_list_sp+='</a></i></li>';
                         });
