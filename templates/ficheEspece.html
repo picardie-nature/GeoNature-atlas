@@ -5,6 +5,9 @@
 
         <title>{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
 
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
         <!-- Jquery -->
         <link rel="stylesheet" href="{{url_for('static', filename='lib/jquery-ui.css') }}" />
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
@@ -133,11 +136,14 @@
                                 {% endif %}
                             {% endfor %}
                         </div>
-                        <div id="listerouge" style="padding-top:15px">
-                            {% for lr_statut in taxon.taxonSearch.liste_rouge %}
-                                <span class="redlistBadge redlist{{lr_statut}}"> {{lr_statut}} </span>
-                            {% endfor %}
-                        </div>
+                        <div id="badges" style="margin-top:15px;">
+                            <div id="listerouge" style="display:inline-block">
+                                {% for lr_statut in taxon.taxonSearch.liste_rouge %}
+                                    <span class="redlistBadge redlist{{lr_statut}}"> {{lr_statut}} </span>
+                                {% endfor %}
+                            </div>
+                                {% if taxon.taxonSearch.protected %} <span title="Espèce protégée" style="display:inline-block;font-size: 45px; color: #004d98;padding:10px"class="fa fa-shield-alt"> </span>{% endif %}
+                        </div>                        
                         <div id="inpnLink">
                             <a href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank">
                                 <img width="130px" src="{{url_for('static', filename='images/logo_inpn.png') }}"  data-toggle="tooltip" data-original-title="Consultez la fiche espèce sur l'INPN" data-placement="right">
