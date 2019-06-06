@@ -11,7 +11,7 @@
 
          <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-4
+
         <!-- highcharts -->
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -45,7 +45,6 @@
    </head>
    <body>
     {% include 'templates/navbar.html' %}
-
 		<div id="sideBar">
 			{% include 'templates/sideBar.html' %}
 		</div>
@@ -53,35 +52,50 @@
 
             <div class="col-sm-{{ '7' if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE else '12' }}">
                  <div class="panel panel-default" id="parent">
-					          <div class="row">
+			        <div class="row">
                         <h4><b>Commune de {{referenciel.communeName}}</b></h4>
-                        <ul id="stat">
-                            <li><span class="fa fa-binoculars" style="font-size: 30px;"></span><br/><b>{{listTaxons.nbObsTotal | pretty}}</b><br/>{{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }}</li>
-                            <li><span class="fa fa-paw" style="font-size: 30px;"></span></br><b>{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}</li>
-                            <li><span class="fa fa-user" style="font-size: 30px;"></span></br><b>{{observers | length | pretty}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}</li>
-                        </ul>
                     </div>
                 </div>
 
-                <div class="panel panel-default" id="stats">
+                <!--<div class="panel panel-default" id="stat2">
+                   
+                    <div id="pie_chart" style="max-width:660px;height:400px"></div>
 
-                    <!--<div id="pie_chart" style="max-width:660px;height:400px"></div>-->
+                </div>-->
+                 <div class="panel panel-default" id="taxons">
+                         <div class="row" style="text-align:center">
+                               <div class="col-sm-1 col-md-offset-3" > 
+                                    <span style="color: ##35526f;font-size:45px" class="fa fa-shield-alt"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("protected") | list | count }}</b><br> espèces protégées
+                                </div>
+                               <div class="col-sm-1"> 
+                                    <span class="fa fa-exclamation-triangle" style="font-size:45px"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("threatened") | list | count }}</b> <br>espèces menacées
+                                </div>
+                                <div class="col-sm-1"> 
+                                    <span class="fa fa-binoculars" style="font-size: 45px;"></span><br/><b style="font-size:150%">{{listTaxons.nbObsTotal | pretty}}</b><br/>{{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }}
+                                 </div>
+                                <div class="col-sm-1"> 
+                                    <span class="fa fa-paw" style="font-size: 45px;"></span></br><b style="font-size:150%">{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}
+                                </div>
+                                <div class="col-sm-1"> 
+                                    <span class="fa fa-user" style="font-size: 45px;"></span></br><b style="font-size:150%">{{observers | length | pretty}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}
+                                </div>
 
-                </div>
-                 <div class="panel panel-default" id="stats">
-
+                        </div>
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         {% for reseau in reseaux %}
                             {% set rtaxons = listTaxons.taxons | selectattr("code_reseau", "equalto", reseau.code_reseau) | list %}
                             {% set nb_sp_protected = rtaxons | selectattr("protected") | list | count  %}
+                            {% set nb_sp_threatened = rtaxons | selectattr("threatened") | list | count  %}
                           <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="heading{{ reseau.code_reseau }}">
                               <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ reseau.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ reseau.code_reseau }}">
-                                  {{ reseau.nom_reseau }} : <b>{{ rtaxons | count }} </b> </a>
-                                    <span class="badge" title="Espèce protégée">
-                                            {{ nb_sp_protected }} 
-                                            <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>
+                                  {{ reseau.nom_reseau }} : <b>{{ rtaxons | count }} </b> espèces </a>
+                                    <span class="badge" title="Espèces protégée">
+                                            <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>  {{ nb_sp_protected }}
+                                    </span>
+                                    <span class="badge" title="Espèces menacées">
+                                            <span style="display:inline-block;color: #fff;"class="fa fa-exclamation-triangle"></span>  {{ nb_sp_threatened }}
                                     </span>
                               </h4>
                             </div>
