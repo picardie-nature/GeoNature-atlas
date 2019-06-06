@@ -7,7 +7,7 @@ from modeles.repositories import (
     vmTaxonsRepository, vmObservationsRepository, vmAltitudesRepository,
     vmMoisRepository, vmTaxrefRepository,
     vmCommunesRepository, vmObservationsMaillesRepository, vmMedias,
-    vmCorTaxonAttribut, vmTaxonsMostView
+    vmCorTaxonAttribut, vmTaxonsMostView, vmReseauxNat
 )
 from . import utils
 
@@ -213,6 +213,8 @@ def ficheCommune(insee):
         connection, insee
     )
 
+    reseaux = vmReseauxNat.getAllReseaux(connection)
+
     configuration = base_configuration.copy()
     configuration.update({
         'NB_LAST_OBS': config.NB_LAST_OBS,
@@ -233,6 +235,7 @@ def ficheCommune(insee):
         communesSearch=communesSearch,
         observations=observations,
         observers=observers,
+        reseaux=reseaux,
         configuration=configuration
     )
 
