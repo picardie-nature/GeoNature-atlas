@@ -9,6 +9,14 @@
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
         <link rel="stylesheet" href="{{url_for('static', filename='lib/jquery-ui.css') }}" />
 
+         <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+4
+        <!-- highcharts -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
         <!-- Leaflet -->
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet.css') }}" />
         <script src="{{url_for('static', filename='lib/leaflet/leaflet.js') }}"></script>
@@ -48,18 +56,64 @@
 					          <div class="row">
                         <h4><b>Commune de {{referenciel.communeName}}</b></h4>
                         <ul id="stat">
-                            <li><span data-icon="&#xe037;" style="font-size: 30px;"></span><br/><b>{{listTaxons.nbObsTotal | pretty}}</b><br/>{{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }}</li>
-                            <li><span data-icon="&#xe03b;" style="font-size: 30px;"></span></br><b>{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}</li>
-                            <li><span data-icon="&#xe040;" style="font-size: 30px;"></span></br><b>{{observers | length | pretty}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}</li>
+                            <li><span class="fa fa-binoculars" style="font-size: 30px;"></span><br/><b>{{listTaxons.nbObsTotal | pretty}}</b><br/>{{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }}</li>
+                            <li><span class="fa fa-paw" style="font-size: 30px;"></span></br><b>{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}</li>
+                            <li><span class="fa fa-user" style="font-size: 30px;"></span></br><b>{{observers | length | pretty}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}</li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="row rowMargin" id="clear">
-                        <div class="panel panel-default">
-                            {% include 'templates/tabTaxons.html' %}
-                        </div>
+                <div class="panel panel-default" id="stats">
+
+                    <!--<div id="pie_chart" style="max-width:660px;height:400px"></div>-->
+
                 </div>
+                 <div class="panel panel-default" id="stats">
+
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        {% for reseau in reseaux %}
+                            {% set rtaxons = listTaxons.taxons | selectattr("code_reseau", "equalto", reseau.code_reseau) | list %}
+                            {% set nb_sp_protected = rtaxons | selectattr("protected") | list | count  %}
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading{{ reseau.code_reseau }}">
+                              <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ reseau.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ reseau.code_reseau }}">
+                                  {{ reseau.nom_reseau }} : <b>{{ rtaxons | count }} </b> </a>
+                                    <span class="badge" title="Espèce protégée">
+                                            {{ nb_sp_protected }} 
+                                            <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>
+                                    </span>
+                              </h4>
+                            </div>
+                            <div id="collapse{{ reseau.code_reseau }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                              <div class="panel-body">
+                                    <table class="table table-bordered">
+                                         <tr>
+                                            <th style='width:40px'>Protegé</th>
+                                            <th style='width:115px'>Liste rouge régionale</th> 
+                                            <th>Nom vernaculaire</th> 
+                                            <th>Nom latin</th>
+                                            <th>Première observation</th>
+                                            <th>Dernière observation</th>
+                                        </tr>
+                                         {% for taxon in rtaxons %}
+                                        <tr>
+                                                <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;"class="fa fa-shield-alt"></span> {% endif %}</td>
+                                               <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlistBadge redlist{{lr_statut}}" style="font-size:15px;padding:5px;margin:5px"> {{ lr_statut }} </span> {% endfor %} </td>
+                                               <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{taxon.nom_vern}}</a></td><td>{{ taxon.nom_complet_html | safe}}  </td>
+                                                <td>1970</td>
+                                                <td>2006</td>
+                                        </tr>
+                                         {% endfor %}
+                
+                                    </table>
+                              </div>
+                            </div> 
+                          </div>
+                        {% endfor %}
+                         
+                </div>
+
             </div>
             {% if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE %}
             <div class="col-sm-5" id="mapWrapper">
@@ -103,7 +157,7 @@
             <script src="{{url_for('static', filename='mapCommune.js') }}"></script>
         {% endif %}
         <script src="{{url_for('static', filename='main.js') }}"></script>
-
+        <script type="text/javascript" src="{{url_for('static', filename='chart_taxo.js') }}"></script>
    </body>
 </html>
 
