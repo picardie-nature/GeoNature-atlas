@@ -46,7 +46,8 @@ def getTaxonsCommunes(connection, insee,species_only=False):
             'id_media': r.id_media,
             'code_reseau':r.code_reseau,
             'protected':r.protected,
-            'code_lr':r.code_lr or list()
+            'code_lr':r.code_lr or list(),
+            'threatened': len(set(('CR','CR*','EN','VU')).intersection(r.code_lr or list()))
         }
         taxonCommunesList.append(temp)
         nbObsTotal = nbObsTotal + r.nb_obs
