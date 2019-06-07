@@ -16,7 +16,7 @@ def deleteAccent(string):
 def getTaxonsCommunes(connection, insee,species_only=False):
     sql = """
         SELECT DISTINCT
-	        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs,
+	        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs,
             COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
             t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,r.code_reseau,
             m.url, m.chemin, m.id_media
@@ -38,6 +38,7 @@ def getTaxonsCommunes(connection, insee,species_only=False):
             'nb_obs': r.nb_obs,
             'nom_vern': r.nom_vern,
             'cd_ref': r.cd_ref,
+            'first_obs': r.first_obs,
             'last_obs': r.last_obs,
             'group2_inpn': deleteAccent(r.group2_inpn),
             'patrimonial': r.patrimonial,
