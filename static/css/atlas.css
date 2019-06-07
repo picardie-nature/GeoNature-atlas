@@ -440,47 +440,80 @@ li.sidebar-brand {
 /* END Galerie photos */
 
 
-
 .redlistBadge{
-    padding:10px;
-    font-size:28px;
+    padding:5px;
+    font-size:100%;
 }
+
 .redlistLC {
     color:#FFFFFF;
     background-color:#78b74a;
+}
+.redlistLC::after {
+    content:'LC';
 }
 
 .redlistNT {
     color:#000000;
     background-color:#fbf2ca;
 }
+.redlistNT::after {
+    content:'NT';
+}
 
 .redlistVU {
     color:#000000;
     background-color:#ffed00;
+}
+.redlistVU::after {
+    content:'VU';
 }
 
 .redlistEN {
     color:#000000;
     background-color:#fbbf00;
 }
+.redlistEN::after {
+    content:'EN';
+}
 
-.redlistCR {
+.redlistCR,.redlistCRstar {
     color:#FFFFFF;
     background-color:#d3001b;
 }
+.redlistCR::after {
+    content:'CR';
+}
+
+.redlistCRstar::after {
+    content:'CR*';
+}
+
 
 .redlistRE {
     color:#FFFFFF;
     background-color:#5a1a63;
 }
+.redlistRE::after {
+    content:'RE';
+}
+
+
 
 .redlistEX {
     color:#FFFFFF;
     background-color:#000000;
+}
+.redlistEX::after {
+    content:'EX';
 }
 
 .redlistDD {
     color:#FFFFFF;
     background-color:#d3d4d5;
 }
+.redlistDD::after {
+    content:'DD';
+}
+
+
