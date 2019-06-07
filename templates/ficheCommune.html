@@ -82,24 +82,22 @@
 
                         </div>
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        {% for reseau in reseaux %}
-                            {% set rtaxons = listTaxons.taxons | selectattr("code_reseau", "equalto", reseau.code_reseau) | list | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
-                            {% set nb_sp_protected = rtaxons | selectattr("protected") | list | count  %}
-                            {% set nb_sp_threatened = rtaxons | selectattr("threatened") | list | count  %}
+                        {% for d in data | sort(attribute="n_sp",reverse=True) %}
+                            {% set rtaxons = d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
                           <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ reseau.code_reseau }}">
+                            <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ d.code_reseau }}">
                               <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ reseau.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ reseau.code_reseau }}">
-                                  {{ reseau.nom_reseau }} : <b>{{ rtaxons | count }} </b> espèces </a>
-                                    <span class="badge" title="Espèces protégée">
-                                            <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>  {{ nb_sp_protected }}
-                                    </span>
-                                    <span class="badge" title="Espèces menacées">
-                                            <span style="display:inline-block;color: #fff;"class="fa fa-exclamation-triangle"></span>  {{ nb_sp_threatened }}
-                                    </span>
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ d.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ d.code_reseau }}">
+                                 <b>{{ d.taxons | count }} </b> {{ d.nom_reseau }}   </a>
+                                    {% if d.n_sp_protected > 0 %}<span class="badge" title="Espèces protégée">
+                                            <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>  {{ d.n_sp_protected }}
+                                    </span>{% endif %}
+                                    {% if d.n_sp_threatened > 0 %}<span class="badge" title="Espèces menacées">
+                                            <span style="display:inline-block;color: #fff;"class="fa fa-exclamation-triangle"></span>  {{ d.n_sp_threatened }}
+                                    </span>{% endif %}
                               </h4>
                             </div>
-                            <div id="collapse{{ reseau.code_reseau }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div id="collapse{{ d.code_reseau }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                               <div class="panel-body">
                                     <table class="table table-bordered">
                                          <tr>
@@ -110,7 +108,7 @@
                                             <th>Première observation</th>
                                             <th>Dernière observation</th>
                                         </tr>
-                                         {% for taxon in rtaxons %}
+                                         {% for taxon in d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
                                         <tr>
                                                 <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;"class="fa fa-shield-alt"></span> {% endif %}</td>
                                                <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>

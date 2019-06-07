@@ -215,7 +215,18 @@ def ficheCommune(insee):
 
     reseaux = vmReseauxNat.getAllReseaux(connection)
     reseaux.append({'code_reseau':'autre','nom_reseau':u'Autres espèces','id_reseau':99})
-
+    
+    data_by_reseau = list()
+    for r in reseaux :
+        taxons = filter(lambda k : k['code_reseau'] == r['code_reseau'], listTaxons['taxons'])
+        n_sp_protected = len(filter(lambda k : k['protected'] == True, taxons))
+        n_sp_threatened = len(filter(lambda k : k['threatened'] == True, taxons))
+        data_by_reseau.append({
+            'nom_reseau':r['nom_reseau'],
+            'code_reseau':r['code_reseau'],
+            'n_sp_protected':n_sp_protected, 'n_sp_threatened' : n_sp_threatened, 'n_sp': len(taxons),
+            'taxons':taxons})
+    
     configuration = base_configuration.copy()
     configuration.update({
         'NB_LAST_OBS': config.NB_LAST_OBS,
@@ -237,7 +248,8 @@ def ficheCommune(insee):
         observations=observations,
         observers=observers,
         reseaux=reseaux,
-        configuration=configuration
+        configuration=configuration,
+        data = data_by_reseau
     )
 
 
