@@ -114,7 +114,8 @@
                                         <tr>
                                                 <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;"class="fa fa-shield-alt"></span> {% endif %}</td>
                                                <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
-                                               <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{taxon.nom_vern}}</a></td><td>{{ taxon.nom_complet_html | safe}}  </td>
+                                               <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
+                                                <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> </td>
                                                 <td>1970</td>
                                                 <td>2006</td>
                                         </tr>
