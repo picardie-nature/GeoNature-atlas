@@ -41,19 +41,18 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/icones.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}"/>
 
-
    </head>
    <body>
     {% include 'templates/navbar.html' %}
 		<div id="sideBar">
 			{% include 'templates/sideBar.html' %}
 		</div>
-		<div class="container-fluid" id="page">
+		<div class="container-fluid" id="page" style="margin-top:10px">
 
             <div class="col-sm-{{ '7' if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE else '12' }}">
                  <div class="panel panel-default" id="parent">
 			        <div class="row">
-                        <h4><b>Commune de {{referenciel.communeName}}</b></h4>
+                        <h4 style="font-size:150%">Commune de <b>{{referenciel.communeName}}</b></h4>
                     </div>
                 </div>
 
@@ -62,73 +61,82 @@
                     <div id="pie_chart" style="max-width:660px;height:400px"></div>
 
                 </div>-->
-                 <div class="panel panel-default" id="taxons">
-                         <div class="row" style="text-align:center;padding:15px"">
-                               <div class="col-sm-1 col-md-offset-3" > 
-                                    <span style="color: ##35526f;font-size:45px" class="fa fa-shield-alt"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("protected") | list | count }}</b><br> espèces protégées
-                                </div>
-                               <div class="col-sm-1"> 
-                                    <span class="fa fa-exclamation-triangle" style="font-size:45px"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("threatened") | list | count }}</b> <br>espèces menacées
-                                </div>
-                                <div class="col-sm-1"> 
-                                    <span class="fa fa-binoculars" style="font-size: 45px;"></span><br/><b style="font-size:150%">{{listTaxons.nbObsTotal | pretty}}</b><br/>{{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }}
-                                 </div>
-                                <div class="col-sm-1"> 
-                                    <span class="fa fa-paw" style="font-size: 45px;"></span></br><b style="font-size:150%">{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}
-                                </div>
-                                <div class="col-sm-1"> 
-                                    <span class="fa fa-user" style="font-size: 45px;"></span></br><b style="font-size:150%">{{observers | length | pretty}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}
-                                </div>
+                 <div class="panel panel-default" id="taxons"><div class="panel-body">
 
-                        </div>
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        {% for d in data | sort(attribute="n_sp",reverse=True) %}
-                            {% set rtaxons = d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
-                          <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ d.code_reseau }}">
-                              <h4 class="panel-title">
-                                <a role="button" {% if d.n_sp > 0 %} data-toggle="collapse"{% endif %} data-parent="#accordion" href="#collapse{{ d.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ d.code_reseau }}">
-                                 <b style="font-size:115%">{{ d.taxons | count }} </b> {{ d.nom_reseau }}   </a>
-                                    {% if d.n_sp_protected > 0 %}<span class="badge" title="Espèces protégée">
-                                            <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>  {{ d.n_sp_protected }}
-                                    </span>{% endif %}
-                                    {% if d.n_sp_threatened > 0 %}<span class="badge" title="Espèces menacées">
-                                            <span style="display:inline-block;color: #fff;"class="fa fa-exclamation-triangle"></span>  {{ d.n_sp_threatened }}
-                                    </span>{% endif %}
-                              </h4>
+                     <div class="row" style="text-align:center;padding:15px"">
+                           <div class="col-sm-1 col-md-offset-3" > 
+                                <span style="color: ##35526f;font-size:45px" class="fa fa-shield-alt"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("protected") | list | count }}</b><br> espèces protégées
                             </div>
-                            <div id="collapse{{ d.code_reseau }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                              <div class="panel-body">
-                                    <table class="table table-bordered">
-                                         <tr>
-                                            <th style='width:40px'>Protegé</th>
-                                            <th style='width:115px'>Liste rouge régionale</th> 
-                                            <th>Nom vernaculaire</th> 
-                                            <th>Nom latin</th>
-                                            <th>Première observation</th>
-                                            <th>Dernière observation</th>
-                                        </tr>
-                                         {% for taxon in d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
-                                        <tr>
-                                                <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;"class="fa fa-shield-alt"></span> {% endif %}</td>
-                                               <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
-                                               <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
-                                                <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> </td>
-                                                <td>{{ taxon.first_obs | int }} </td>
-                                                <td>{{ taxon.last_obs | int }}</td>
-                                        </tr>
-                                         {% endfor %}
-                
-                                    </table>
+                           <div class="col-sm-1"> 
+                                <span class="fa fa-exclamation-triangle" style="font-size:45px"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("threatened") | list | count }}</b> <br>espèces menacées
+                            </div>
+                            <div class="col-sm-1"> 
+                                <span class="fa fa-binoculars" style="font-size: 45px;"></span><br/><b style="font-size:150%">{{listTaxons.nbObsTotal | pretty}}</b><br/>{{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }}
+                             </div>
+                            <div class="col-sm-1"> 
+                                <span class="fa fa-paw" style="font-size: 45px;"></span></br><b style="font-size:150%">{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}
+                            </div>
+                            <div class="col-sm-1"> 
+                                <span class="fa fa-user" style="font-size: 45px;"></span></br><b style="font-size:150%">{{observers | length | pretty}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}
+                            </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            {% for d in data | sort(attribute="n_sp",reverse=True) %}
+                                {% set rtaxons = d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
+                              <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ d.code_reseau }}">
+                                  <h4 class="panel-title">
+                                    <a role="button" {% if d.n_sp > 0 %} data-toggle="collapse"{% endif %} data-parent="#accordion" href="#collapse{{ d.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ d.code_reseau }}">
+                                     <b style="font-size:115%">{{ d.taxons | count }} </b> {{ d.nom_reseau }}   </a>
+                                        {% if d.n_sp_protected > 0 %}<span class="badge" title="Espèces protégée">
+                                                <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>  {{ d.n_sp_protected }}
+                                        </span>{% endif %}
+                                        {% if d.n_sp_threatened > 0 %}<span class="badge" title="Espèces menacées">
+                                                <span style="display:inline-block;color: #fff;"class="fa fa-exclamation-triangle"></span>  {{ d.n_sp_threatened }}
+                                        </span>{% endif %}
+                                  </h4>
+                                </div>
+                                <div id="collapse{{ d.code_reseau }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                  <div class="panel-body">
+                                        <table class="table table-bordered">
+                                             <tr>
+                                                <th style='width:40px'>Protegé</th>
+                                                <th style='width:115px'>Liste rouge régionale</th> 
+                                                <th>Nom vernaculaire</th> 
+                                                <th>Nom latin</th>
+                                                <th>Première observation</th>
+                                                <th>Dernière observation</th>
+                                            </tr>
+                                             {% for taxon in d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
+                                            <tr>
+                                                    <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;" class="fa fa-shield-alt"></span> {% endif %}</td>
+                                                   <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
+                                                   <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
+                                                    <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> </td>
+                                                    <td>{{ taxon.first_obs | int }} </td>
+                                                    <td>{{ taxon.last_obs | int }}</td>
+                                            </tr>
+                                             {% endfor %}
+                    
+                                        </table>
+                                  </div>
+                                </div> 
                               </div>
-                            </div> 
-                          </div>
-                        {% endfor %}
-                         
+                            {% endfor %}
+                             
+                    </div>
                 </div>
+                <div class="col-sm-3">
+                   <button type="button" class="btn btn-primary" DISABLED><span class="fa fa-download"></span>Télécharger la liste des espèces</button>
+                </div>
+              </div> <!--row-->
+
+            </div></div>
             <div class="alert alert-warning" role="alert"> 
                 Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>.
-            </div>
             </div>
             {% if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE %}
             <div class="col-sm-5" id="mapWrapper">
