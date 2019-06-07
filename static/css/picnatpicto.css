@@ -1,0 +1,49 @@
+@font-face {
+    font-family: picnatpicto1;
+    src: url("fonts/PICNATPICTO_01.otf") format("opentype");
+}
+@font-face {
+    font-family: picnatpicto2;
+    src: url("fonts/PICNATPICTO_02.otf") format("opentype");
+}
+
+
+.pn {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  font-size:45px;
+  vertical-align:middle;
+}
+
+
+.pn-binocular {
+  font-family:"picnatpicto2"
+}
+
+.pn-binocular:before {
+  content: "E";
+}
+
+.pn-fly {
+  font-family:"picnatpicto1"
+}
+.pn-fly:before {
+  content: "A";
+}
+.pn-snake {
+  font-family:"picnatpicto1"
+}
+.pn-fly:before {
+  content: "B";
+}
+.pn-frog {
+  font-family:"picnatpicto1"
+}
+.pn-frog:before {
+  content: "C";
+}
