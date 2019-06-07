@@ -63,7 +63,7 @@
 
                 </div>-->
                  <div class="panel panel-default" id="taxons">
-                         <div class="row" style="text-align:center">
+                         <div class="row" style="text-align:center;padding:15px"">
                                <div class="col-sm-1 col-md-offset-3" > 
                                     <span style="color: ##35526f;font-size:45px" class="fa fa-shield-alt"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("protected") | list | count }}</b><br> espèces protégées
                                 </div>
@@ -87,7 +87,7 @@
                           <div class="panel panel-default">
                             <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ d.code_reseau }}">
                               <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ d.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ d.code_reseau }}">
+                                <a role="button" {% if d.n_sp > 0 %} data-toggle="collapse"{% endif %} data-parent="#accordion" href="#collapse{{ d.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ d.code_reseau }}">
                                  <b style="font-size:115%">{{ d.taxons | count }} </b> {{ d.nom_reseau }}   </a>
                                     {% if d.n_sp_protected > 0 %}<span class="badge" title="Espèces protégée">
                                             <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>  {{ d.n_sp_protected }}
@@ -126,7 +126,9 @@
                         {% endfor %}
                          
                 </div>
-
+            <div class="alert alert-warning" role="alert"> 
+                Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>.
+            </div>
             </div>
             {% if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE %}
             <div class="col-sm-5" id="mapWrapper">
