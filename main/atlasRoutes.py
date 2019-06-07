@@ -224,6 +224,7 @@ def ficheCommune(insee):
         data_by_reseau.append({
             'nom_reseau':r['nom_reseau'],
             'code_reseau':r['code_reseau'],
+            'picto_reseau':r.get('picto_reseau',''),
             'n_sp_protected':n_sp_protected, 'n_sp_threatened' : n_sp_threatened, 'n_sp': len(taxons),
             'taxons':taxons})
     

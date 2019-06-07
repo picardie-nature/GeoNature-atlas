@@ -41,6 +41,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/icones.css') }}"/>
         <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}"/>
 
+        <link rel="stylesheet" href="{{url_for('static', filename='css/picnatpicto.css') }}"/>
    </head>
    <body>
     {% include 'templates/navbar.html' %}
@@ -90,7 +91,7 @@
                                 <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ d.code_reseau }}">
                                   <h4 class="panel-title">
                                     <a role="button" {% if d.n_sp > 0 %} data-toggle="collapse"{% endif %} data-parent="#accordion" href="#collapse{{ d.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ d.code_reseau }}">
-                                     <b style="font-size:115%">{{ d.taxons | count }} </b> {{ d.nom_reseau }}   </a>
+                                    <span style="font-size:30px" class="pn {{ d.picto_reseau }}"></span>  <b style="font-size:115%">{{ d.taxons | count }} </b> {{ d.nom_reseau }}   </a> 
                                         {% if d.n_sp_protected > 0 %}<span class="badge" title="Espèces protégée">
                                                 <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>  {{ d.n_sp_protected }}
                                         </span>{% endif %}
