@@ -87,7 +87,7 @@
                             {% set nb_sp_protected = rtaxons | selectattr("protected") | list | count  %}
                             {% set nb_sp_threatened = rtaxons | selectattr("threatened") | list | count  %}
                           <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="heading{{ reseau.code_reseau }}">
+                            <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ reseau.code_reseau }}">
                               <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ reseau.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ reseau.code_reseau }}">
                                   {{ reseau.nom_reseau }} : <b>{{ rtaxons | count }} </b> espèces </a>
