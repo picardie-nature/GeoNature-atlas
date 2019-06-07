@@ -88,7 +88,7 @@
                             <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ d.code_reseau }}">
                               <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ d.code_reseau }}" aria-expanded="false" aria-controls="collapse{{ d.code_reseau }}">
-                                 <b>{{ d.taxons | count }} </b> {{ d.nom_reseau }}   </a>
+                                 <b style="font-size:115%">{{ d.taxons | count }} </b> {{ d.nom_reseau }}   </a>
                                     {% if d.n_sp_protected > 0 %}<span class="badge" title="Espèces protégée">
                                             <span style="display:inline-block;color: #fff;"class="fa fa-shield-alt"></span>  {{ d.n_sp_protected }}
                                     </span>{% endif %}
