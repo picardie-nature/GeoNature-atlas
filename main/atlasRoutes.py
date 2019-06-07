@@ -214,6 +214,7 @@ def ficheCommune(insee):
     )
 
     reseaux = vmReseauxNat.getAllReseaux(connection)
+    reseaux.append({'code_reseau':'autre','nom_reseau':u'Autres espèces','id_reseau':99})
 
     configuration = base_configuration.copy()
     configuration.update({

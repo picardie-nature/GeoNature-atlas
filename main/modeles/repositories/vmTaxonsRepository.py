@@ -18,7 +18,7 @@ def getTaxonsCommunes(connection, insee,species_only=False):
         SELECT DISTINCT
 	        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs,
             COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
-            t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,r.code_reseau,
+            t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,coalesce(r.code_reseau,'autre') as code_reseau,
             m.url, m.chemin, m.id_media
         FROM atlas.vm_taxons t
         JOIN atlas.vm_observations o ON (t.id_rang='ES' AND t.cd_ref=o.cd_ref) OR (t.id_rang='SESS' and o.cd_ref=t.cd_taxsup)
