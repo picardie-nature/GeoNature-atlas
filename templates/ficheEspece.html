@@ -139,7 +139,7 @@
                         <div id="badges" style="margin-top:15px;">
                             <div id="listerouge" style="display:inline-block">
                                 {% for lr_statut in taxon.taxonSearch.liste_rouge %}
-                                    <span class="redlistBadge redlist{{lr_statut}}"> {{lr_statut}} </span>
+                                    <span class="redlistBadge redlist{{lr_statut | replace('*','star') }}" style="font-size:150%"> </span>
                                 {% endfor %}
                             </div>
                                 {% if taxon.taxonSearch.protected %} <span title="Espèce protégée" style="display:inline-block;font-size: 45px; color: #004d98;padding:10px"class="fa fa-shield-alt"> </span>{% endif %}
