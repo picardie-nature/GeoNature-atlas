@@ -65,6 +65,17 @@ app = create_app()
 def pretty(val):
     return format_number(val)
 
+@app.template_filter('sortLR')
+def sortLR(l,attribute,reverse=False):
+    level_redlist={'NA':10,'DD':15,'LC':20,'NT':30,'VU':40,'EN':50,'CR':60,'CR*':65,'EX':100}
+    def sorting(k):
+        try :
+            val=k.get(attribute,0)[0]
+        except IndexError:
+            return 0
+        return level_redlist.get(val)
+    return sorted(l, key=sorting, reverse = reverse)
+
 if __name__ == '__main__':
     from flask_script import Manager
     # Manager(app).run()
