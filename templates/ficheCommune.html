@@ -83,7 +83,7 @@
                         </div>
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         {% for reseau in reseaux %}
-                            {% set rtaxons = listTaxons.taxons | selectattr("code_reseau", "equalto", reseau.code_reseau) | list | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
+                            {% set rtaxons = listTaxons.taxons | selectattr("code_reseau", "equalto", reseau.code_reseau) | list | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
                             {% set nb_sp_protected = rtaxons | selectattr("protected") | list | count  %}
                             {% set nb_sp_threatened = rtaxons | selectattr("threatened") | list | count  %}
                           <div class="panel panel-default">
