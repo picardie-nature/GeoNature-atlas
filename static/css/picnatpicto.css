@@ -29,21 +29,62 @@
   content: "E";
 }
 
-.pn-fly {
+.pn-fly,
+.pn-snake, 
+.pn-frog,
+.pn-dragonfly,
+.pn-bird,
+.pn-martens,
+.pn-grasshopper,
+.pn-ladybug,
+.pn-butterfly,
+.pn-bat,
+.pn-spider,
+.pn-fish,
+.pn-shell,
+.pn-bug
+{
   font-family:"picnatpicto1"
 }
 .pn-fly:before {
   content: "A";
 }
-.pn-snake {
-  font-family:"picnatpicto1"
-}
-.pn-fly:before {
+.pn-snake:before {
   content: "B";
-}
-.pn-frog {
-  font-family:"picnatpicto1"
 }
 .pn-frog:before {
   content: "C";
+}
+.pn-dragonfly:before {
+  content: "F";
+}
+.pn-bird:before {
+  content: "G";
+}
+.pn-martens:before {
+  content: "a";
+}
+.pn-grasshopper:before {
+  content: "S";
+}
+.pn-ladybug:before {
+  content: "O";
+}
+.pn-butterfly:before {
+  content: "Q";
+}
+.pn-bat:before {
+  content: "X";
+}
+.pn-spider:before {
+  content: "I";
+}
+.pn-fish:before {
+  content: "N";
+}
+.pn-shell:before {
+  content: "D";
+}
+.pn-bug:before {
+  content: "P";
 }
