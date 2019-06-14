@@ -5,16 +5,17 @@ config/config.py
 config.py
 log/*
 static/conf/custom.js
-main/debug.py
+atlas/debug.py
 data/ref/emprise_territoire.*
 data/ref/
 static/territoire.json
 static/images/ancien
-main/configuration/config.py
-main/configuration/settings.ini
+atlas/configuration/config.py
+atlas/configuration/settings.ini
 robots.txt
 .htaccess
 venv/*
+venv3/*
 
 data/ref/communes.shp
 data/ref/communes.shx
@@ -42,4 +43,10 @@ data/ref/territoire.prj
 data/ref/territoire.shp
 data/ref/territoire.shx
 
+<<<<<<< HEAD
+=======
+# Pycharm
+.idea/
+
+>>>>>>> upstream/develop
 .vscode
