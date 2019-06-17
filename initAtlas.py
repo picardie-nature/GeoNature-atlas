@@ -5,17 +5,16 @@ from flask_sqlalchemy import SQLAlchemy
 
 from werkzeug.serving import run_simple
 
-<<<<<<< HEAD
-from main.configuration import config
-from main.utils import format_number
-=======
->>>>>>> upstream/develop
+
+
+
 from sqlalchemy import create_engine, MetaData, Table
 from flask_compress import Compress
 
 from atlas.configuration.config_parser import read_and_validate_conf
 from atlas.configuration.config_schema import AtlasConfig, SecretSchemaConf
 from atlas.configuration import config
+from atlas.utils import format_number
 
 db = SQLAlchemy()
 compress = Compress()

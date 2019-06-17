@@ -13,6 +13,7 @@ from .modeles.repositories import (
     vmMedias,
     vmCorTaxonAttribut,
     vmTaxonsMostView,
+    vmReseauxNat,
 )
 from . import utils
 
@@ -194,28 +195,59 @@ def ficheCommune(insee):
 
     listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
-    if current_app.config["AFFICHAGE_MAILLE"]:
+    communesSearch = vmCommunesRepository.getAllCommunes(session)
+    if config.AFFICHAGE_MAILLE:
         observations = vmObservationsMaillesRepository.lastObservationsCommuneMaille(
-            connection, current_app.config["NB_LAST_OBS"], insee
+            connection, config.NB_LAST_OBS, insee
         )
     else:
         observations = vmObservationsRepository.lastObservationsCommune(
-            connection, current_app.config["NB_LAST_OBS"], insee
+            connection, config.NB_LAST_OBS, insee
         )
 
-    observers = vmObservationsRepository.getObserversCommunes(connection, insee)
+    observers = vmObservationsRepository.getObserversCommunes(
+        connection, insee
+    )
+
+    reseaux = vmReseauxNat.getAllReseaux(connection)
+    reseaux.append({'code_reseau':'autre','nom_reseau':u'Autres espèces','id_reseau':99})
+    
+    data_by_reseau = list()
+    for r in reseaux :
+        taxons = list(filter(lambda k : k['code_reseau'] == r['code_reseau'], listTaxons['taxons']))
+        n_sp_protected = len(list(filter(lambda k : k['protected'] == True, taxons)))
+        n_sp_threatened = len(list(filter(lambda k : k['threatened'] == True, taxons)))
+        data_by_reseau.append({
+            'nom_reseau':r['nom_reseau'],
+            'code_reseau':r['code_reseau'],
+            'picto_reseau':r.get('picto_reseau',''),
+            'n_sp_protected':n_sp_protected, 'n_sp_threatened' : n_sp_threatened, 'n_sp': len(taxons),
+            'taxons':taxons})
+    """
+    configuration = base_configuration.copy()
+    configuration.update({
+        'NB_LAST_OBS': config.NB_LAST_OBS,
+        'AFFICHAGE_MAILLE': config.AFFICHAGE_MAILLE,
+        'MAP': config.MAP,
+        'MYTYPE': 1,
+        'PATRIMONIALITE': config.PATRIMONIALITE,
+        'PROTECTION': config.PROTECTION
+    })"""
 
     session.close()
     connection.close()
 
     return render_template(
-        "templates/ficheCommune.html",
+        'templates/ficheCommune.html',
         listTaxons=listTaxons,
         referenciel=commune,
+        communesSearch=communesSearch,
         observations=observations,
         observers=observers,
-        DISPLAY_EYE_ON_LIST=True,
-    )
+        reseaux=reseaux,
+        #configuration=configuration,
+        data = data_by_reseau
+)
 
 
 @main.route("/liste/<cd_ref>", methods=["GET", "POST"])

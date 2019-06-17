@@ -56,7 +56,7 @@ def getObservationsMaillesLastObsChilds(connection, cd_ref):
                 'nb_observations': o.nb_obs,
                 'lastyear': o.lastyear
             },
-            'geometry': ast.literal_eval(o.geojson_maille),
+            'geometry': json.loads(o.geojson_maille),
             'type' : "Feature"
         }
         tabObs.append(temp)
@@ -89,7 +89,6 @@ def lastObservationsMailles(connection, mylimit, idPhoto):
         else:
             taxon = o.lb_nom
         temp = {
-<<<<<<< HEAD:main/modeles/repositories/vmObservationsMaillesRepository.py
             'id_observation': o.id_observation,
             'id_maille': o.id_maille,
             'cd_ref': o.cd_ref,
@@ -97,22 +96,10 @@ def lastObservationsMailles(connection, mylimit, idPhoto):
             'dateobs_date': o.dateobs,
             'altitude_retenue': o.altitude_retenue,
             'taxon': taxon,
-            'geojson_maille': ast.literal_eval(o.geojson_maille),
+            'geojson_maille': json.loads(o.geojson_maille),
             'group2_inpn': utils.deleteAccent(o.group2_inpn),
             'pathImg': utils.findPath(o),
             'id_media': o.id_media
-=======
-            "id_observation": o.id_observation,
-            "id_maille": o.id_maille,
-            "cd_ref": o.cd_ref,
-            "dateobs": str(o.dateobs),
-            "altitude_retenue": o.altitude_retenue,
-            "taxon": taxon,
-            "geojson_maille": json.loads(o.geojson_maille),
-            "group2_inpn": utils.deleteAccent(o.group2_inpn),
-            "pathImg": utils.findPath(o),
-            "id_media": o.id_media,
->>>>>>> upstream/develop:atlas/modeles/repositories/vmObservationsMaillesRepository.py
         }
         obsList.append(temp)
     return obsList

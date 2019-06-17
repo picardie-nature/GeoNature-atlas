@@ -7,23 +7,19 @@ function generateMap() {
     attribution: configuration.MAP.SECOND_MAP.attribution
   });
 
-<<<<<<< HEAD
-    var mbAttr = 'GéoPicardie & contributeurs d&apos;<a href="http://openstreetmap.org">OpenStreetMap</a>',
-	mbUrl = 'http://osm.geopicardie.fr/mapproxy/tms/1.0.0/{id}/webmercator/{z}/{x}/{y}.png';
 
-    // Map initialization
-    firstMapTile = L.tileLayer(configuration.MAP.FIRST_MAP.url, {attribution : configuration.MAP.FIRST_MAP.attribution} );
-    orthoMap =  L.tileLayer(configuration.MAP.SECOND_MAP.url, {attribution: configuration.MAP.SECOND_MAP.attribution});
-    var layer_naturalist  = L.tileLayer(mbUrl, {id: 'naturaliste', tms:true, zoomOffset:-1, attribution: mbAttr, maxZoom: 19});
-    firstMapTile = layer_naturalist;
+var mbAttr = 'GéoPicardie & contributeurs d&apos;<a href="http://openstreetmap.org">OpenStreetMap</a>',
+mbUrl = 'http://osm.geopicardie.fr/mapproxy/tms/1.0.0/{id}/webmercator/{z}/{x}/{y}.png';
 
-    baseMap = {};
-    baseMap[configuration.MAP.FIRST_MAP.tileName]=firstMapTile;
+// Map initialization
+firstMapTile = L.tileLayer(configuration.MAP.FIRST_MAP.url, {attribution : configuration.MAP.FIRST_MAP.attribution} );
+orthoMap =  L.tileLayer(configuration.MAP.SECOND_MAP.url, {attribution: configuration.MAP.SECOND_MAP.attribution});
+var layer_naturalist  = L.tileLayer(mbUrl, {id: 'naturaliste', tms:true, zoomOffset:-1, attribution: mbAttr, maxZoom: 19});
+firstMapTile = layer_naturalist;
 
-=======
-  baseMap = {};
-  baseMap[configuration.MAP.FIRST_MAP.tileName] = firstMapTile;
->>>>>>> upstream/develop
+baseMap = {};
+baseMap[configuration.MAP.FIRST_MAP.tileName]=firstMapTile;
+
 
   var map = L.map("map", {
     crs: L.CRS.EPSG3857,
@@ -50,46 +46,6 @@ function generateMap() {
     });
   });
 
-<<<<<<< HEAD
-     // Add limits of the territory to the map
-     $(document).ready(function()
-          {
-              $.getJSON(url_limit_territory, function(json) {
-                  var layerTerritory = L.geoJson(json, {
-                  	style: territoryStyle
-                  }).addTo(map);
-                    layerTerritory.bringToBack();
-              });
-          });
-
-
-     // 'Google-like' baseLayer controler
-
-    var LayerControl = L.Control.extend({
-
-      options: {
-        position: 'bottomleft' 
-      },
-
-      onAdd: function (map) {
-        currentTileMap = "topo";
-        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-     
-        container.style.backgroundColor = 'white';
-        container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_earth_map.PNG)";
-        container.style.width = '50px';
-        container.style.height = '50px';
-        container.style.border = 'solid white 1px';
-        container.style.cursor = 'pointer';
-        $(container).attr("data-placement", "right");
-        $(container).attr("data-toggle", "tooltip");
-        $(container).attr("data-original-title", "Photos aérienne");
-
-
-        container.onclick = function(){
-          if(currentTileMap == "topo"){
-          container.style.backgroundImage = "url("+configuration.URL_APPLICATION+"/static/images/logo_topo_map.PNG)";
-=======
   // 'Google-like' baseLayer controler
 
   var LayerControl = L.Control.extend({
@@ -123,7 +79,6 @@ function generateMap() {
             "url(" +
             configuration.URL_APPLICATION +
             "/static/images/logo_topo_map.PNG)";
->>>>>>> upstream/develop
           $(container).attr("data-original-title", "Plan");
           map.removeLayer(firstMapTile);
           orthoMap.addTo(map);
@@ -671,47 +626,7 @@ function generateLegende(htmlLegend) {
 }
 
 var mySlider;
-<<<<<<< HEAD
-function generateSliderOnMap(){
-        var SliderControl = L.Control.extend({
-
-      options: {
-        position: 'bottomleft' 
-        //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
-      },
-
-    onAdd: function (map) {
-        sliderContainer = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-slider-control');
-     
-        sliderContainer.style.backgroundColor = 'white';
-        sliderContainer.style.width = '300px';
-        sliderContainer.style.height = '50px';
-        sliderContainer.style.border = 'solid white 1px';
-        sliderContainer.style.cursor = 'pointer';
-        $(sliderContainer).css("margin-bottom", "-300px");
-        $(sliderContainer).css("margin-left", "200px");
-        $(sliderContainer).css("text-align", "center");
-        $(sliderContainer).append("<p> <span id='yearMin'> </span> <input id='sliderControl' type='text'/> <span id='yearMax'>  </span>  </p>"
-                            +"<p id='nbObs'> Nombre d'observation(s): "+nb_obs+" </p>");
-        L.DomEvent.disableClickPropagation(sliderContainer);
-        return sliderContainer;
-      }
-
-
-    });
-
-    map.addControl(new SliderControl());
-        
-        mySlider = new Slider('#sliderControl', {
-        value: [taxonYearMin, YEARMAX],
-        min : taxonYearMin,
-        max : YEARMAX,
-        step: configuration.MAP.STEP,
-      });
-
-    $("#yearMax").html("&nbsp;&nbsp;&nbsp;&nbsp;"+ YEARMAX);
-    $("#yearMin").html(taxonYearMin + "&nbsp;&nbsp;&nbsp;&nbsp");
-=======
+var sliderContainer
 function generateSliderOnMap() {
   var SliderControl = L.Control.extend({
     options: {
@@ -720,7 +635,7 @@ function generateSliderOnMap() {
     },
 
     onAdd: function(map) {
-      var sliderContainer = L.DomUtil.create(
+      sliderContainer = L.DomUtil.create(
         "div",
         "leaflet-bar leaflet-control leaflet-slider-control"
       );
@@ -743,7 +658,6 @@ function generateSliderOnMap() {
       return sliderContainer;
     }
   });
->>>>>>> upstream/develop
 
   map.addControl(new SliderControl());
 

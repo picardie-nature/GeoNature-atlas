@@ -1,16 +1,12 @@
 
 # -*- coding:utf-8 -*-
-
+import json
 from flask import jsonify, Blueprint, request, current_app
 from werkzeug.wrappers import Response
 from . import utils
 from .modeles.repositories import (
     vmSearchTaxonRepository, vmObservationsRepository,
-<<<<<<< HEAD:main/atlasAPI.py
-    vmObservationsMaillesRepository, vmMedias, vmMaillesRichesse
-=======
-    vmObservationsMaillesRepository, vmMedias, vmCommunesRepository
->>>>>>> upstream/develop:atlas/atlasAPI.py
+    vmObservationsMaillesRepository, vmMedias, vmMaillesRichesse,vmCommunesRepository
 )
 from .configuration import config
 

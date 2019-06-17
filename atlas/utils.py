@@ -15,4 +15,5 @@ def loadSession():
 
 def format_number(val):
     """ Ajouter des espaces en séparateur de milliers """
-    return '{:,}'.format(val).replace(',',' ')
+    #return '{:,}'.format(val).replace(',',' ')
+    return format(int(val),',d').replace(',',' ')
