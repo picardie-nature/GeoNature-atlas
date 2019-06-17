@@ -144,10 +144,7 @@
 			{% include 'static/custom/templates/footer.html' %}
 		{% endif %}
 
-        <script type="text/javascript">
-        var communesSearch = {{communesSearch|tojson}},
-            configuration = {{configuration|tojson}};
-        </script>
+       
 
         <script src="{{url_for('static', filename='main.js') }}"></script>
 
