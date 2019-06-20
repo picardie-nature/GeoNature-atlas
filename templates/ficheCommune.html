@@ -108,19 +108,19 @@
                                              <tr>
                                                 <th style='width:40px'>Protegé</th>
                                                 <th style='width:115px'>Liste rouge régionale</th> 
+                                                <th>Groupe d'étude</th>
                                                 <th>Nom vernaculaire</th> 
                                                 <th>Nom latin</th>
-                                                <th>Première observation</th>
-                                                <th>Dernière observation</th>
+                                                <th>Période d'observation</th>
                                             </tr>
                                              {% for taxon in d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
                                             <tr>
                                                     <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;" class="fa fa-shield-alt"></span> {% endif %}</td>
                                                    <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
-                                                   <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
+                                                   <td><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
+                                                    <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
                                                     <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> </td>
-                                                    <td>{{ taxon.first_obs | int }} </td>
-                                                    <td>{{ taxon.last_obs | int }}</td>
+                                                    <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
                                             </tr>
                                              {% endfor %}
                     

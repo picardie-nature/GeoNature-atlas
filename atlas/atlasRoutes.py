@@ -193,7 +193,7 @@ def ficheCommune(insee):
     session = utils.loadSession()
     connection = utils.engine.connect()
 
-    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee)
+    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee,'GP')
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     if config.AFFICHAGE_MAILLE:
@@ -209,12 +209,12 @@ def ficheCommune(insee):
         connection, insee
     )
 
-    reseaux = vmReseauxNat.getAllReseaux(connection)
+    reseaux = vmReseauxNat.getAllReseaux(connection,public_cible='GP')
     reseaux.append({'code_reseau':'autre','nom_reseau':u'Autres espèces','id_reseau':99})
     
     data_by_reseau = list()
-    for r in reseaux :
-        taxons = list(filter(lambda k : k['code_reseau'] == r['code_reseau'], listTaxons['taxons']))
+    for r in reseaux : #reseaux publics
+        taxons = list(filter(lambda k : k['code_reseau_gp'] == r['code_reseau'], listTaxons['taxons']))
         n_sp_protected = len(list(filter(lambda k : k['protected'] == True, taxons)))
         n_sp_threatened = len(list(filter(lambda k : k['threatened'] == True, taxons)))
         data_by_reseau.append({

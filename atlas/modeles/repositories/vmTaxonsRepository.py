@@ -11,23 +11,25 @@ from .. import utils
 
 
 # With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
-def getTaxonsCommunes(connection, insee,species_only=False):
+def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
     sql = """
         SELECT DISTINCT
 	        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs,
             COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
-            t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,coalesce(r.code_reseau,'autre') as code_reseau,
+            t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,
+            coalesce(rnat.code_reseau,'autre') as code_reseau_nat, rnat.picto as picto_reseau_nat, coalesce(rgp.code_reseau,'autre') as code_reseau_gp,rgp.picto as picto_reseau_gp,
             m.url, m.chemin, m.id_media
         FROM atlas.vm_taxons t
         JOIN atlas.vm_observations o ON (t.id_rang='ES' AND t.cd_ref=o.cd_ref) OR (t.id_rang='SESS' and o.cd_ref=t.cd_taxsup)
         LEFT JOIN atlas.vm_medias m ON m.cd_ref=o.cd_ref AND m.id_type={}
-        LEFT JOIN pn_reseaux.reseaux r ON r.id_reseau = t.id_reseau
-        WHERE o.insee = :thisInsee
+        LEFT JOIN pn_reseaux.reseaux rnat ON rnat.id_reseau = t.id_reseau_nat
+        LEFT JOIN pn_reseaux.reseaux rgp ON rgp.id_reseau = t.id_reseau_gp
+        WHERE o.insee = :thisInsee 
         GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
-            t.patrimonial, t.protection_stricte, m.url, m.chemin, m.id_media, r.code_reseau, t.code_lr
+            t.patrimonial, t.protection_stricte, m.url, m.chemin, m.id_media, rgp.picto, rgp.code_reseau, rnat.picto, rnat.code_reseau, t.code_lr
         ORDER BY nb_obs DESC
     """.format(current_app.config['ATTR_MAIN_PHOTO'])
-    req = connection.execute(text(sql), thisInsee=insee)
+    req = connection.execute(text(sql), thisInsee=insee, publicCible=public_cible)
     taxonCommunesList = list()
     nbObsTotal = 0
     for r in req:
@@ -43,7 +45,10 @@ def getTaxonsCommunes(connection, insee,species_only=False):
             'protection_stricte': r.protection_stricte,
             'path': utils.findPath(r),
             'id_media': r.id_media,
-            'code_reseau':r.code_reseau,
+            'code_reseau_nat':r.code_reseau_nat,
+            'code_reseau_gp':r.code_reseau_gp,
+            'picto_reseau_nat':r.picto_reseau_nat,
+            'picto_reseau_gp':r.picto_reseau_gp,
             'protected':r.protected,
             'code_lr':r.code_lr or list(),
             'threatened': len(set(('CR','CR*','EN','VU')).intersection(r.code_lr or list()))
