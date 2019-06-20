@@ -32,7 +32,7 @@
         <script type="text/javascript" src="{{url_for('static', filename='lib/datatables/datatables.min.js') }}"></script>
 
         <!-- Bootstrap -->
-        <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}"></link>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
         <script type="text/javascript" src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
 
        <!-- Atlas -->
@@ -43,6 +43,8 @@
         <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}"/>
 
         <link rel="stylesheet" href="{{url_for('static', filename='css/picnatpicto.css') }}"/>
+
+        <script src="{{url_for('static', filename='listeEspeces_2.js') }}"></script>
    </head>
    <body>
     {% include 'templates/navbar.html' %}
@@ -104,27 +106,31 @@
                                 </div>
                                 <div id="collapse{{ d.code_reseau }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                   <div class="panel-body">
-                                        <table class="table table-bordered">
-                                             <tr>
-                                                <th style='width:40px'>Protegé</th>
-                                                <th style='width:115px'>Liste rouge régionale</th> 
-                                                <th>Groupe d'étude</th>
-                                                <th>Nom vernaculaire</th> 
-                                                <th>Nom latin</th>
-                                                <th>Période d'observation</th>
-                                            </tr>
+                                        <table class="table table-bordered" id="myTable{{ d.code_reseau }}">
+                                             <thead>
+                                                 <tr>
+                                                    <th style='width:40px'>Protegé</th>
+                                                    <th style='width:115px'>Liste rouge régionale</th> 
+                                                    <th>Groupe d'étude</th>
+                                                    <th>Nom vernaculaire</th> 
+                                                    <th>Nom latin</th>
+                                                    <th>Période d'observation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                              {% for taxon in d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
-                                            <tr>
-                                                    <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;" class="fa fa-shield-alt"></span> {% endif %}</td>
-                                                   <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
-                                                   <td><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
-                                                    <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
-                                                    <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> </td>
-                                                    <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
-                                            </tr>
+                                                <tr>
+                                                        <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;" class="fa fa-shield-alt"></span> {% endif %}</td>
+                                                       <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
+                                                       <td><b hidden>{{ taxon.picto_reseau_nat }}</b><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
+                                                        <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
+                                                        <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> </td>
+                                                        <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
+                                                </tr>
                                              {% endfor %}
-                    
+                                            </tbody>
                                         </table>
+                                        <script>myDataTable("#myTable{{ d.code_reseau }}")</script>
                                   </div>
                                 </div> 
                               </div>
@@ -177,12 +183,11 @@
             var defaultSortedColumn=nbColumn-4; //var for dataTables js lib
         </script>
 	  	<script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
-        <script src="{{url_for('static', filename='listeEspeces.js') }}"></script>
 		{% if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE %}
-            <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
-            <script src="{{url_for('static', filename='mapCommune.js') }}"></script>
+        <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
+        <script src="{{url_for('static', filename='mapCommune.js') }}"></script>
         {% endif %}
         <script src="{{url_for('static', filename='main.js') }}"></script>
-        <script type="text/javascript" src="{{url_for('static', filename='chart_taxo.js') }}"></script>
+        <!--<script type="text/javascript" src="{{url_for('static', filename='chart_taxo.js') }}"></script>-->
    </body>
 </html>
