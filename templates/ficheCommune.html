@@ -86,7 +86,7 @@
                     <div class="row">
                         <div class="col-sm-9">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            {% for d in data | sort(attribute="n_sp",reverse=True) %}
+                            {% for d in data | sort(attribute="n_sp",reverse=True) | sort(attribute="int_sort",reverse=False) %}
                                 {% set rtaxons = d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
                               <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ d.code_reseau }}">

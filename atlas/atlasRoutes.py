@@ -210,7 +210,7 @@ def ficheCommune(insee):
     )
 
     reseaux = vmReseauxNat.getAllReseaux(connection,public_cible='GP')
-    reseaux.append({'code_reseau':'autre','nom_reseau':u'Autres espèces','id_reseau':99})
+    reseaux.append({'code_reseau':'autre','nom_reseau':u'Autres espèces','id_reseau':99,'int_sort':99})
     
     data_by_reseau = list()
     for r in reseaux : #reseaux publics
@@ -222,6 +222,7 @@ def ficheCommune(insee):
             'code_reseau':r['code_reseau'],
             'picto_reseau':r.get('picto_reseau',''),
             'n_sp_protected':n_sp_protected, 'n_sp_threatened' : n_sp_threatened, 'n_sp': len(taxons),
+            'int_sort':r.get('int_sort',0), #"Autre" à 99, les autres à 0
             'taxons':taxons})
     """
     configuration = base_configuration.copy()
