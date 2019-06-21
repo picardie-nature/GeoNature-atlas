@@ -439,7 +439,6 @@ input.ajax-search {
 /* END Galerie photos */
 
 
-<<<<<<< HEAD
 .redlistBadge{
     padding:5px;
     font-size:100%;
@@ -486,11 +485,11 @@ input.ajax-search {
 }
 
 
-=======
+
 /* Search bar */
 .search-bar-item {
 	width: 100%;
 	display: inline-block;
 	text-decoration: none !important;
 }
->>>>>>> upstream/develop
+
