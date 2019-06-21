@@ -38,11 +38,13 @@
 .pn-grasshopper,
 .pn-ladybug,
 .pn-butterfly,
+.pn-night_butterfly,
 .pn-bat,
 .pn-spider,
 .pn-fish,
 .pn-shell,
-.pn-bug
+.pn-bug,
+.pn-seal
 {
   font-family:"picnatpicto1"
 }
@@ -67,6 +69,9 @@
 .pn-grasshopper:before {
   content: "S";
 }
+.pn-night_butterfly:before{
+  content: "T";
+}
 .pn-ladybug:before {
   content: "O";
 }
@@ -87,4 +92,7 @@
 }
 .pn-bug:before {
   content: "P";
+}
+.pn-seal:before {
+  content: "z";
 }
