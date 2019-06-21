@@ -25,10 +25,10 @@ def searchTaxonAPI():
 
 @api.route('/searchCommune', methods=['GET'])
 def searchCommuneAPI():
-    session = utils.loadSession()
+    connection = utils.engine.connect()
     search = request.args.get('search', '')
     limit = request.args.get('limit', 50)
-    results = vmCommunesRepository.getCommunesSearch(session, search, limit)
+    results = vmCommunesRepository.getCommunesSearch(connection, search, limit)
     return jsonify(results)
 
 
