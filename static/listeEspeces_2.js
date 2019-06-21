@@ -6,6 +6,11 @@ $(document).ready(function() {
 function myDataTable(domid){
       $(domid).DataTable({
           bPaginate: false,
-          language:{ search:         "Filtrer :"}
+          "bAutoWidth": false,
+          language:{ search:         "Filtrer :"},
+          columnDefs: [
+                { width: "35%" , targets: [3, 4]}
+
+          ]
         });
 }

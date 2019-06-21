@@ -106,11 +106,11 @@
                                 </div>
                                 <div id="collapse{{ d.code_reseau }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                   <div class="panel-body">
-                                        <table class="table table-bordered" id="myTable{{ d.code_reseau }}">
+                                        <table class="table table-bordered" id="myTable{{ d.code_reseau }}" style='width:100%'>
                                              <thead>
                                                  <tr>
-                                                    <th style='width:40px'>Protegé</th>
-                                                    <th style='width:115px'>Liste rouge régionale</th> 
+                                                    <th>Protegé</th>
+                                                    <th>Liste rouge régionale</th> 
                                                     <th>Groupe d'étude</th>
                                                     <th>Nom vernaculaire</th> 
                                                     <th>Nom latin</th>
@@ -122,7 +122,7 @@
                                                 <tr>
                                                         <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;" class="fa fa-shield-alt"></span> {% endif %}</td>
                                                        <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
-                                                       <td><b hidden>{{ taxon.picto_reseau_nat }}</b><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
+                                                       <td  align='center'><b hidden>{{ taxon.picto_reseau_nat }}</b><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
                                                         <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
                                                         <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> </td>
                                                         <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
