@@ -5,12 +5,12 @@ from sqlalchemy.sql import text
 
 
 def getAttributesTaxon(
-    connection, cd_ref, attrDesc, attrComment, attrMilieu, attrChoro
+    connection, cd_ref, attrDesc, attrComment, attrMilieu, attrChoro, attrConnaissance = None, attrHab = None, attrPheno = None, attrPop = None
 ):
     sql = """
         SELECT *
         FROM atlas.vm_cor_taxon_attribut
-        WHERE id_attribut IN (:thisattrDesc, :thisattrComment, :thisattrMilieu, :thisattrChoro)
+        WHERE id_attribut IN (:thisattrDesc, :thisattrComment, :thisattrMilieu, :thisattrChoro, :thisattrConnaissance, :thisattrHab,:thisattrPheno,:thisattrPop )
         AND cd_ref = :thiscdref
     """
     req = connection.execute(
@@ -19,14 +19,22 @@ def getAttributesTaxon(
         thisattrDesc=attrDesc,
         thisattrComment=attrComment,
         thisattrMilieu=attrMilieu,
-        thisattrChoro=attrChoro
+        thisattrChoro=attrChoro,
+        thisattrConnaissance=attrConnaissance,
+        thisattrHab = attrHab,
+        thisattrPheno = attrPheno,
+        thisattrPop = attrPop
     )
 
     descTaxon = {
         'description': None,
         'commentaire': None,
         'milieu': None,
-        'chorologie': None
+        'chorologie': None,
+        'connaissance':None,
+        'habitat':None,
+        'phenologie':None,
+        'populations':None
     }
     for r in req:
         if r.id_attribut == attrDesc:
@@ -37,4 +45,12 @@ def getAttributesTaxon(
             descTaxon['milieu'] = r.valeur_attribut.replace("&" , " | ")
         elif r.id_attribut == attrChoro:
             descTaxon['chorologie'] = r.valeur_attribut
+        elif r.id_attribut == attrConnaissance:
+            descTaxon['connaissance'] = r.valeur_attribut
+        elif r.id_attribut == attrHab:
+            descTaxon['habitat'] = r.valeur_attribut
+        elif r.id_attribut == attrPheno:
+            descTaxon['phenologie'] = r.valeur_attribut
+        elif r.id_attribut == attrPop:
+            descTaxon['populations'] = r.valeur_attribut
     return descTaxon

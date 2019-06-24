@@ -162,6 +162,10 @@ def ficheEspece(cd_ref):
         current_app.config["ATTR_COMMENTAIRE"],
         current_app.config["ATTR_MILIEU"],
         current_app.config["ATTR_CHOROLOGIE"],
+        current_app.config["ATTR_CONNAISSANCE"],
+        current_app.config["ATTR_HAB"],
+        current_app.config["ATTR_PHENO"],
+        current_app.config["ATTR_POP"]
     )
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
 
