@@ -448,7 +448,7 @@
                 {% set non_renseigne = '<small>Non renseignée pour le moment</small>' %}
                 <div class="tab-content">
                         <div id="connaissance" class="tab-pane fade in active">
-                               {{ taxonDescription.connaissance or non_renseigne | safe }}
+                               {{ taxonDescription.connaissance | safe or non_renseigne | safe }}
                         </div>
                         {% if taxonDescription.commentaire != None %}
                         <div id="commentaire" class="tab-pane fade">
@@ -456,13 +456,13 @@
                         </div>
                         {% endif %}
                         <div id="habitats" class="tab-pane fade">
-                               {{ taxonDescription.habitat or non_renseigne | safe }}
+                               {{ taxonDescription.habitat | safe or non_renseigne | safe }}
                         </div>
                         <div id="phenologie" class="tab-pane fade">
-                               {{ taxonDescription.phenologie or non_renseigne | safe }}
+                               {{ taxonDescription.phenologie | safe or non_renseigne | safe }}
                         </div>
                         <div id="populations" class="tab-pane fade">
-                              {{ taxonDescription.populations or non_renseigne | safe }}
+                              {{ taxonDescription.populations | safe or non_renseigne | safe }}
                         </div>
                         <div id="synonymes" class="tab-pane fade">
                             {% if synonyme | length == 1 %}
