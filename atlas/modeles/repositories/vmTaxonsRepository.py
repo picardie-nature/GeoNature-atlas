@@ -16,7 +16,7 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
         SELECT DISTINCT
 	        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs,
             COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
-            t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,t.sensible,
+            t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,t.sort_lr, t.sensible,
             coalesce(rnat.code_reseau,'autre') as code_reseau_nat, rnat.picto as picto_reseau_nat, coalesce(rgp.code_reseau,'autre') as code_reseau_gp,rgp.picto as picto_reseau_gp,
             m.url, m.chemin, m.id_media
         FROM atlas.vm_taxons t
@@ -26,7 +26,7 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
         LEFT JOIN pn_reseaux.reseaux rgp ON rgp.id_reseau = t.id_reseau_gp
         WHERE o.insee = :thisInsee 
         GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
-            t.patrimonial, t.protection_stricte, m.url, m.chemin, m.id_media, rgp.picto, rgp.code_reseau, rnat.picto, rnat.code_reseau, t.code_lr, t.sensible
+            t.patrimonial, t.protection_stricte, m.url, m.chemin, m.id_media, rgp.picto, rgp.code_reseau, rnat.picto, rnat.code_reseau, t.code_lr, t.sort_lr, t.sensible
         ORDER BY nb_obs DESC
     """.format(current_app.config['ATTR_MAIN_PHOTO'])
     req = connection.execute(text(sql), thisInsee=insee, publicCible=public_cible)
@@ -51,6 +51,7 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
             'picto_reseau_gp':r.picto_reseau_gp,
             'protected':r.protected,
             'code_lr':r.code_lr or list(),
+            'sort_lr':r.sort_lr or list(),
             'sensible':r.sensible or False,
             'threatened': len(set(('CR','CR*','EN','VU')).intersection(r.code_lr or list()))
         }

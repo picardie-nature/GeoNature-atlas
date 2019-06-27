@@ -89,7 +89,7 @@
                         <div class="col-sm-9">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                             {% for d in data | sort(attribute="n_sp",reverse=True) | sort(attribute="int_sort",reverse=False) %}
-                                {% set rtaxons = d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
+                                {% set rtaxons = d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sort(attribute="sort_lr",reverse=True) %}
                               <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ d.code_reseau }}">
                                   <h4 class="panel-title">
@@ -124,7 +124,7 @@
                                              {% for taxon in d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
                                                 <tr>
                                                         <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;" class="fa fa-shield-alt"></span> {% endif %}</td>
-                                                       <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
+                                                       <td align='center'> <b hidden>{% for lr_int in taxon.sort_lr %} {{ lr_int }} |  {% endfor %} </b> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
                                                        <td align='center'><b hidden>{{ taxon.picto_reseau_nat }}</b><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
                                                         <td>{% if not taxon.sensible %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a>{% else %} {{ txt_taxon_sensible|safe }} {% endif %}</td>
                                                         <td>{% if not taxon.sensible %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> {% else %} {{ txt_taxon_sensible |safe }} {% endif %} </td>
