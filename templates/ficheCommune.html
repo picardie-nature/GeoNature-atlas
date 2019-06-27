@@ -101,6 +101,8 @@
                                         {% if d.n_sp_threatened > 0 %}<span class="badge" title="Espèces menacées">
                                                 <span style="display:inline-block;color: #fff;"class="fa fa-exclamation-triangle"></span>  {{ d.n_sp_threatened }}
                                         </span>{% endif %}
+                                         <!--{% if d.n_sp_sensible > 0 %} {{ d.n_sp_sensible }} espèces sensibles
+                                         {% endif %}-->
 
                                   </h4>
                                 </div>
@@ -118,13 +120,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            {% set txt_taxon_sensible = '<small>Espèce sensible</small>' %}
                                              {% for taxon in d.taxons | sort(attribute="nom_complet_html") | sort(attribute="protected",reverse=True) | sortLR(attribute="code_lr",reverse=True) %}
                                                 <tr>
                                                         <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;" class="fa fa-shield-alt"></span> {% endif %}</td>
                                                        <td align='center'> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
-                                                       <td  align='center'><b hidden>{{ taxon.picto_reseau_nat }}</b><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
-                                                        <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
-                                                        <td><a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> </td>
+                                                       <td align='center'><b hidden>{{ taxon.picto_reseau_nat }}</b><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
+                                                        <td>{% if not taxon.sensible %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a>{% else %} {{ txt_taxon_sensible|safe }} {% endif %}</td>
+                                                        <td>{% if not taxon.sensible %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> {% else %} {{ txt_taxon_sensible |safe }} {% endif %} </td>
                                                         <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
                                                 </tr>
                                              {% endfor %}

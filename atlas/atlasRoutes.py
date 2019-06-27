@@ -221,11 +221,12 @@ def ficheCommune(insee):
         taxons = list(filter(lambda k : k['code_reseau_gp'] == r['code_reseau'], listTaxons['taxons']))
         n_sp_protected = len(list(filter(lambda k : k['protected'] == True, taxons)))
         n_sp_threatened = len(list(filter(lambda k : k['threatened'] == True, taxons)))
+        n_sp_sensible = len(list(filter(lambda k : k['sensible'] == True, taxons)))
         data_by_reseau.append({
             'nom_reseau':r['nom_reseau'],
             'code_reseau':r['code_reseau'],
             'picto_reseau':r.get('picto_reseau',''),
-            'n_sp_protected':n_sp_protected, 'n_sp_threatened' : n_sp_threatened, 'n_sp': len(taxons),
+            'n_sp_protected':n_sp_protected, 'n_sp_threatened' : n_sp_threatened, 'n_sp_sensible':n_sp_sensible,'n_sp': len(taxons),
             'int_sort':r.get('int_sort',0), #"Autre" à 99, les autres à 0
             'taxons':taxons})
     """
