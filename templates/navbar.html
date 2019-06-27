@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="{{url_for('static', filename='css/picnatpicto.css') }}"/>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
 	  <div class="navbar-header">
@@ -25,16 +25,23 @@
 					   <span class="glyphicon glyphicon-search form-control-feedback"></span>
 				</div>
 				<input id="hiddenInputTaxons" type="hidden" name="cd_ref" />
-      </form>
+          </form>
 
-      <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormCommunes' action=""  class="navbar-form navbar-left" role="search">
-				<div class="form-group has-feedback">
-					<input id="searchCommunes" type="text" class="form-control ajax-search" placeholder="Rechercher une commune" >
-					<span class="glyphicon glyphicon-search form-control-feedback"></span>
-				</div>
-			  <input id="hiddenInputCommunes" type="hidden" name="insee">
-      </form>
+          <form method="POST" onsubmit="completeAction('#searchFormCommunes', hiddenInputCommunes)" id='searchFormCommunes' action=""  class="navbar-form navbar-left" role="search">
+				    <div class="form-group has-feedback">
+					    <input id="searchCommunes" type="text" class="form-control ajax-search" placeholder="Rechercher une commune" >
+					    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+				    </div>
+			      <input id="hiddenInputCommunes" type="hidden" name="insee">
+          </form>
+             <ul class="nav navbar-nav navbar-right">
+                 <li> <a href="http://poste.obs.picardie-nature.org/"  style='padding-top:0px;padding-right:5px'><span class="pn pn-binocular"></span></a></li>
+                <li> <a href="http://poste.obs.picardie-nature.org/"  style='padding-left:5px;font-size:120%'> Transmettre vos observations</a></li>
+
+            </ul>     
 	  </div>
+
+
 
   </div>
 </nav>
