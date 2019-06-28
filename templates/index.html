@@ -23,6 +23,10 @@
         <script src="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.min.js') }}"></script>
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.css') }}" />
 
+        <!-- Slick -->
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
         <!-- CSS Application -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
         <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}" />
@@ -100,7 +104,16 @@
 				</div>
 			</div>
 			{% endif %}
-
+			<div class="col-sm-12" id='toto'>
+                        <!-- Logos partenaires -->
+			    <div class="panel panel-default stat-panel" style="padding-right:60px;padding-left:60px"> 
+                    <div class="slick-track partenaires-slick" hidden>
+                        {% for partenaire in configuration.PARTENAIRES | shuffle %}
+                          <span><a href="{{ partenaire.url }}"> <img src="{{url_for('static', filename='images/partenaires/'+partenaire.logo)}}"> </a></span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 			{% if customStatMedias != None and configuration.AFFICHAGE_RANG_STAT %}
 			<!-- Statistiques par rang taxonomique -->
 			<div class="col-sm-12">
@@ -238,6 +251,8 @@
 			{% include 'static/custom/templates/footer.html' %}
 		{% endif %}
 
+        <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
     	<script type="text/javascript">
   			var observations = {{observations|tojson}}
   			, configuration = {{configuration|tojson}},
@@ -247,16 +262,18 @@
 	  	<script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
 		<script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
 		<script src="{{url_for('static', filename='mapHome.js') }}"></script>
-			<script src="{{url_for('static', filename='main.js') }}"></script>
-			<script>
-				// load lazy the images
-				$(".lazy").lazy();
+		<script src="{{url_for('static', filename='main.js') }}"></script>
+		<script src="{{url_for('static', filename='partenairesSlick.js') }}"></script>
+		<script>
+			// load lazy the images
+			$(".lazy").lazy();
 
-				// load lazy on scroll
-				$("#tableEspece").scroll(function() {
-					$(".lazy").lazy();
-				});
-			</script>
+			// load lazy on scroll
+			$("#tableEspece").scroll(function() {
+				$(".lazy").lazy();
+			});
+       
+		</script>
 
     </body>
 </html>

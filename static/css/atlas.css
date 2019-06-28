@@ -493,3 +493,13 @@ input.ajax-search {
 	text-decoration: none !important;
 }
 
+/* Slick */
+.slick-track img{
+    /*max-height:150px;*/
+    width:80%;
+}
+
+.slick-prev::before,.slick-next::before {
+    color:#969696
+}
+

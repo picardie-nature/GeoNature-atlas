@@ -1,5 +1,6 @@
 import os
 import sys
+import random
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
@@ -86,6 +87,15 @@ app = create_app()
 @app.template_filter('pretty')
 def pretty(val):
     return format_number(val)
+
+@app.template_filter('shuffle')
+def filter_shuffle(seq):
+    try:
+        result = list(seq)
+        random.shuffle(result)
+        return result
+    except:
+        return seq
 
 @app.template_filter('sortLR')
 def sortLR(l,attribute,reverse=False):
