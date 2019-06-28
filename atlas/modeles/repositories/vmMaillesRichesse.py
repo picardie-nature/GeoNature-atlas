@@ -52,3 +52,27 @@ def getEspecesMaille(connection, id_maille, id_liste):
         })
     outGeoJson={'type':"FeatureCollection", 'features':tab}
     return outGeoJson
+
+def getStatLastObsMailles(connection,since=15):
+    sql = """
+        SELECT id_maille, count(om.id_observation) as n_obs, count(DISTINCT om.cd_ref) as n_taxons, st_asgeojson(st_transform(om.the_geom,4326)) as geojson_maille 
+        FROM atlas.vm_observations_mailles om
+        JOIN atlas.vm_observations o ON o.id_observation = om.id_observation
+        WHERE o.date_min > now() - INTERVAL '{}' DAY
+        GROUP BY id_maille, st_asgeojson(st_transform(om.the_geom,4326));
+        """.format(since)
+    data = connection.execute(text(sql) )
+    tab=list()
+    for e in data:
+        tab.append({
+            'properties':{
+                'n_obs':e.n_obs,
+                'n_taxons':e.n_taxons,
+                'id_maille':e.id_maille
+            },
+            'type' : "Feature",
+            'geometry': ast.literal_eval(e.geojson_maille)
+        })
+    outGeoJson={'type':"FeatureCollection", 'features':tab}
+    return outGeoJson
+

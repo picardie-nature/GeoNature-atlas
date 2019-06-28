@@ -93,6 +93,12 @@ def getEspecesMaille(id_maille,id_reseau):
     data = vmMaillesRichesse.getEspecesMaille(connection,id_maille,id_reseau)
     return Response(json.dumps(data),mimetype='application/json')
 
+@api.route('/mailles/lastObs',methods=['GET'])
+def getStatLastObsMailles():
+    connection = utils.engine.connect()
+    data = vmMaillesRichesse.getStatLastObsMailles(connection)
+    return Response(json.dumps(data),mimetype='application/json')
+
 @api.route('/photoGroup/<group>', methods=['GET'])
 def getPhotosGroup(group):
     connection = utils.engine.connect()
