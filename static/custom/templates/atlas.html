@@ -74,39 +74,47 @@
 		<div id="sideBar">
 			{% include 'templates/sideBar.html' %}
 		</div>
-		<div class="container-fluid" id="page">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		    <div class="container-fluid" id="page">
 
-            <div class="panel panel-default" id="mapPanel">
-                <div class ="row">
-                    <div class="col-sm-10" style='height:800px' id="mapContainer">
-
-
+                <div class="panel panel-default" id="mapPanel">
+                  <div class="panel-heading">
                         <ul class="nav nav-pills">  
                             <li class="active"><a href="#" data-toggle="tab" onclick=changeLayer(3)>Micro-mammifères</a></li>  
+                             <li><a data-toggle="tab" onclick=changeLayer(55) href="#">Grands mammifères terrestres</a></li> 
                              <li><a data-toggle="tab" onclick=changeLayer(4) href="#">Chiroptère</a></li> 
-                             <li><a data-toggle="tab" onclick=changeLayer(6) href="#">Odonates</a></li> 
+                             <li><a data-toggle="tab" onclick=changeLayer(50) href="#">Mammifères</a></li> 
                         </ul>
+                  </div>
+                  <div class="panel-body">
+                    <div class ="row">
+                        <div class="col-sm-10"  id="mapContainer">
 
-                        <div id="map" style='height:800px'>
-                            <img id ="loadingGif" src="">
+                            <div id="map" style='height:600px'>
+                                <img id ="loadingGif" src="">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="alert alert-info" role="alert">Cette carte présente les atlas en cours de création, elle couvre la période <strong>2009-2019</strong>. </div>
                         </div>
                     </div>
+                  </div>
                 </div>
+
             </div>
 
+
+
+            <script>
+                var configuration = {{configuration|tojson}};
+                var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
+            </script>
+
+            <script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
+            <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
+            <script src="{{url_for('static', filename='main.js') }}"></script>
+            <script src="{{url_for('static', filename='mapAtlasReseau.js') }}"></script>
         </div>
-
-
-
-        <script>
-            var configuration = {{configuration|tojson}};
-            var url_limit_territory = "{{url_for('static', filename='custom/territoire.json') }}";
-        </script>
-
-        <script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
-        <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
-        <script src="{{url_for('static', filename='main.js') }}"></script>
-        <script src="{{url_for('static', filename='mapAtlasReseau.js') }}"></script>
     </body>
-
+    
 </html>

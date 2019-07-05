@@ -34,6 +34,8 @@ function getGrades(id_liste){
     return id_liste == 3 ? [1,5,10,15] : //micro mamm
            id_liste == 4 ? [1,5,10,15] : //chiro
            id_liste == 6 ? [1,5,20,35] : //odonates
+           id_liste == 55 ? [1,5,10,15] : //grand mammifères terrestres
+           id_liste == 50 ? [1,5,20,35] : //mammifères
            [1,2,3,4,5]; 
 
 }
