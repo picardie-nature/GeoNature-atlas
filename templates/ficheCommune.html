@@ -64,7 +64,6 @@
 
                 </div>-->
                  <div class="panel panel-default" id="taxons"><div class="panel-body">
-
                      <div class="row" style="text-align:center;padding:15px"">
                            <div class="col-sm-1 col-md-offset-3" > 
                                 <span style="color: ##35526f;font-size:45px" class="fa fa-shield-alt"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("protected") | list | count }}</b><br> espèces protégées
@@ -123,7 +122,7 @@
                                                 <tr>
                                                         <td align='center'>{% if taxon.protected %} <span style="display:inline-block;color: ##35526f;" class="fa fa-shield-alt"></span> {% endif %}</td>
                                                        <td align='center'> <b hidden>{% for lr_int in taxon.sort_lr %} {{ lr_int }} |  {% endfor %} </b> {% for lr_statut in taxon.code_lr %} {% if not loop.first %}  | {% endif %} <span class="redlist{{lr_statut | replace('*','star')}} redlistBadge"> {{lr_statut}} </span>  {% endfor %} </td>
-                                                       <td align='center'><b hidden>{{ taxon.picto_reseau_nat }}</b><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span> </td>
+                                                       <td align='center'><b hidden>{{ taxon.picto_reseau_nat }}</b><a href="{{taxon.url_reseau_nat}}"><span style="font-size:30px" class="pn {{ taxon.picto_reseau_nat }}"></span></a></td>
                                                         <td>{% if not taxon.sensible %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a>{% else %} {{ txt_taxon_sensible|safe }} {% endif %}</td>
                                                         <td>{% if not taxon.sensible %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> {% else %} {{ txt_taxon_sensible |safe }} {% endif %} </td>
                                                         <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
@@ -165,7 +164,7 @@
             </div>
                 {% endif %}
         </div>
-
+        </div>
         {% if configuration.AFFICHAGE_FOOTER %}
             {% include 'static/custom/templates/footer.html' %}
         {% endif %}
