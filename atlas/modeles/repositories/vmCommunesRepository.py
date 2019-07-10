@@ -47,19 +47,19 @@ def getCommuneFromInsee(connection, insee):
 
 def getCommunesObservationsChilds(connection, cd_ref):
     sql = """
-    SELECT DISTINCT (com.insee) as insee, com.commune_maj
+    SELECT DISTINCT (com.insee) as insee, com.commune_maj, count(id_observation) AS n_obs, max(dateobs) AS last_obs, min(dateobs) AS first_obs
     FROM atlas.vm_communes com
     JOIN atlas.vm_observations obs
     ON obs.insee = com.insee
     WHERE obs.cd_ref in (
-            SELECT * from atlas.find_all_taxons_childs(:thiscdref)
+            SELECT * from atlas.find_all_taxons_childs(:thiscdref) UNION SELECT :thiscdref
         )
-        OR obs.cd_ref = :thiscdref
+    GROUP BY com.insee,com.commune_maj
     ORDER BY com.commune_maj ASC
     """
     req = connection.execute(text(sql), thiscdref=cd_ref)
     listCommunes = list()
     for r in req:
-        temp = {'insee': r.insee, 'commune_maj': r.commune_maj}
+        temp = {'insee': r.insee, 'commune_maj': r.commune_maj,'first_obs':r.first_obs,'last_obs':r.last_obs,'n_obs':r.n_obs}
         listCommunes.append(temp)
     return listCommunes
