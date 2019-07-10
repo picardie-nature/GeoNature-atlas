@@ -38,6 +38,10 @@
         <script src="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.min.js') }}"></script>
         <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.css') }}" />
 
+        <!-- DataTable -->
+	    <link rel="stylesheet" href="{{url_for('static', filename='lib/datatables/datatables.min.css') }}"/>
+        <script type="text/javascript" src="{{url_for('static', filename='lib/datatables/datatables.min.js') }}"></script>
+
         <!-- D3 -->
         <script src="{{url_for('static', filename='lib/d3/d3.min.js') }}"></script>
         <!-- MorrisJs -->
@@ -56,6 +60,7 @@
         <link rel="stylesheet" href="{{url_for('static', filename='css/icones.css') }}" />
         <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}" />
 
+        <script src="{{url_for('static', filename='listeCommunes.js') }}"></script>
     </head>
 
 <body>
@@ -344,14 +349,26 @@
                             {% if taxon.taxonSearch.sensible %} 
                                 <p> <i>Ce taxon est considéré comme sensible, la localisation à l'échelle communale n'est donc pas publique.</i>
                             {% else %}
-                                <p>
+                                <table class="table table-bordered" id="tableCommunes" style='width:100%'>
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Departement</th>
+                                            <th>Dernière observations</th>
+                                            <th>Nombre d'observations</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     {% for com in communes %}
-                                        <a href = "{{url_for('main.ficheCommune', insee = com.insee)}}">{{com.commune_maj}}</a>
-                                        {% if not loop.last %}
-                                         -
-                                        {% endif %}
+                                        <tr>
+                                            <td> <a href = "{{url_for('main.ficheCommune', insee = com.insee)}}">{{com.commune_maj}}</a> <b hidden>>{{com.insee}}</b></td>
+                                             <td>{{com.insee[:2]}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
                                     {% endfor %}
-                                </p>
+                                    </tbody>
+                                </table>
                             {% endif %}
                             </div>
 
