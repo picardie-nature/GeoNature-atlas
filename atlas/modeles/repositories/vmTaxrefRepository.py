@@ -21,12 +21,11 @@ def searchEspece(connection, cd_ref):
             cd_ref in (SELECT * FROM atlas.find_all_taxons_childs(:thiscdref))
             OR cd_ref = :thiscdref
     )
-    SELECT taxref.*, l.*, t2.patrimonial, t2.protection_stricte, t2.code_lr, t2.protected, t2.sensible
+    SELECT taxref.*, l.*, t2.patrimonial, t2.protection_stricte, t2.code_lr, t2.protected, t2.sensible, doc_lr.full_citation as doc_lr_citation,doc_lr.doc_url as doc_lr_url
     FROM atlas.vm_taxref taxref
-    JOIN limit_obs l
-    ON l.cd_ref = taxref.cd_nom
-    LEFT JOIN atlas.vm_taxons t2
-    ON t2.cd_ref = taxref.cd_ref
+    JOIN limit_obs l ON l.cd_ref = taxref.cd_nom
+    LEFT JOIN atlas.vm_taxons t2 ON t2.cd_ref = taxref.cd_ref
+    LEFT JOIN taxonomie.bdc_statuts_doc doc_lr ON doc_lr.cd_doc=t2.cd_doc_lr
     WHERE taxref.cd_nom = :thiscdref
     """
     req = connection.execute(text(sql), thiscdref=cd_ref)
@@ -47,7 +46,9 @@ def searchEspece(connection, cd_ref):
             'protection': r.protection_stricte,
             'liste_rouge':r.code_lr or list(),
             'protected':r.protected,
-            'sensible':r.sensible
+            'sensible':r.sensible,
+            'doc_lr_citation':r.doc_lr_citation,
+            'doc_lr_url':r.doc_lr_url
         }
 
     sql = """
