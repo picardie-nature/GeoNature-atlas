@@ -5,6 +5,8 @@ user=geonatadmin
 db=geonature2db
 
 
+echo $(date)
+
 #PGPASSWORD=$1 nohup psql -U $user -h $host -f import_foreign.sql -d $db
 
 PGPASSWORD=$1 psql -h $host -w -U $user $db -f "/home/jb/GeoNature-atlas/scripts/clicnat2geonature-atlas.sql"
