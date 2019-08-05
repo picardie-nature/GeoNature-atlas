@@ -383,12 +383,13 @@
                             </div>
 
                             <div id="observateurs" class="tab-pane fade">
+                                {# Masquer les observateurs (attente de consentement)
                                 {% for o in observers %}
                                     {{o }}
                                     {% if  not loop.last %}
                                     -
                                     {% endif %}
-                                {% endfor %}
+                                {% endfor %} #}
                             </div>
                         </div>
                 </div>
