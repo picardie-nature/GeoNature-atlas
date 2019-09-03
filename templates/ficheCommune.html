@@ -139,6 +139,14 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
+                    {% if referenciel.image_url %}
+                        <div style="margin-bottom:25px; margin-top:10px">
+                        <table  style="margin:auto">
+                            <tr><td><img src="{{referenciel.image_url}}&width=300" class="img-rounded"></td></tr>
+                            <tr><td style="text-align:right"><small>{{referenciel.image_credit}} [<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>]</small></td></tr>
+                        </table>
+                        </div>
+                    {% endif %}
                     <div class="alert alert-warning" role="alert"> 
                         <p>Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>. <p>Certaines espèces jugées sensibles peuvent également ne pas apparaître ici.
                    </div>

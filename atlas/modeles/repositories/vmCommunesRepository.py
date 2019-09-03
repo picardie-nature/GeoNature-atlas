@@ -27,18 +27,22 @@ def getCommunesSearch(connection, search, limit=50):
 
 
 def getCommuneFromInsee(connection, insee):
-    sql = "SELECT c.commune_maj, \
-           c.insee, \
-           c.commune_geojson \
-           FROM atlas.vm_communes c \
-           WHERE c.insee = :thisInsee"
+    sql = """SELECT c.commune_maj, 
+           c.insee, 
+           c.commune_geojson, 
+           c.image_url,
+           c.image_credit
+           FROM atlas.vm_communes c 
+           WHERE c.insee = :thisInsee"""
     req = connection.execute(text(sql), thisInsee=insee)
     communeObj = dict()
     for r in req:
         communeObj = {
             'communeName': r.commune_maj,
             'insee': str(r.insee),
-            'communeGeoJson': ast.literal_eval(r.commune_geojson)
+            'communeGeoJson': ast.literal_eval(r.commune_geojson),
+            'image_url' : r.image_url or None,
+            'image_credit' : r.image_credit or None
         }
     return communeObj
 

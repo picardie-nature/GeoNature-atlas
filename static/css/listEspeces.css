@@ -120,7 +120,7 @@ ul#statHierarchy {
 
 tbody tr:hover{
 	/*background-color: #cccccc !important;*/
-	cursor: pointer;
+	/*cursor: pointer;*/
 } 
 
 tbody tr.current{
