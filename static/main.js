@@ -53,6 +53,7 @@ autocompleteSearch = function(inputID, urlDestination, nbProposal) {
     },
     create: function (event,ui){
        $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
+         if (urlDestination == "commune") { item.label = item.label + ' [' + item.value.substring(0,2) +']'}
         return $('<li>')
             .append('<a  class="search-bar-item">' + item.label + '</a>')
             .appendTo(ul);
