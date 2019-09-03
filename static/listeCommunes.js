@@ -11,7 +11,8 @@ function myDataTable(domid){
           lengthChange: false,
           language:{ 
                 search:         "Rechercher :",
-                info: "_START_ sur _MAX_"
+                info: "_START_ sur _MAX_",
+                paginate : { previous:"Précédent", next:"Suivant"  }
             }
           /*order:[[0,"desc"],[1,"desc"],[ 4, 'asc' ]],
           columnDefs: [
