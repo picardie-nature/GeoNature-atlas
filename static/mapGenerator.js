@@ -9,7 +9,7 @@ function generateMap() {
 
 
 var mbAttr = 'GéoPicardie & contributeurs d&apos;<a href="http://openstreetmap.org">OpenStreetMap</a>',
-mbUrl = 'http://osm.geopicardie.fr/mapproxy/tms/1.0.0/{id}/webmercator/{z}/{x}/{y}.png';
+mbUrl = 'https://osm.geopicardie.fr/mapproxy/tms/1.0.0/{id}/webmercator/{z}/{x}/{y}.png';
 
 // Map initialization
 firstMapTile = L.tileLayer(configuration.MAP.FIRST_MAP.url, {attribution : configuration.MAP.FIRST_MAP.attribution} );
