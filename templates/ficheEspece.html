@@ -112,11 +112,13 @@
 					          <!-- Si pas de photo, alors le premier bloc occupe toute la largeur -->
                     <div class="col-sm-12" id="taxonIdentity">
                     {% endif %}
+                    {% if taxon.taxonSearch.picto_reseau_nat %}
 						<div id="groupLogoCol" >
-                            <a href="{{url_for('main.ficheGroupe', groupe=taxon.taxonSearch.groupAccent ) }}">
-	                            <img src="{{url_for('static', filename='images/picto_'+ taxon.taxonSearch.group2_inpn| replace(" ", "_")|urlencode+'.png') }}" alt="{{taxon.taxonSearch.group2_inpn}}" data-toggle="tooltip" data-original-title="{{taxon.taxonSearch.group2_inpn}}" data-placement="right">
+                            <a href="{{taxon.taxonSearch.url_reseau_nat}}">
+                                 <span style="font-size:70px;color:black" class="pn {{ taxon.taxonSearch.picto_reseau_nat }}"></span> 
                             </a>
 						</div>
+                    {% endif %}
 						<div id="taxonName">
                             {% if taxon.taxonSearch.nom_vern != None %}
                                 <h3> {{taxon.taxonSearch.nom_vern}} </h3>
