@@ -198,7 +198,7 @@
 											{% endif %}
 										</td>
 										<td class="singleTaxon name" cdref="{{obs.cd_ref}}" > {{obs.taxon}}</td>
-										<td class="singleTaxon date"> {{obs.dateobs_date.strftime('%Y-%m-%d') }} </td>
+										<td class="singleTaxon date"> {{obs.dateobs_date.strftime('%d/%m/%Y') }} </td>
 										<td class="singleTaxon detail">
 											<a href = "{{url_for('main.ficheEspece',cd_ref=obs.cd_ref)}}">
 												<span class="glyphicon glyphicon-list" data-toggle="tooltip" data-original-title="Consulter la fiche espèce" data-placement="left"> </span>

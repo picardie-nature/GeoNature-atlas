@@ -146,7 +146,7 @@
                                 {% if referenciel.image_url.startswith('http') %} src="{{ referenciel.image_url }}&width=300"
                                 {% else %} src="{{ url_for('static', filename='images/communes/'+referenciel.image_url) }}"
                                 {% endif %} 
-                                class="img-rounded"></td></tr> 
+                                class="img-rounded img-responsive"></td></tr> 
                             <tr><td style="text-align:right"><small>{{referenciel.image_credit}} [<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>]</small></td></tr>
                         </table>
                         </div>
