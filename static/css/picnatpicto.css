@@ -44,7 +44,8 @@
 .pn-fish,
 .pn-shell,
 .pn-bug,
-.pn-seal
+.pn-seal,
+.pn-wasp
 {
   font-family:"picnatpicto1"
 }
@@ -95,4 +96,7 @@
 }
 .pn-seal:before {
   content: "z";
+}
+.pn-wasp:before {
+  content: "Y";
 }
