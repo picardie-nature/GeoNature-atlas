@@ -65,7 +65,10 @@
                 </div>-->
                  <div class="panel panel-default" id="taxons"><div class="panel-body">
                      <div class="row" style="text-align:center;padding:15px"">
-                           <div class="col-sm-1 col-md-offset-3" > 
+                            <div class="col-sm-1  col-md-offset-3"> 
+                                <span class="fa fa-paw" style="font-size: 45px;"></span></br><b style="font-size:150%">{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}
+                            </div>
+                           <div class="col-sm-1" > 
                                 <span style="color: ##35526f;font-size:45px" class="fa fa-shield-alt"></span><br><b style="font-size:150%">{{ listTaxons.taxons | selectattr("protected") | list | count }}</b><br> espèces protégées
                             </div>
                            <div class="col-sm-1"> 
@@ -74,9 +77,6 @@
                             <div class="col-sm-1"> 
                                 <span class="fa fa-binoculars" style="font-size: 45px;"></span><br/><b style="font-size:150%">{{listTaxons.nbObsTotal | pretty}}</b><br/>{{ 'observations' if listTaxons.nbObsTotal > 1 else 'observation' }}
                              </div>
-                            <div class="col-sm-1"> 
-                                <span class="fa fa-paw" style="font-size: 45px;"></span></br><b style="font-size:150%">{{listTaxons.taxons|length | pretty}}</b><br/>{{ 'espèces' if listTaxons.taxons|length > 1 else 'espèce' }}
-                            </div>
                             <div class="col-sm-1"> 
                                 <span class="fa fa-user" style="font-size: 45px;"></span></br><b style="font-size:150%">{{observers | length | pretty}}</b><br/>{{ 'observateurs' if observers|length > 1 else 'observateur' }}
                             </div>
