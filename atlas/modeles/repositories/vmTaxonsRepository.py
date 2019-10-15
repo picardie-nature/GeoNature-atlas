@@ -13,21 +13,22 @@ from .. import utils
 # With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
 def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
     sql = """
-        SELECT DISTINCT
-	        o.cd_ref, max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs,
-            COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
-            t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,t.sort_lr, t.sensible,
-            coalesce(rnat.code_reseau,'autre') as code_reseau_nat, rnat.picto as picto_reseau_nat, rnat.url as url_reseau_nat, coalesce(rgp.code_reseau,'autre') as code_reseau_gp,rgp.picto as picto_reseau_gp,
-            m.url, m.chemin, m.id_media
-        FROM atlas.vm_taxons t
-        JOIN atlas.vm_observations o ON ( o.cd_ref = CASE WHEN t.id_rang='ES' THEN t.cd_ref WHEN t.id_rang='SESS' THEN t.cd_taxsup END)
-        LEFT JOIN atlas.vm_medias m ON m.cd_ref=o.cd_ref AND m.id_type={}
-        LEFT JOIN pn_reseaux.reseaux rnat ON rnat.id_reseau = t.id_reseau_nat
-        LEFT JOIN pn_reseaux.reseaux rgp ON rgp.id_reseau = t.id_reseau_gp
-        WHERE o.insee = :thisInsee AND t.id_rang IN ('ES','SESS')
-        GROUP BY o.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
-            t.patrimonial, t.protection_stricte, m.url, m.chemin, m.id_media, rgp.picto, rgp.code_reseau, rnat.picto,  rnat.url, rnat.code_reseau, t.code_lr, t.sort_lr, t.sensible
-        ORDER BY nb_obs DESC
+            SELECT 
+	            cd_ref_sp as cd_ref,max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs,
+                COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
+                t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,t.sort_lr, t.sensible,
+                coalesce(rnat.code_reseau,'autre') as code_reseau_nat, rnat.picto as picto_reseau_nat, rnat.url as url_reseau_nat, coalesce(rgp.code_reseau,'autre') as code_reseau_gp,rgp.picto as picto_reseau_gp,
+                m.url, m.chemin, m.id_media
+            FROM atlas.vm_observations o
+            JOIN taxonomie.vm_cd_ref_sp ON taxonomie.vm_cd_ref_sp.cd_nom = o.cd_ref
+            JOIN atlas.vm_taxons t ON t.cd_ref=cd_ref_sp
+            LEFT JOIN atlas.vm_medias m ON m.cd_ref=o.cd_ref AND m.id_type={}
+            LEFT JOIN pn_reseaux.reseaux rnat ON rnat.id_reseau = t.id_reseau_nat
+            LEFT JOIN pn_reseaux.reseaux rgp ON rgp.id_reseau = t.id_reseau_gp
+            WHERE o.insee = :thisInsee AND t.id_rang IN ('ES','SSES')
+            GROUP BY cd_ref_sp, t.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
+                t.patrimonial, t.protection_stricte, m.url, m.chemin, m.id_media, rgp.picto, rgp.code_reseau, rnat.picto,  rnat.url, rnat.code_reseau, t.code_lr, t.sort_lr, t.sensible
+            ORDER BY nb_obs DESC    
     """.format(current_app.config['ATTR_MAIN_PHOTO'])
     req = connection.execute(text(sql), thisInsee=insee, publicCible=public_cible)
     taxonCommunesList = list()
