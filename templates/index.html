@@ -132,9 +132,9 @@
 							<span class="higlight">{{customStat[i].nb_obs | pretty}}</span> observations | <span class="higlight">{{customStat[i].nb_taxons| pretty}}</span> espèces
 						</div>
 						<h5><span class="fa fa-paw"></span> Espèces à découvrir</h5>
-					{% for j in range(2) %}
+					{% for j in range(3) %}
 						{% if loop.index <= customStatMedias[i] | length %}
-								<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-stat-medias">
+								<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-stat-medias">
 									<div class ="thumbnail-stat-medias">
 										<div class="zoom-wrapper">
 											<a href="{{url_for('main.ficheEspece',cd_ref=customStatMedias[i][j].cd_ref)}}" >
@@ -151,7 +151,7 @@
 										</div>
 									    <div class="thumbnail-caption-medias" >
 									        <p>{% if customStatMedias[i][j].nom_vern != None %} {{customStatMedias[i][j].nom_vern}} {% endif %} <br/><i>{{customStatMedias[i][j].lb_nom}}</i></p>
-									        <p><a href="{{url_for('main.ficheEspece',cd_ref=customStatMedias[i][j].cd_ref)}}" class="btn btn-default" role="button">Fiche espèce</a></p>
+									        <!--<p><a href="{{url_for('main.ficheEspece',cd_ref=customStatMedias[i][j].cd_ref)}}" class="btn btn-default" role="button">Fiche espèce</a></p>-->
 									    </div>
 									</div>
 								</div>
