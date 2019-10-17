@@ -15,7 +15,7 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
     sql = """
             SELECT 
 	            cd_ref_sp as cd_ref,max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs,
-                COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern,
+                COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern, t.lb_nom, t.classe, t.ordre, t.famille,
                 t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,t.sort_lr, t.sensible,
                 coalesce(rnat.code_reseau,'autre') as code_reseau_nat, rnat.picto as picto_reseau_nat, rnat.url as url_reseau_nat, coalesce(rgp.code_reseau,'autre') as code_reseau_gp,rgp.picto as picto_reseau_gp,
                 m.url, m.chemin, m.id_media
@@ -26,7 +26,7 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
             LEFT JOIN pn_reseaux.reseaux rnat ON rnat.id_reseau = t.id_reseau_nat
             LEFT JOIN pn_reseaux.reseaux rgp ON rgp.id_reseau = t.id_reseau_gp
             WHERE o.insee = :thisInsee AND t.id_rang IN ('ES','SSES')
-            GROUP BY cd_ref_sp, t.cd_ref, t.nom_vern, t.nom_complet_html, t.group2_inpn,
+            GROUP BY cd_ref_sp, t.cd_ref, t.nom_vern, t.nom_complet_html, t.lb_nom, t.classe, t.ordre, t.famille, t.group2_inpn,
                 t.patrimonial, t.protection_stricte, m.url, m.chemin, m.id_media, rgp.picto, rgp.code_reseau, rnat.picto,  rnat.url, rnat.code_reseau, t.code_lr, t.sort_lr, t.sensible
             ORDER BY nb_obs DESC    
     """.format(current_app.config['ATTR_MAIN_PHOTO'])
@@ -36,11 +36,15 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
     for r in req:
         temp = {
             'nom_complet_html': r.nom_complet_html,
+            'lb_nom':r.lb_nom,
+            'classe':r.classe,
+            'ordre':r.ordre,
+            'famille':r.famille,
             'nb_obs': r.nb_obs,
             'nom_vern': r.nom_vern,
             'cd_ref': r.cd_ref,
-            'first_obs': r.first_obs,
-            'last_obs': r.last_obs,
+            'first_obs': int(r.first_obs),
+            'last_obs': int(r.last_obs),
             'group2_inpn': utils.deleteAccent(r.group2_inpn),
             'patrimonial': r.patrimonial,
             'protection_stricte': r.protection_stricte,
