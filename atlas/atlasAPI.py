@@ -61,7 +61,7 @@ def syntheseObsCommune(insee_com):
             nr['cd_nom'] = 0
             nr['nom_vern'] = nr['nom_scientifique'] = nr['famille'] = 'Espece sensible'
         if not writer:
-            writer = csv.DictWriter(csvfile, fieldnames=list(nr.keys()))
+            writer = csv.DictWriter(csvfile, fieldnames=list(nr.keys()), delimiter=';')
             writer.writeheader()
         writer.writerow(nr)
     csvstring=csvfile.getvalue()
