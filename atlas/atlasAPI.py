@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import json
 import csv
+from collections import OrderedDict
 from io import StringIO
 from flask import jsonify, Blueprint, request, current_app
 from werkzeug.wrappers import Response
@@ -42,7 +43,7 @@ def syntheseObsCommune(insee_com):
     csvfile=StringIO()
     writer=None
     for r in taxons:
-        nr=dict()
+        nr=OrderedDict()
         nr['cd_nom'] = r['cd_ref']
         nr['nom_vern'] = r['nom_vern']
         nr['nom_scientifique'] = r['lb_nom']
