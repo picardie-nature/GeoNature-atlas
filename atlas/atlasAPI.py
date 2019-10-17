@@ -1,12 +1,14 @@
 
 # -*- coding:utf-8 -*-
 import json
+import csv
+from io import StringIO
 from flask import jsonify, Blueprint, request, current_app
 from werkzeug.wrappers import Response
 from . import utils
 from .modeles.repositories import (
     vmSearchTaxonRepository, vmObservationsRepository,
-    vmObservationsMaillesRepository, vmMedias, vmMaillesRichesse,vmCommunesRepository
+    vmObservationsMaillesRepository, vmMedias, vmMaillesRichesse,vmCommunesRepository,vmTaxonsRepository
 )
 from .configuration import config
 
@@ -31,6 +33,39 @@ def searchCommuneAPI():
     results = vmCommunesRepository.getCommunesSearch(connection, search, limit)
     return jsonify(results)
 
+@api.route('/syntheseObsCommune/<insee_com>',methods=['GET'])
+def syntheseObsCommune(insee_com):
+    render_format = request.args.get('format','csv')
+    connection = utils.engine.connect()
+    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee_com,'GP')
+    taxons = listTaxons['taxons']
+    csvfile=StringIO()
+    writer=None
+    for r in taxons:
+        nr=dict()
+        nr['cd_nom'] = r['cd_ref']
+        nr['nom_vern'] = r['nom_vern']
+        nr['nom_scientifique'] = r['lb_nom']
+        nr['classe'] = r['classe']
+        nr['ordre'] = r['ordre']
+        nr['famille'] = r['famille']
+        nr['premiere_obs'] = r['first_obs']
+        nr['derniere_obs'] = r['last_obs']
+        try:
+            nr['menace'] = r['code_lr'][0]
+        except IndexError:
+            nr['menace'] = None
+        nr['nombre_obs'] = r['nb_obs']
+        if r['sensible'] :
+            nr['cd_nom'] = 0
+            nr['nom_vern'] = nr['nom_scientifique'] = nr['famille'] = 'Espece sensible'
+        if not writer:
+            writer = csv.DictWriter(csvfile, fieldnames=list(nr.keys()))
+            writer.writeheader()
+        writer.writerow(nr)
+    csvstring=csvfile.getvalue()
+    csvfile.close()
+    return Response(csvstring,headers={"Content-Type":"application/csv", "Content-Disposition":"attachment;filename=\"{}.csv\"".format(insee_com) })
 
 @api.route('/observationsMailleAndPoint/<int:cd_ref>', methods=['GET'])
 def getObservationsMailleAndPointAPI(cd_ref):
