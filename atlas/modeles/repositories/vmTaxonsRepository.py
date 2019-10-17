@@ -68,7 +68,7 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
 
 def getTaxonsChildsList(connection, cd_ref):
     sql = """
-        SELECT DISTINCT nom_complet_html, nb_obs, nom_vern, tax.cd_ref,
+        SELECT DISTINCT nom_complet_html, coalesce(nb_obs,0) as nb_obs, nom_vern, tax.cd_ref,
             yearmax, group2_inpn, patrimonial, protection_stricte,
             chemin, url, m.id_media
         FROM atlas.vm_taxons tax
