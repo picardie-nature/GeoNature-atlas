@@ -35,7 +35,8 @@ legend.onAdd = function (map) {
         labels = [];
 
     // loop through our density intervals and generate a label with a colored square for each interval
-    var grades = [1,5,15,50,80,100]
+    var grades = [1,5,15,50,80,100];
+    div.innerHTML += "<p><b>Nombre <br>d'observations</b></p>"
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(grades[i]) + '"></i> ' +
