@@ -34,7 +34,15 @@ function styleMailleAtlas(feature) {
         color: 'white',
         fillOpacity: 0.8
     };
-}
+};
+
+function shadowMaille(feature){
+    s = styleMailleAtlas(feature);
+    s.fillOpacity = 0.4;
+    s.color = 'red';
+    return s;
+};
+
 
 L.DomUtil.remove(sliderContainer); //Remove slider created in mapGenerator.js
 
@@ -50,102 +58,13 @@ $.ajax({
   currentLayer = L.geoJson(observations, {
       onEachFeature : function (feature, layer){
                     popupContent = "<b>Nombre d'observations </b> "+feature.properties.nb_observations+"<br><b>Dernière d'observations </b>"+feature.properties.lastyear ;
-
-                layer.bindPopup(popupContent)
+                    layer.bindPopup(popupContent)
+                    layer.on('mouseover',function(e){ layer.setStyle( shadowMaille(layer.feature) ); layer.bringToFront(); });
+                    layer.on('mouseout ',function(e){ layer.setStyle( styleMailleAtlas(layer.feature) ); });
       },
       style: styleMailleAtlas,
   }).addTo(map);
   currentLayer.bringToFront();
-    /*    
-    // affichage des mailles
-    displayMailleLayerFicheEspece(observations, taxonYearMin, YEARMAX);
 
-      //display nb observations
-  $("#nbObsLateral").html("<b>"+observations.length+" </b> </br> Observations" );
-
-
-
-    // pointer on first and last obs
-    $('.pointer').css('cursor', 'pointer');
-    //display nb observations
-        nbObs=0;
-        myGeoJson.features.forEach(function(l){
-          nbObs += l.properties.nb_observations
-          })
-        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-   
-
-
-     // Slider event
-    mySlider.on("change",function(){
-          years = mySlider.getValue();
-          yearMin = years[0];
-          yearMax = years[1];
-          map.removeLayer(currentLayer);
-          displayMailleLayerFicheEspece(observations, yearMin, yearMax)
-
-
-        nbObs=0;
-        myGeoJson.features.forEach(function(l){
-          nbObs += l.properties.nb_observations
-        })
-
-        $("#nbObs").html("Nombre d'observation(s): "+ nbObs);
-
-       });
-
-
-    // Stat - map interaction
-    $('#firstObs').click(function(){
-      var firstObsLayer;
-      var year = new Date('2400-01-01');
-
-
-          var layer = (currentLayer._layers);
-          for (var key in layer) {
-            layer[key].feature.properties.tabDateobs.forEach(function(thisYear){
-              if (thisYear <= year){
-                year = thisYear;
-                firstObsLayer = layer[key];
-              }
-            });
-          }
-
-          
-          var bounds = L.latLngBounds([]);
-          var layerBounds = firstObsLayer.getBounds();
-          bounds.extend(layerBounds);
-          map.fitBounds(bounds, {
-            maxZoom : 12
-          });
-
-          firstObsLayer.openPopup();
-    })
-
-    $('#lastObs').click(function(){
-      var firstObsLayer;
-      var year = new Date('1800-01-01');
-
-
-          var layer = (currentLayer._layers);
-          for (var key in layer) {
-            layer[key].feature.properties.tabDateobs.forEach(function(thisYear){
-              if (thisYear >= year){
-                year = thisYear;
-                firstObsLayer = layer[key];
-              }
-            });
-          }
-
-          
-          var bounds = L.latLngBounds([]);
-          var layerBounds = firstObsLayer.getBounds();
-          bounds.extend(layerBounds);
-          map.fitBounds(bounds, {
-            maxZoom : 12
-          });
-
-          firstObsLayer.openPopup();
-    })*/
 });
 

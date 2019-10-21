@@ -17,7 +17,14 @@ function styleMailleAtlas(feature) {
         color: 'white',
         fillOpacity: 0.7
     };
-}
+};
+
+function shadowMaille(feature){
+    s = styleMailleAtlas(feature);
+    s.fillOpacity = 0.4;
+    s.color = 'red';
+    return s;
+};
 
 
 legend.remove()
@@ -47,7 +54,9 @@ $.getJSON( configuration.URL_APPLICATION+'/api/mailles/lastObs' ).done(function(
           onEachFeature : function (feature, layer){
                     prop=feature.properties;
                     popupContent = "<b>Nombre d'obs </b> "+prop.n_obs+"</b> ("+prop.n_taxons+ " taxons)";
-                    layer.bindPopup(popupContent)
+                    layer.bindPopup(popupContent);
+                    layer.on('mouseover',function(e){ layer.setStyle( shadowMaille(layer.feature) ); layer.bringToFront(); });
+                    layer.on('mouseout ',function(e){ layer.setStyle( styleMailleAtlas(layer.feature) ); });
           },
           style: styleMailleAtlas,
       }).addTo(map);

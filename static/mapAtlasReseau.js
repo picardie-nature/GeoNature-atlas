@@ -19,6 +19,13 @@ function styleMailleAtlas(feature) {
     };
 }
 
+function shadowMaille(feature){
+    s = styleMailleAtlas(feature);
+    s.fillOpacity = 0.5;
+    s.color = 'red';
+    return s;
+}
+
 /******* LEGEND **********/
 function getColor(d) {
     grades = getGrades(currentIdListe);
@@ -81,7 +88,9 @@ function changeLayer(id_reseau){
           currentLayer = L.geoJson(observations, {
               onEachFeature : function (feature, layer){
                         popupContent = "<b>Nombre d'espèces </b> "+feature.properties.n_sp+"</b>";
-                        layer.bindPopup(popupContent)
+                        layer.bindPopup(popupContent);
+                        layer.on('mouseover',function(e){ layer.setStyle( shadowMaille(layer.feature) ); layer.bringToFront(); });
+                        layer.on('mouseout ',function(e){ layer.setStyle( styleMailleAtlas(layer.feature) ); });
               },
               style: styleMailleAtlas,
           }).addTo(map);
