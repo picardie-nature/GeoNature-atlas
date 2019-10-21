@@ -43,6 +43,7 @@ function getGrades(id_liste){
            id_liste == 6 ? [1,5,20,35] : //odonates
            id_liste == 55 ? [1,5,10,15] : //grand mammifères terrestres
            id_liste == 50 ? [1,5,20,35] : //mammifères
+           id_liste == 8 ? [1,5,15,30] : //orthoptères
            [1,2,3,4,5]; 
 
 }
