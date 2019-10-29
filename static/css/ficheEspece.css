@@ -241,11 +241,11 @@ h5#buttonChild:hover {
 }
 
 rect{
-	fill: #2466D1;
+	fill: #467E19;
 }
 
 rect.highlight {
-    fill: #333333;
+    fill: #76D02E;
 	padding: 5px;
 }
 
