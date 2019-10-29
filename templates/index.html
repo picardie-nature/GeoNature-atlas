@@ -93,7 +93,7 @@
 			    <div class="panel panel-default stat-panel" style="padding-right:60px;padding-left:60px;"> 
                     <div class="slick-track partenaires-slick" hidden>
                         {% for partenaire in configuration.PARTENAIRES | shuffle %}
-                          <span><a href="{{ partenaire.url }}"> <img class="img img-responsive" src="{{url_for('static', filename='images/partenaires/'+partenaire.logo)}}" style="max-width:60%"> </a></span>
+                          <span><a href="{{ partenaire.url }}" target='_blank'> <img class="img img-responsive" src="{{url_for('static', filename='images/partenaires/'+partenaire.logo)}}" style="max-width:60%"> </a></span>
                         {% endfor %}
                     </div>
                 </div>
