@@ -591,12 +591,10 @@
 
             </div>
             {% endif %}
-            {% if (taxon.taxonSearch.nb_obs or 0) > 100 %}
-                <div class="panel panel-default" id="graphBloc">
+                <div class="panel panel-default" id="graphBloc" {% if (taxon.taxonSearch.nb_obs or 0) < 100 %} HIDDEN {% endif %}>
                     <h3 class="text-center">Observations mensuelles</h3>
                     <div id="phenologyChart"></div>
                 </div>
-            {% endif %}
             <div class="alert alert-warning">
 			Les informations données ici représentent l'état actuel des connaissances et ne peuvent être considérées comme exhaustives.
 		    </div>
