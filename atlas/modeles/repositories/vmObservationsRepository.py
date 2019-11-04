@@ -232,7 +232,7 @@ def genericStat(connection, tab):
     for pair in tab:
         rang, nomTaxon = list(pair.items())[0]
         sql = """
-            SELECT COUNT (t.nb_obs) AS nb_obs,
+            SELECT sum(t.nb_obs) AS nb_obs,
             COUNT (DISTINCT vm_cd_ref_sp.cd_ref_sp) AS nb_taxons
             FROM atlas.vm_taxons t
             JOIN taxonomie.vm_cd_ref_sp ON taxonomie.vm_cd_ref_sp.cd_nom = t.cd_ref
