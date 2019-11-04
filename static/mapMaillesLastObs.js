@@ -1,5 +1,5 @@
 var map = generateMap();
-//generateSliderOnMap();
+generateSliderOnMap();
 var legend = L.control({position: 'bottomright'});
 
 // Legende
