@@ -1,12 +1,13 @@
 import os
 import sys
 import random
-from flask import Flask, render_template
+import datetime as dt
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 from werkzeug.serving import run_simple
 
-
+import logging
 
 
 from sqlalchemy import create_engine, MetaData, Table
@@ -108,6 +109,21 @@ def sortLR(l,attribute,reverse=False):
         return level_redlist.get(val,0)
     return sorted(l, key=sorting, reverse = reverse)
 
+@app.before_request
+def log_request_info():
+    if len(app.config.get('BASIC_ACCESS_LOG_FILE',"")) = 0 :
+        return
+    if not (request.base_url.lower().endswith(('.js','.png','.jpg','.jpeg','.css','.ico','.json','.otf','.svg')) or "/static/" in request.base_url or "/api/" in request.base_url)  :
+        out=list()
+        out.append(str(dt.datetime.now().date()))
+        out.append(str(dt.datetime.now().time()))
+        out.append(request.remote_addr)
+        out.append(request.headers.get('Referer'))
+        out.append(request.base_url)
+        with open (app.config.get('BASIC_ACCESS_LOG_FILE','access.log'),'a') as f :
+            f.write("|".join(out))
+
+
 if __name__ == "__main__":
     from flask_script import Manager
 
@@ -115,3 +131,4 @@ if __name__ == "__main__":
     app.run(port=8080, debug=True)
     # Manager(app).run()
     # run_simple("localhost", 8080, app, use_reloader=True)
+
