@@ -117,11 +117,11 @@ def log_request_info():
         out=list()
         out.append(str(dt.datetime.now().date()))
         out.append(str(dt.datetime.now().time()))
-        out.append(str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr)  ) )
+        out.append(str(request.environ.get('HTTP_X_FORWARDED_FOR', request.remote_addr)  ) )
         out.append(str(request.headers.get('Referer','')))
         out.append(request.base_url)
         with open (app.config.get('BASIC_ACCESS_LOG_FILE','access.log'),'a') as f :
-            f.write("|".join(out))
+            f.write("|".join(out)+"\n")
 
 
 if __name__ == "__main__":
