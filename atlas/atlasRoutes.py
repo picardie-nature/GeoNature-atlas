@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from flask import render_template, redirect, abort, current_app
+from flask import render_template, redirect, abort, current_app, url_for
 from .configuration import config
 from .modeles.repositories import (
     vmTaxonsRepository,
@@ -17,7 +17,7 @@ from .modeles.repositories import (
 )
 from . import utils
 
-from flask import Blueprint
+from flask import Blueprint, request
 
 main = Blueprint("main", __name__)
 
@@ -86,7 +86,12 @@ def indexMedias(image):
 def index():
     session = utils.loadSession()
     connection = utils.engine.connect()
-
+    if request.args.get('page')=='fiche' and request.args.get('id') and utils.idtier2cdref(request.args.get('id'),'clicnat1') : # provient d'une ancienne url clicnat 1
+        return redirect(
+                    url_for('main.ficheEspece',cd_ref=utils.idtier2cdref(request.args.get('id'),'clicnat1'))
+                    ,code=301)
+    #TODO rediriger les anciennes fiches communes
+    
     if current_app.config["AFFICHAGE_MAILLE"]:
         observations = vmObservationsMaillesRepository.lastObservationsMailles(
             connection,
