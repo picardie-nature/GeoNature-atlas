@@ -111,14 +111,14 @@ def sortLR(l,attribute,reverse=False):
 
 @app.before_request
 def log_request_info():
-    if len(app.config.get('BASIC_ACCESS_LOG_FILE',"")) == 0 :
-        return
+    #if len(app.config.get('BASIC_ACCESS_LOG_FILE',"")) == 0 :
+    #    return
     if not (request.base_url.lower().endswith(('.js','.png','.jpg','.jpeg','.css','.ico','.json','.otf','.svg')) or "/static/" in request.base_url or "/api/" in request.base_url)  :
         out=list()
         out.append(str(dt.datetime.now().date()))
         out.append(str(dt.datetime.now().time()))
-        out.append(str(request.environ.get('HTTP_X_REAL_IP', request.remote_addr)  ) )
-        out.append(str(request.headers.get('Referer','')))
+        out.append(request.remote_addr)
+        out.append(request.headers.get('Referer',''))
         out.append(request.base_url)
         with open (app.config.get('BASIC_ACCESS_LOG_FILE','access.log'),'a') as f :
             f.write("|".join(out))
