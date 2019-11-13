@@ -111,7 +111,7 @@ def sortLR(l,attribute,reverse=False):
 
 @app.before_request
 def log_request_info():
-    if len(app.config.get('BASIC_ACCESS_LOG_FILE',"")) == 0 :
+    if len(app.config.get('BASIC_ACCESS_LOG_FILE',"")) = 0 :
         return
     if not (request.base_url.lower().endswith(('.js','.png','.jpg','.jpeg','.css','.ico','.json','.otf','.svg')) or "/static/" in request.base_url or "/api/" in request.base_url)  :
         out=list()
