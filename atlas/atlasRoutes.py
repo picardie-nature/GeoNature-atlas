@@ -86,11 +86,14 @@ def indexMedias(image):
 def index():
     session = utils.loadSession()
     connection = utils.engine.connect()
-    if request.args.get('page')=='fiche' and request.args.get('id') and utils.idtier2cdref(request.args.get('id'),'clicnat1') : # provient d'une ancienne url clicnat 1
+    if request.args.get('page')=='fiche' and request.args.get('id') and utils.idtier2cdref(request.args.get('id'),'clicnat1') : # provient d'une ancienne url clicnat 1 (espece)
         return redirect(
                     url_for('main.ficheEspece',cd_ref=utils.idtier2cdref(request.args.get('id'),'clicnat1'))
                     ,code=301)
-    #TODO rediriger les anciennes fiches communes
+    elif request.args.get('page')=='commune' and request.args.get('id') and utils.idtier2areacode(request.args.get('id'),'clicnat1') : # provient d'une ancienne url clicnat 1 (commune)
+        return redirect(
+                    url_for('main.ficheCommune',insee=utils.idtier2areacode(request.args.get('id'),'clicnat1'))
+                    ,code=301)
     
     if current_app.config["AFFICHAGE_MAILLE"]:
         observations = vmObservationsMaillesRepository.lastObservationsMailles(

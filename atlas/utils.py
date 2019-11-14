@@ -35,3 +35,19 @@ def idtier2cdref(id_tiers,tiers):
     if not r :
         return None
     return r['cd_ref']
+
+def idtier2areacode(id_tiers,tiers):
+    session = loadSession()
+    connection = engine.connect()
+    sql = """
+        SELECT area_code FROM ref_geo.ref_tiers 
+        WHERE id_tiers=:id_tiers AND tiers=:tiers
+        LIMIT 1
+        """
+    req = connection.execute(text(sql), id_tiers=id_tiers, tiers=tiers)
+    r = req.first()
+    connection.close()
+    session.close()
+    if not r :
+        return None
+    return r['area_code']
