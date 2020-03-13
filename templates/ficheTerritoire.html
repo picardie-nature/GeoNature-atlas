@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+   <head>
+        <meta charset="utf-8" />
+        <title>{{territoire.area_name}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+
+        <!-- Jquery -->
+        <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
+        <script type="text/javascript" src="{{url_for('static', filename='lib/jquery.lazy/jquery.lazy.min.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/jquery-ui.css') }}" />
+
+         <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+        <!-- highcharts -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet.css') }}" />
+        <script src="{{url_for('static', filename='lib/leaflet/leaflet.js') }}"></script>
+        <script src="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.min.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leaflet-fullscreen/leafletFullScreen.css') }}" />
+        <script src="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.js') }}"></script>
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.css') }}" />
+		    <link rel="stylesheet" href="{{url_for('static', filename='lib/leaflet/leafletMarkerCluster.Default.css') }}" />
+
+        <!-- DataTable -->
+		    <link rel="stylesheet" href="{{url_for('static', filename='lib/datatables/datatables.min.css') }}"/>
+        <script type="text/javascript" src="{{url_for('static', filename='lib/datatables/datatables.min.js') }}"></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
+        <script type="text/javascript" src="{{url_for('static', filename='lib/bootstrap/js/bootstrap.min.js') }}"></script>
+
+       <!-- Atlas -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/atlas.css') }}"/>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/listEspeces.css') }}"/>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/icones.css') }}"/>
+        <link rel="stylesheet" href="{{url_for('static', filename='custom/custom.css') }}"/>
+
+        <!-- Charts -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="{{url_for('static', filename='chart_territory.js') }}"></script>
+        <script>
+            var chartData={};
+            chartData.labels=[];
+            chartData.data=[];
+            console.log(chartData);
+            $( document ).ready(function() {
+               drawChart('myChart', chartData.labels, chartData.data);
+
+            });
+        </script>
+
+
+
+        <script src="{{url_for('static', filename='listeEspeces_2.js') }}"></script>
+
+   </head>
+   <body>
+    {% include 'templates/navbar.html' %}
+		<div id="sideBar">
+			{% include 'templates/sideBar.html' %}
+		</div>
+		<div class="container-fluid" id="page" style="margin-top:10px">
+
+            <div class="col-sm-{{ '7' if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE else '12' }}">
+                 <div class="panel panel-default" id="parent">
+			        <div class="row">
+                        <h4 style="font-size:150%">Territoire de <b>{{territoire.area_name}} </b> ({{territoire.area_code}} )</h4>
+                    </div>
+                </div>
+
+                 <div class="panel panel-default" id="taxons"><div class="panel-body">
+                     <div class="row" style="text-align:center;padding:15px"">
+                            <div class="col-sm-1  col-md-offset-3"> 
+                                <span class="fa fa-paw" style="font-size: 45px;"></span></br><b style="font-size:150%">{{taxons|length | pretty }}</b><br/>{{ 'espèces' if taxons|length > 1 else 'espèce' }}
+                            </div>
+                           <div class="col-sm-1" > 
+                                <span style="color: ##35526f;font-size:45px" class="fa fa-shield-alt"></span><br><b style="font-size:150%">{{ taxons | selectattr("protected") | list | count }}</b><br> espèces protégées
+                            </div>
+                            <div class="col-sm-1"> 
+                                <span class="fa fa-binoculars" style="font-size: 45px;"></span><br/><b style="font-size:150%">{{nbObsTotal | pretty}}</b><br/>{{ 'observations' if nbObsTotal > 1 else 'observation' }}
+                             </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                          
+
+                            {% for g1 in groupes1 %}
+                                    {% set n_taxons_group1=taxons | selectattr("grp1","equalto",g1 ) | list | count  %}
+                                  <script> chartData.labels.push('{{ g1 }} '); chartData.data.push({{ n_taxons_group1 }})</script>
+                                  <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ g1 }}">
+                                      <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse"data-parent="#accordion" href="#collapse{{ g1 | replace(' ','_') }}" aria-expanded="false" aria-controls="collapse{{ g1 | replace(' ','_') }}">
+                                        <span style="font-size:30px" class='pn {{ (taxons | selectattr("grp1","equalto",g1 ) | first).grp1_picto }}'></span>  <b style="font-size:115%"> {{ n_taxons_group1 }} </b> {{ g1 }}   <span style="color: #3b3b3b;font-size:30px;float:right" class="fa fa-angle-down"></span>  </a>                                       
+                                         
+                                      </h4>
+                                    </div>
+                                    <div id="collapse{{ g1 | replace(' ','_') }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                      <div class="panel-body">
+                                            <table class="table table-bordered" id="myTable{{ g1 }}" style='width:100%'>
+                                                 <thead>
+                                                     <tr>
+                                                        <th>Protegé</th>
+                                                        <th>Liste rouge régionale</th> 
+                                                        <th>Groupe d'étude</th>
+                                                        <th>Nom vernaculaire</th> 
+                                                        <th>Nom scientifique</th>
+                                                        <th>Période d'observation</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% set txt_taxon_sensible = '<small>Espèce sensible</small>' %}
+                                                     {% for taxon in taxons | selectattr("grp1","equalto",g1 ) %}
+                                                    <tr>
+                                                            <td align='center'> - </td>
+                                                           <td align='center'>  - </td>
+                                                           <td align='center'> <span style="font-size:30px" class="pn {{ taxon.grp2_picto }}"></span> </td>
+                                                            <td> <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
+                                                            <td> <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a>  </td>
+                                                            <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
+                                                    </tr>
+                                                 {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <script>myDataTable("#myTable{{ g1 }}")</script>
+                                      </div>
+                                    </div> 
+                                  </div>
+
+
+
+                            {% endfor %}
+
+
+                             
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    {% if territoire.image_url %}
+                        <div style="margin-bottom:25px; margin-top:10px">
+                        <table  style="margin:auto">
+                            <tr><td><img 
+                                {% if territoire.image_url.startswith('http') %} src="{{ territoire.image_url }}&width=300"
+                                {% else %} src="{{ url_for('static', filename='images/communes/'+territoire.image_url) }}"
+                                {% endif %} 
+                                class="img-rounded img-responsive"></td></tr> 
+                            <tr><td style="text-align:right"><small>{{territoire.image_credit}} [<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>]</small></td></tr>
+                        </table>
+                        </div>
+                    {% endif %}
+
+                    <div style="padding:10%"><canvas id="myChart" width="100" height="100"></canvas></div>
+
+                    <div class="alert alert-warning" role="alert"> 
+                        <p>Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>. <p>Certaines espèces jugées sensibles peuvent également ne pas apparaître ici.
+                   </div>
+                   <br><a href="{{ url_for('api.syntheseObsCommune',insee_com=territoire.insee ) }}"><button type="button" class="btn btn-primary" style="float:right"><span class="fa fa-download"></span>Télécharger la liste des espèces</button></a>
+                </div>
+
+
+
+              </div> <!--row-->
+
+            </div></div>
+
+  
+        </div>
+        </div>
+        {% if configuration.AFFICHAGE_FOOTER %}
+            {% include 'static/custom/templates/footer.html' %}
+        {% endif %}
+
+      	  	<script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
+		{% if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE %}
+        <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
+        <script src="{{url_for('static', filename='mapCommune.js') }}"></script>
+        {% endif %}
+        <script src="{{url_for('static', filename='main.js') }}"></script>
+        <!--<script type="text/javascript" src="{{url_for('static', filename='chart_taxo.js') }}"></script>-->
+
+        <!--Chart-->
+
+
+
+   </body>
+</html>

@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from flask import render_template, redirect, abort, current_app, url_for
+import json
 from .configuration import config
 from .modeles.repositories import (
     vmTaxonsRepository,
@@ -14,6 +15,7 @@ from .modeles.repositories import (
     vmCorTaxonAttribut,
     vmTaxonsMostView,
     vmReseauxNat,
+    vmTerritoriesRepository
 )
 from . import utils
 
@@ -263,6 +265,26 @@ def ficheCommune(insee):
         data = data_by_reseau
 )
 
+@main.route("/territoire/<area_code>", methods=["GET", "POST"])
+def ficheTerritoire(area_code):
+    session = utils.loadSession()
+    connection = utils.engine.connect()
+    
+    listTaxons = vmTaxonsRepository.getTaxonsTerritory(connection, area_code)
+    territoire = vmTerritoriesRepository.getTerritorieFromCode(connection, area_code)
+    groupes1 = list(set([e['grp1'] for e in listTaxons ]))
+    groupes1.sort(key=lambda x: 'zz' if x=='Autre' else x)
+    groupes2 = set([e['grp2'] for e in listTaxons ])
+
+    nbObsTotal = sum([ r['nb_obs'] for r in listTaxons ] )
+
+    return render_template(
+        'templates/ficheTerritoire.html',
+        territoire=territoire,
+        taxons=listTaxons,
+        groupes1 = groupes1,
+        nbObsTotal = nbObsTotal
+    )
 
 @main.route("/liste/<cd_ref>", methods=["GET", "POST"])
 def ficheRangTaxonomie(cd_ref):

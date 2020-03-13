@@ -61,6 +61,31 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
         nbObsTotal = nbObsTotal + r.nb_obs
     return {'taxons': taxonCommunesList, 'nbObsTotal': nbObsTotal}
 
+def getTaxonsTerritory(connection, area_code):
+    sql = """
+            SELECT 
+	            tx.cd_nom as cd_ref,
+                max(date_part('year'::text, o.dateobs)) as last_obs, 
+                min(date_part('year'::text, o.dateobs)) as first_obs,
+                COUNT(o.id_observation) AS nb_obs, 
+                tx.nom_complet_html, min(t.nom_vern) as nom_vern, tx.lb_nom, tx.classe, tx.ordre, tx.famille,
+                min(COALESCE(gt1.libel,'Autre')) AS grp1,
+                min(gt1.picto) as grp1_picto,
+                min(COALESCE(gt2.libel,'Autre'))  AS grp2,
+                min(gt2.picto) as grp2_picto
+            FROM atlas.vm_observations o
+            JOIN taxonomie.taxref tx ON tx.cd_nom=taxonomie.find_cdref_sp(o.cd_ref)
+            JOIN atlas.vm_taxons2 t ON t.cd_ref=tx.cd_nom
+            JOIN atlas.vm_cor_observations_territories cot ON cot.id_observation=o.id_observation
+            JOIN atlas.vm_territories ter ON ter.id_area=cot.id_area
+            LEFT JOIN atlas.groupes_taxons gt1 ON gt1.id=t.id_grp1
+            LEFT JOIN atlas.groupes_taxons gt2 ON gt2.id=t.id_grp2
+            WHERE ter.area_code = :thisAreaCode AND t.id_rang IN ('ES','SSES')
+            GROUP BY tx.cd_nom
+    """
+    req = connection.execute(text(sql), thisAreaCode=area_code)
+    taxonList = [ dict(r ) for r in req  ]
+    return taxonList
 
 def getTaxonsChildsList(connection, cd_ref):
     sql = """
