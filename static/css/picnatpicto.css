@@ -34,7 +34,12 @@
 .pn-frog,
 .pn-dragonfly,
 .pn-bird,
+.pn-swallow,
+.pn-duck,
+.pn-wader,
 .pn-martens,
+.pn-deer,
+.pn-mousse,
 .pn-grasshopper,
 .pn-ladybug,
 .pn-butterfly,
@@ -64,8 +69,23 @@
 .pn-bird:before {
   content: "G";
 }
+.pn-swallow:before {
+  content: "L";
+}
+.pn-duck:before {
+  content: "J";
+}
+.pn-wader:before {
+  content: "M";
+}
 .pn-martens:before {
   content: "a";
+}
+.pn-deer:before {
+  content: "r";
+}
+.pn-mousse:before {
+  content: "e";
 }
 .pn-grasshopper:before {
   content: "S";
