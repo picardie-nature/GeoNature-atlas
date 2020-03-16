@@ -109,8 +109,7 @@
                                             <table class="table table-bordered" id="myTable{{ g1 }}" style='width:100%'>
                                                  <thead>
                                                      <tr>
-                                                        <th>Protegé</th>
-                                                        <th>Liste rouge régionale</th> 
+                                                        <th>Menace</th> 
                                                         <th>Groupe d'étude</th>
                                                         <th>Nom vernaculaire</th> 
                                                         <th>Nom scientifique</th>
@@ -121,8 +120,9 @@
                                                 {% set txt_taxon_sensible = '<small>Espèce sensible</small>' %}
                                                      {% for taxon in taxons | selectattr("grp1","equalto",g1 ) %}
                                                     <tr>
-                                                            <td align='center'> - </td>
-                                                           <td align='center'>  - </td>
+                                                           <td align='center'>
+                                                                <span class="redlist{{taxon.menace  | replace('*','star')}} redlistBadge"> {{ taxon.menace }} </span>
+                                                           </td>
                                                            <td align='center'> <span style="font-size:30px" class="pn {{ taxon.grp2_picto }}"></span> </td>
                                                             <td> <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
                                                             <td> <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a>  </td>
