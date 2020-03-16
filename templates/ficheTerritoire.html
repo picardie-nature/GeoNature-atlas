@@ -51,7 +51,7 @@
             chartData.data=[];
             console.log(chartData);
             $( document ).ready(function() {
-               drawChart('myChart', chartData.labels, chartData.data);
+               drawChart('taxonomicChart', chartData.labels, chartData.data, 'Taxons recensés');
 
             });
         </script>
@@ -143,8 +143,18 @@
 
                              
                     </div>
+
+
+                        <div class="alert alert-warning" role="alert"> 
+                            <p>Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>. <p>Certaines espèces jugées sensibles peuvent également ne pas apparaître ici.
+                       </div>
+                       <!--<br><a href="{{ url_for('api.syntheseObsCommune',insee_com=territoire.insee ) }}"><button type="button" class="btn btn-primary" style="float:right"><span class="fa fa-download"></span>Télécharger la liste des espèces</button></a>-->
+
+
                 </div>
                 <div class="col-sm-3">
+
+                                        <div style="padding:10%"><canvas id="taxonomicChart" width="100" height="100"></canvas></div>
                     {% if territoire.image_url %}
                         <div style="margin-bottom:25px; margin-top:10px">
                         <table  style="margin:auto">
@@ -153,17 +163,11 @@
                                 {% else %} src="{{ url_for('static', filename='images/communes/'+territoire.image_url) }}"
                                 {% endif %} 
                                 class="img-rounded img-responsive"></td></tr> 
-                            <tr><td style="text-align:right"><small>{{territoire.image_credit}} [<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>]</small></td></tr>
+                            <tr><td style="text-align:right"><small>{{territoire.image_author}} [<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>]</small></td></tr>
                         </table>
                         </div>
                     {% endif %}
 
-                    <div style="padding:10%"><canvas id="myChart" width="100" height="100"></canvas></div>
-
-                    <div class="alert alert-warning" role="alert"> 
-                        <p>Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>. <p>Certaines espèces jugées sensibles peuvent également ne pas apparaître ici.
-                   </div>
-                   <br><a href="{{ url_for('api.syntheseObsCommune',insee_com=territoire.insee ) }}"><button type="button" class="btn btn-primary" style="float:right"><span class="fa fa-download"></span>Télécharger la liste des espèces</button></a>
                 </div>
 
 

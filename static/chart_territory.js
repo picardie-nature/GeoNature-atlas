@@ -1,4 +1,5 @@
-var drawChart = function(elementId, labels, data){ 
+var drawChart = function(elementId, labels, data, title){ 
+
 
     var ctx = document.getElementById(elementId).getContext('2d');
     var chart = new Chart(ctx, {
@@ -18,7 +19,11 @@ var drawChart = function(elementId, labels, data){
 
         // Configuration options go here
         options: {
-            legend:{ display : false }
+            legend:{ display : false },
+            title:{
+                display: (typeof title  !== "undefined") ? true : false,
+                text: title
+            }
         }
     });
 
