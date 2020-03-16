@@ -76,7 +76,7 @@
                 </div>
 
                  <div class="panel panel-default" id="taxons"><div class="panel-body">
-                     <div class="row" style="text-align:center;padding:15px"">
+                     <div class="row" style="text-align:center;padding:15px">
                             <div class="col-sm-1  col-md-offset-3"> 
                                 <span class="fa fa-paw" style="font-size: 45px;"></span></br><b style="font-size:150%">{{taxons|length | pretty }}</b><br/>{{ 'espèces' if taxons|length > 1 else 'espèce' }}
                             </div>
@@ -97,16 +97,16 @@
                                     {% set n_taxons_group1=taxons | selectattr("grp1","equalto",g1 ) | list | count  %}
                                   <script> chartData.labels.push('{{ g1 }} '); chartData.data.push({{ n_taxons_group1 }})</script>
                                   <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ g1 }}">
+                                    <div class="panel-heading" role="tab" style="padding-top:2px; padding-bottom:2px" id="heading{{ g1 | replace(' ','_') }}">
                                       <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse"data-parent="#accordion" href="#collapse{{ g1 | replace(' ','_') }}" aria-expanded="false" aria-controls="collapse{{ g1 | replace(' ','_') }}">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ g1 | replace(' ','_') }}" aria-expanded="false" aria-controls="collapse{{ g1 | replace(' ','_') }}">
                                         <span style="font-size:30px" class='pn {{ (taxons | selectattr("grp1","equalto",g1 ) | first).grp1_picto }}'></span>  <b style="font-size:115%"> {{ n_taxons_group1 }} </b> {{ g1 }}   <span style="color: #3b3b3b;font-size:30px;float:right" class="fa fa-angle-down"></span>  </a>                                       
                                          
                                       </h4>
                                     </div>
                                     <div id="collapse{{ g1 | replace(' ','_') }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                       <div class="panel-body">
-                                            <table class="table table-bordered" id="myTable{{ g1 }}" style='width:100%'>
+                                            <table class="table table-bordered" id="myTable{{ g1 | replace(' ','_') }}" style='width:100%'>
                                                  <thead>
                                                      <tr>
                                                         <th>Menace</th> 
@@ -131,7 +131,7 @@
                                                  {% endfor %}
                                                 </tbody>
                                             </table>
-                                            <script>myDataTable("#myTable{{ g1 }}")</script>
+                                            <script>myDataTable("#myTable{{ g1 | replace(' ','_') }}")</script>
                                       </div>
                                     </div> 
                                   </div>
