@@ -110,7 +110,7 @@
                                                  <thead>
                                                      <tr>
                                                         <th>Menace</th> 
-                                                        <th>Groupe d'étude</th>
+                                                        <th>Type</th>
                                                         <th>Nom vernaculaire</th> 
                                                         <th>Nom scientifique</th>
                                                         <th>Période d'observation</th>
@@ -123,7 +123,7 @@
                                                            <td align='center'>
                                                                 <span class="redlist{{taxon.menace  | replace('*','star')}} redlistBadge"> {{ taxon.menace if taxon.menace}} </span>
                                                            </td>
-                                                           <td align='center'> <span style="font-size:30px" class="pn {{ taxon.grp2_picto }}"></span> </td>
+                                                           <td align='center'> <span style="font-size:30px" class="pn {{ taxon.grp2_picto if taxon.grp2_picto else taxon.grp1_picto }}"></span> </td>
                                                             <td> <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
                                                             <td> <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a>  </td>
                                                             <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
