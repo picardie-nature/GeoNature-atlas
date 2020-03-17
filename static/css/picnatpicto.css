@@ -35,6 +35,7 @@
 .pn-dragonfly,
 .pn-bird,
 .pn-owl,
+.pn.bird-of-prey,
 .pn-swallow,
 .pn-duck,
 .pn-wader,
@@ -72,6 +73,9 @@
 }
 .pn-owl:before {
   content: "H";
+}
+.pn-bird-of-prey:before {
+  content: "K";
 }
 .pn-swallow:before {
   content: "L";
