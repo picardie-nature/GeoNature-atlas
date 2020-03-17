@@ -34,6 +34,7 @@
 .pn-frog,
 .pn-dragonfly,
 .pn-bird,
+.pn-owl,
 .pn-martens,
 .pn-grasshopper,
 .pn-ladybug,
@@ -63,6 +64,9 @@
 }
 .pn-bird:before {
   content: "G";
+}
+.pn-owl:before {
+  content: "H";
 }
 .pn-martens:before {
   content: "a";
