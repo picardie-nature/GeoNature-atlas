@@ -272,6 +272,7 @@ def ficheTerritoire(area_code):
     
     listTaxons = vmTaxonsRepository.getTaxonsTerritory(connection, area_code)
     territoire = vmTerritoriesRepository.getTerritorieFromCode(connection, area_code)
+    territoire['knoweldgeEvolution'] = vmTerritoriesRepository.getTerritorieKnoweldgeEvolution(connection, area_code)[:-1]
     groupes1 = list(set([e['grp1'] for e in listTaxons ]))
     groupes1.sort(key=lambda x: 'zz' if x=='Autre' else x)
     groupes2 = set([e['grp2'] for e in listTaxons ])

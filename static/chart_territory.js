@@ -25,6 +25,52 @@ var drawChart = function(elementId, labels, data, title){
         }
     });
 
-
 }
+
+var drawChartTerritorieKnoweldgeEvolution = function(elementId, labels, dataTaxon,dataOccurence , title){ 
+    var ctx = document.getElementById(elementId).getContext('2d');
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data:{
+            labels:labels,
+            datasets: [
+                {
+                    label:'Nombre de taxon connus',
+                    data:dataTaxon,
+                    borderColor:'rgba(0,128,0,1)',
+                    backgroundColor:'rgba(0,128,0,0.3)',
+                    yAxisID:'left-axis'
+                },
+                {
+                    label:"Nombre d'observations",
+                    fill:false,
+                    borderColor:'rgba(255,102,0,0.8)',
+                    backgroundColor:'rgba(0,102,255,0)',
+                    data:dataOccurence,
+                    yAxisID:'right-axis'
+                }
+            ]
+        },
+        options: {
+            legend:{ display : true },
+            title:{
+                display: (typeof title  !== "undefined") ? true : false,
+                text: title
+            },
+            scales:{
+                yAxes: [{
+                    id: 'left-axis',
+                    type: 'linear',
+                    position:'left'
+                }, {
+                    id: 'right-axis',
+                    type: 'linear',
+                    position:'right'
+                }]
+            }
+        }
+    });
+
+
+};
 
