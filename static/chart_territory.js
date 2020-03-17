@@ -35,19 +35,19 @@ var drawChartTerritorieKnoweldgeEvolution = function(elementId, labels, dataTaxo
             labels:labels,
             datasets: [
                 {
-                    label:'Nombre de taxon connus',
-                    data:dataTaxon,
-                    borderColor:'rgba(0,128,0,1)',
-                    backgroundColor:'rgba(0,128,0,0.3)',
-                    yAxisID:'left-axis'
-                },
-                {
                     label:"Nombre d'observations",
                     fill:false,
                     borderColor:'rgba(255,102,0,0.8)',
                     backgroundColor:'rgba(0,102,255,0)',
                     data:dataOccurence,
                     yAxisID:'right-axis'
+                },
+                {
+                    label:'Nombre de taxon connus',
+                    data:dataTaxon,
+                    borderColor:'rgba(0,128,0,1)',
+                    backgroundColor:'rgba(0,128,0,0.3)',
+                    yAxisID:'left-axis'
                 }
             ]
         },
