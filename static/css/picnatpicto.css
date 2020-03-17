@@ -34,6 +34,7 @@
 .pn-frog,
 .pn-dragonfly,
 .pn-bird,
+.pn-owl,
 .pn-swallow,
 .pn-duck,
 .pn-wader,
@@ -68,6 +69,9 @@
 }
 .pn-bird:before {
   content: "G";
+}
+.pn-owl:before {
+  content: "H";
 }
 .pn-swallow:before {
   content: "L";
