@@ -197,6 +197,9 @@
         {% if configuration.AFFICHAGE_FOOTER %}
             {% include 'static/custom/templates/footer.html' %}
         {% endif %}
+        <script>
+            var configuration = {{configuration|tojson}};
+        </script>
 
       	  	<script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
 		{% if configuration.AFFICHAGE_CARTE_FICHE_COMMUNE %}
