@@ -10,7 +10,7 @@ def getTerritorieFromCode(connection, area_code):
 
 
 def getTerritorieKnoweldgeEvolution(connection, area_code):
-    sql="""SELECT n_taxon, n_occurence, date_part('year', t) AS "year"
+    sql="""SELECT n_taxon, n_occurence, n_observer, date_part('year', t) AS "year"
         FROM atlas.vm_territories_knoweldge_evolution tke
         JOIN atlas.vm_territories t ON t.id_area =tke.id_area WHERE area_code=:thisAreaCode;"""
     req = connection.execute(text(sql), thisAreaCode=area_code)

@@ -54,7 +54,7 @@
             knoweldgeChart.labels=[] ;
             knoweldgeChart.dataTaxon=[];
             knoweldgeChart.dataOccurence=[];
-            var knoweldgeRawData={{territoire.knoweldgeEvolution | tojson| safe }}
+            var knoweldgeRawData={{territoire.knoweldgeEvolution[:-1] | tojson| safe }}
             knoweldgeRawData.forEach(function(element){
                 knoweldgeChart.labels.push(element.year);
                 knoweldgeChart.dataTaxon.push(element.n_taxon);
@@ -112,6 +112,34 @@
                                     </table>
                                 {% endif %}
                                 </div>
+
+                                <div class="col-sm-3">
+                                    <table width=100%>
+                                            <tr>
+                                                <td>
+                                                     <span style="color: ##35526f;font-size:45px" class="fa fa-paw"></span><br>
+                                                        <b style="font-size:150%"> {{ taxons | count }}</b><br>espèces
+                                                </td>
+                                                <td>
+                                                     <span style="color: ##35526f;font-size:45px" class="fa fa-exclamation-triangle"></span><br>
+                                                        <b style="font-size:150%">
+                                                         {{ taxons | selectattr("menace","in",['VU','EN'] ) | list | count }}
+                                                        </b><br>espèces menacées
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <!-- <span style="color: ##35526f;font-size:45px;margin-top:25px" class="fa fa-shield-alt"></span><br>
+                                                        <b style="font-size:150%">99</b><br>espèces protégées -->
+                                                </td>
+                                                <td>
+                                                      <span style="color: ##35526f;font-size:45px;margin-top:25px" class="fa fa-user"></span><br>
+                                                      <b style="font-size:150%">{{ territoire.knoweldgeEvolution[-1].n_observer }}</b><br>observateurs     
+                                                </td>
+                                            </tr>
+                                    </table>
+                                </div>
+
                             </div><!--ROW-->
                     </div>
                     <div class="row">
