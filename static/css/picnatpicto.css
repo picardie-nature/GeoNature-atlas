@@ -52,6 +52,7 @@
 .pn-shell,
 .pn-bug,
 .pn-seal,
+.pn-dolphin,
 .pn-wasp
 {
   font-family:"picnatpicto1"
@@ -124,6 +125,9 @@
 }
 .pn-seal:before {
   content: "z";
+}
+.pn-dolphin:before {
+  content: "V";
 }
 .pn-wasp:before {
   content: "Y";
