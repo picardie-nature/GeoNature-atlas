@@ -35,7 +35,7 @@ var drawChartTerritorieKnoweldgeEvolution = function(elementId, labels, dataTaxo
             labels:labels,
             datasets: [
                 {
-                    label:"Nombre d'observations",
+                    label:"Observations",
                     fill:false,
                     borderColor:'rgba(255,102,0,0.8)',
                     backgroundColor:'rgba(0,102,255,0)',
@@ -43,7 +43,7 @@ var drawChartTerritorieKnoweldgeEvolution = function(elementId, labels, dataTaxo
                     yAxisID:'right-axis'
                 },
                 {
-                    label:'Nombre de taxon connus',
+                    label:'Taxons',
                     data:dataTaxon,
                     borderColor:'rgba(0,128,0,1)',
                     backgroundColor:'rgba(0,128,0,0.3)',
@@ -67,6 +67,9 @@ var drawChartTerritorieKnoweldgeEvolution = function(elementId, labels, dataTaxo
                     type: 'linear',
                     position:'right'
                 }]
+            },
+            tooltips: {
+                mode:'index'
             }
         }
     });
