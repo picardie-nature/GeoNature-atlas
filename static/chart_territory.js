@@ -43,7 +43,7 @@ var drawChartTerritorieKnoweldgeEvolution = function(elementId, labels, dataTaxo
                     yAxisID:'right-axis'
                 },
                 {
-                    label:'Taxons',
+                    label:'Espèces',
                     data:dataTaxon,
                     borderColor:'rgba(0,128,0,1)',
                     backgroundColor:'rgba(0,128,0,0.3)',
