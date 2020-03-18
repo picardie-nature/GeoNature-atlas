@@ -63,7 +63,7 @@
             console.log(knoweldgeChart);
             console.log(knoweldgeRawData);
             $( document ).ready(function() {
-               drawChart('taxonomicChart', chartData.labels, chartData.data, 'Taxons recensés');
+               drawChart('taxonomicChart', chartData.labels, chartData.data, '{{ taxons | count }} taxons recensés');
                drawChartTerritorieKnoweldgeEvolution('knoweldgeChart',knoweldgeChart.labels,knoweldgeChart.dataTaxon,knoweldgeChart.dataOccurence,'Evolution de la connaissance');
             });
 
@@ -90,20 +90,32 @@
                 </div>
 
                  <div class="panel panel-default" id="taxons"><div class="panel-body">
-                     <div class="row" style="text-align:center;padding:15px">
-                            <div class="col-sm-1  col-md-offset-3"> 
-                                <span class="fa fa-paw" style="font-size: 45px;"></span></br><b style="font-size:150%">{{taxons|length | pretty }}</b><br/>{{ 'espèces' if taxons|length > 1 else 'espèce' }}
-                            </div>
-                           <div class="col-sm-1" > 
-                                <span style="color: ##35526f;font-size:45px" class="fa fa-shield-alt"></span><br><b style="font-size:150%">{{ taxons | selectattr("protected") | list | count }}</b><br> espèces protégées
-                            </div>
-                            <div class="col-sm-1"> 
-                                <span class="fa fa-binoculars" style="font-size: 45px;"></span><br/><b style="font-size:150%">{{nbObsTotal | pretty}}</b><br/>{{ 'observations' if nbObsTotal > 1 else 'observation' }}
-                             </div>
+                     <div class="row" style="text-align:center;padding:15px;display:flex;align-items:center">
 
+                                <div class="col-sm-3 col-sm-offset-1">
+                                    <div style="padding:10%"><canvas id="taxonomicChart" width="100" height="100"></canvas></div>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <canvas id="knoweldgeChart" width="200" height="200"></canvas>
+                                </div>
+
+                                <div class="col-sm-3">
+                                 {% if territoire.image_url %}
+                                    <table  style="margin:auto">
+                                        <tr><td><img 
+                                            {% if territoire.image_url.startswith('http') %} src="{{ territoire.image_url }}&width=300"
+                                            {% else %} src="{{ url_for('static', filename='images/communes/'+territoire.image_url) }}"
+                                            {% endif %} 
+                                            class="img-rounded img-responsive"></td></tr> 
+                                        <tr><td style="text-align:right"><small>{{territoire.image_credit}} [<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>]</small></td></tr>
+                                    </table>
+                                {% endif %}
+                                </div>
+                            </div><!--ROW-->
                     </div>
                     <div class="row">
-                        <div class="col-sm-9">
+                        <div class="col-sm-10">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                           
 
@@ -133,13 +145,14 @@
                                                 <tbody>
                                                 {% set txt_taxon_sensible = '<small>Espèce sensible</small>' %}
                                                      {% for taxon in taxons | selectattr("grp1","equalto",g1 ) %}
+                                                        {% set is_sensitive =  taxon.sensible and territoire.area_type=='COM' %}
                                                     <tr>
                                                            <td align='center'>
                                                                 <span class="redlist{{taxon.menace  | replace('*','star')}} redlistBadge"> {{ taxon.menace if taxon.menace}} </span>
                                                            </td>
                                                            <td align='center'> <span style="font-size:30px" class="pn {{ taxon.grp2_picto if taxon.grp2_picto else taxon.grp1_picto }}"></span> </td>
-                                                            <td> <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a></td>
-                                                            <td> <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a>  </td>
+                                                            <td>{% if not is_sensitive %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a>{% else %} {{ txt_taxon_sensible |safe }} {% endif %}</td>
+                                                            <td>{% if not is_sensitive %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_complet_html | safe}} </a> {% else %} {{ txt_taxon_sensible |safe }} {% endif %} </td>
                                                             <td align='center'>{% if taxon.first_obs == taxon.last_obs %} {{ taxon.first_obs | int }}  {% else %} {{ taxon.first_obs | int }} - {{ taxon.last_obs | int }} {% endif %}</td>
                                                     </tr>
                                                  {% endfor %}
@@ -159,29 +172,15 @@
                     </div>
 
 
-                        <div class="alert alert-warning" role="alert"> 
-                            <p>Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>. <p>Certaines espèces jugées sensibles peuvent également ne pas apparaître ici.
-                       </div>
-                       <!--<br><a href="{{ url_for('api.syntheseObsCommune',insee_com=territoire.insee ) }}"><button type="button" class="btn btn-primary" style="float:right"><span class="fa fa-download"></span>Télécharger la liste des espèces</button></a>-->
-
 
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
 
-                                        <div style="padding:10%"><canvas id="taxonomicChart" width="100" height="100"></canvas></div>
-                                        <canvas id="knoweldgeChart" width="200" height="200"></canvas>
-                    {% if territoire.image_url %}
-                        <div style="margin-bottom:25px; margin-top:10px">
-                        <table  style="margin:auto">
-                            <tr><td><img 
-                                {% if territoire.image_url.startswith('http') %} src="{{ territoire.image_url }}&width=300"
-                                {% else %} src="{{ url_for('static', filename='images/communes/'+territoire.image_url) }}"
-                                {% endif %} 
-                                class="img-rounded img-responsive"></td></tr> 
-                            <tr><td style="text-align:right"><small>{{territoire.image_author}} [<a href='https://creativecommons.org/licenses/by-sa/3.0/'>CC-BY-SA</a>]</small></td></tr>
-                        </table>
-                        </div>
-                    {% endif %}
+                        <div class="alert alert-warning" role="alert" style="margin-top:10px"> 
+                            <p>Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>.                     <p>Certaines espèces jugées sensibles peuvent également ne pas apparaître ici.
+                       </div>
+                       <!--<br><a href="{{ url_for('api.syntheseObsCommune',insee_com=territoire.insee ) }}"><button type="button" class="btn btn-primary" style="float:right"><span class="fa fa-download"></span>Télécharger la liste des espèces</button></a>-->
+                   
 
                 </div>
 
