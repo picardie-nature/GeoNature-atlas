@@ -9,7 +9,7 @@ from werkzeug.wrappers import Response
 from . import utils
 from .modeles.repositories import (
     vmSearchTaxonRepository, vmObservationsRepository,
-    vmObservationsMaillesRepository, vmMedias, vmMaillesRichesse,vmCommunesRepository,vmTaxonsRepository
+    vmObservationsMaillesRepository, vmMedias, vmMaillesRichesse,vmCommunesRepository,vmTerritoriesRepository,vmTaxonsRepository
 )
 from .configuration import config
 
@@ -32,6 +32,14 @@ def searchCommuneAPI():
     search = request.args.get('search', '')
     limit = request.args.get('limit', 50)
     results = vmCommunesRepository.getCommunesSearch(connection, search, limit)
+    return jsonify(results)
+
+@api.route('/searchTerritory', methods=['GET'])
+def searchTerritoryAPI():
+    connection = utils.engine.connect()
+    search = request.args.get('search', '')
+    limit = request.args.get('limit', 50)
+    results = vmTerritoriesRepository.getTerritoriesSearch(connection, search, limit)
     return jsonify(results)
 
 @api.route('/syntheseObsCommune/<insee_com>',methods=['GET'])

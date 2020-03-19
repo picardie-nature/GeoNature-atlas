@@ -60,8 +60,6 @@
                 knoweldgeChart.dataTaxon.push(element.n_taxon);
                 knoweldgeChart.dataOccurence.push(element.n_occurence);
             });
-            console.log(knoweldgeChart);
-            console.log(knoweldgeRawData);
             $( document ).ready(function() {
                drawChart('taxonomicChart', chartData.labels, chartData.data, '{{ taxons | count }} taxons recensés');
                drawChartTerritorieKnoweldgeEvolution('knoweldgeChart',knoweldgeChart.labels,knoweldgeChart.dataTaxon,knoweldgeChart.dataOccurence,'Evolution de la connaissance');

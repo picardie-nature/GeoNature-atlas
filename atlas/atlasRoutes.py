@@ -204,7 +204,8 @@ def ficheEspece(cd_ref):
 
 @main.route("/commune/<insee>", methods=["GET", "POST"])
 def ficheCommune(insee):
-    session = utils.loadSession()
+    return redirect(url_for('main.ficheTerritoire', area_code=insee)) # redirection vers une fiche territoire générique
+    """session = utils.loadSession()
     connection = utils.engine.connect()
 
     listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee,'GP')
@@ -240,6 +241,7 @@ def ficheCommune(insee):
             'int_sort':r.get('int_sort',0), #"Autre" à 99, les autres à 0
             'taxons':taxons})
     """
+    """
     configuration = base_configuration.copy()
     configuration.update({
         'NB_LAST_OBS': config.NB_LAST_OBS,
@@ -249,7 +251,7 @@ def ficheCommune(insee):
         'PATRIMONIALITE': config.PATRIMONIALITE,
         'PROTECTION': config.PROTECTION
     })"""
-
+    """
     session.close()
     connection.close()
 
@@ -263,7 +265,7 @@ def ficheCommune(insee):
         reseaux=reseaux,
         #configuration=configuration,
         data = data_by_reseau
-)
+    )"""
 
 @main.route("/territoire/<area_code>", methods=["GET", "POST"])
 def ficheTerritoire(area_code):

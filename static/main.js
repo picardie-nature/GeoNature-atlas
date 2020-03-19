@@ -15,6 +15,8 @@ autocompleteSearch = function(inputID, urlDestination, nbProposal) {
         searchUrl = "/api/searchTaxon";
       } else if (urlDestination == "enp") {
         searchUrl = "/api/searchEnp";
+        } else if (urlDestination == "territory") {
+        searchUrl = "/api/searchTerritory";
       } else {
         searchUrl = "/api/searchCommune";
       }
@@ -45,7 +47,10 @@ autocompleteSearch = function(inputID, urlDestination, nbProposal) {
       var url = ui.item.value;
       if (urlDestination == "espece") {
         location.href = configuration.URL_APPLICATION + "/espece/" + url;
-      } else {
+      } else if(urlDestination == "territory"){
+        location.href = configuration.URL_APPLICATION + "/territoire/" + url;
+      }
+      else {
         location.href = configuration.URL_APPLICATION + "/commune/" + url;
       }
 
@@ -54,6 +59,7 @@ autocompleteSearch = function(inputID, urlDestination, nbProposal) {
     create: function (event,ui){
        $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
          if (urlDestination == "commune") { item.label = item.label + ' [' + item.value.substring(0,2) +']'}
+         else if (urlDestination == "territory" && item.type=='COM') { item.label = item.label + ' [' + item.value.substring(0,2) +']' }
         return $('<li>')
             .append('<a  class="search-bar-item">' + item.label + '</a>')
             .appendTo(ul);
@@ -75,6 +81,9 @@ $("#searchCommunes").focus(function() {
 });
 $("#searchCommunesStat").focus(function() {
   autocompleteSearch("#searchCommunesStat", "commune", 10);
+});
+$("#searchTerritories").focus(function() {
+  autocompleteSearch("#searchTerritories", "territory", 20);
 });
 
 // child list display
