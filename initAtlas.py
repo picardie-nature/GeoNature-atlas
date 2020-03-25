@@ -97,6 +97,13 @@ def filter_shuffle(seq):
     except:
         return seq
 
+@app.template_filter('index')
+def list_index(lst,val):
+    try :
+        return lst.index(val)
+    except ValueError:
+        return None
+
 @app.template_filter('sortLR')
 def sortLR(l,attribute,reverse=False):
     level_redlist={'NE':5,'NA':10,'DD':15,'LC':20,'NT':30,'VU':40,'EN':50,'CR':60,'CR*':65,'EX':100}
