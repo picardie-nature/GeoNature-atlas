@@ -144,7 +144,7 @@
                         <div class="col-sm-10">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                           
-
+                            {% set lr_order_index=['NE','NA','LC','NT','VU','EN','CR','CR*','RE'] %}
                             {% for g1 in groupes1 %}
                                     {% set n_taxons_group1=taxons | selectattr("grp1","equalto",g1 ) | list | count  %}
                                   <script> chartData.labels.push('{{ g1 }} '); chartData.data.push({{ n_taxons_group1 }})</script>
@@ -174,7 +174,7 @@
                                                         {% set is_sensitive =  taxon.sensible and territoire.area_type=='COM' %}
                                                     <tr>
                                                            <td align='center'>
-                                                                <span class="redlist{{taxon.menace  | replace('*','star')}} redlistBadge"> {{ taxon.menace if taxon.menace}} </span>
+                                                                <b hidden>{{ lr_order_index | index(taxon.menace) or -99 }}</b><span class="redlist{{taxon.menace  | replace('*','star')}} redlistBadge"> {{ taxon.menace if taxon.menace}} </span>
                                                            </td>
                                                            <td align='center'> <span style="font-size:30px" class="pn {{ taxon.grp2_picto if taxon.grp2_picto else taxon.grp1_picto }}"></span> </td>
                                                             <td>{% if not is_sensitive %} <a href="{{url_for('main.ficheEspece',cd_ref=taxon.cd_ref)}}" >{{ taxon.nom_vern or '-'}}</a>{% else %} {{ txt_taxon_sensible |safe }} {% endif %}</td>
