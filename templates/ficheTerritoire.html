@@ -121,7 +121,7 @@
                                                 <td>
                                                      <span style="color: ##35526f;font-size:45px" class="fa fa-exclamation-triangle"></span><br>
                                                         <b style="font-size:150%">
-                                                         {{ taxons | selectattr("menace","in",['VU','EN'] ) | list | count }}
+                                                         {{ taxons | selectattr("menace","in",['VU','EN','CR','CR*'] ) | list | count }}
                                                         </b><br>espèces menacées
                                                 </td>
                                             </tr>
