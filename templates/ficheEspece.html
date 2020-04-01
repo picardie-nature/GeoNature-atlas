@@ -2,7 +2,18 @@
 <html>
     <head>
         <meta charset="utf-8" />
-
+        {% if firstPhoto != None %}
+            {% if configuration.REDIMENSIONNEMENT_IMAGE %}
+              {% set img_path = configuration.TAXHUB_URL+'/api/tmedias/thumbnail/'+firstPhoto.id_media|string+'?h=500' %}
+            {% else %}
+              {% set img_path = firstPhoto.path %}
+            {% endif %}
+            <meta property="og:image" content="{{img_path}}" />
+            <meta itemprop="image" content="{{img_path}}">
+            <meta name="twitter:card" content="{{img_path}}">
+            <meta name="twitter:site" content="@PicardieNature">
+            <meta name="twitter:title" content="{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}">
+        {% endif %}
         <title>{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
 
         <!-- Font Awesome -->
