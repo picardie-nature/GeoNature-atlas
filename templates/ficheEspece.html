@@ -12,9 +12,10 @@
             <meta itemprop="image" content="{{img_path}}">
             <meta name="twitter:card" content="summary">
             <meta name="twitter:site" content="@PicardieNature">
-            <meta name="twitter:title" content="{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}">
+            <meta name="twitter:creator" content="@PicardieNature">
+            <meta name="twitter:title" content="{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}}">
             <meta name="twitter:image" content="{{img_path}}">
-            <meta name="twitter:creator" content="Picardie Nature"> 
+            <meta name="twitter:description" content="Répartion, phénologie et statut en Picardie">
             <meta name="twitter:url" content="{{ request.url }}">   
         {% endif %}
         <title>{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
