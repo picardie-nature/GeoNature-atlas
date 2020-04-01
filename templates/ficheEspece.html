@@ -8,8 +8,14 @@
             {% else %}
               {% set img_path = firstPhoto.path %}
             {% endif %}
+            
             <meta property="og:image" content="{{img_path}}" />
+            <meta property="og:description" content="Répartion, phénologie et statut en Picardie" />
+            <meta name="og:url" content="{{ request.url }}">   
+            <meta name="og:title" content="{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}}"> 
+  
             <meta itemprop="image" content="{{img_path}}">
+
             <meta name="twitter:card" content="summary">
             <meta name="twitter:site" content="@PicardieNature">
             <meta name="twitter:creator" content="@PicardieNature">
