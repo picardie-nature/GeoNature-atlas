@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
         <meta charset="utf-8" />
         {% if firstPhoto != None %}
             {% if configuration.REDIMENSIONNEMENT_IMAGE %}
@@ -8,23 +9,25 @@
             {% else %}
               {% set img_path = firstPhoto.path %}
             {% endif %}
-            
-            <meta property="og:image" content="{{img_path}}" />
-            <meta property="og:description" content="Répartion, phénologie et statut en Picardie" />
-            <meta property="og:url" content="{{ request.url }}">   
-            <meta property="og:title" content="{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}}"> 
+         {% else %}
+            {% set img_path = None %}
+         {% endif %} 
   
+        {% include 'templates/meta.html' %}
+        <meta property="og:description" content="Répartion, phénologie et statut en Picardie" />
+        <meta property="og:title" content="{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}}"> 
+        {% if img_path %}
             <meta itemprop="image" content="{{img_path}}">
-
-            <meta name="twitter:card" content="summary">
-            <meta name="twitter:site" content="@PicardieNature">
-            <meta name="twitter:creator" content="@PicardieNature">
-            <meta name="twitter:title" content="{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}}">
+            <meta property="og:image" content="{{img_path}}" />
             <meta name="twitter:image" content="{{img_path}}">
-            <meta name="twitter:description" content="Répartion, phénologie et statut en Picardie">
-            <meta name="twitter:url" content="{{ request.url }}">   
         {% endif %}
-        <title>{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+        <meta name="description" content="Répartion, phénologie et statut en Picardie"/>
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{%if taxon.taxonSearch.nom_vern %}  {{taxon.taxonSearch.nom_vern}} - {% endif %} {{taxon.taxonSearch.lb_nom}}">
+
+        <meta name="twitter:description" content="Répartion, phénologie et statut en Picardie">
+
 
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">

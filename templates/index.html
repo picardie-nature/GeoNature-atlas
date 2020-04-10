@@ -3,6 +3,17 @@
     <head>
         <meta charset="utf-8" />
         <title>{{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+        {% include 'templates/meta.html' %}
+        <meta itemprop="image" content="{{url_for('static', filename='custom/images/logo_picnat.png', _external=True) }}">
+        <meta property="og:image" content="{{url_for('static', filename='custom/images/logo_picnat.png',_external=True) }}" />
+        <meta name="twitter:image" content="{{url_for('static', filename='custom/images/logo_picnat.png', _external=True) }}">
+        <meta property="og:description" content="Découvrez la faune sauvage de Picardie grâce à cette base de données alimentée par un important réseau de naturalistes" />
+        <meta property="og:title" content="Clicnat : La faune sauvage picarde à portée de clic !"> 
+        <meta name="description" content="Découvrez la faune sauvage de Picardie grâce à cette base de données alimentée par un important réseau de naturalistes"/>
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Clicnat : La faune sauvage picarde à portée de clic !">
+        <meta name="twitter:description" content="Découvrez la faune sauvage de Picardie grâce à cette base de données alimentée par un important réseau de naturalistes">
+
 
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">

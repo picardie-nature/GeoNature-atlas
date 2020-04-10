@@ -3,6 +3,19 @@
    <head>
         <meta charset="utf-8" />
         <title>{{territoire.area_name}} | {{configuration.NOM_APPLICATION}} - {{configuration.STRUCTURE}}</title>
+        {% include 'templates/meta.html' %}
+        {% if territoire.image_url and not territoire.image_url.startswith('http') %}
+            {% set img_path = url_for('static', filename='images/communes/'+territoire.image_url, _external=True) %}
+            <meta itemprop="image" content="{{img_path}}">
+            <meta property="og:image" content="{{img_path}}" />
+            <meta name="twitter:image" content="{{img_path}}">
+        {% endif %}
+        <meta property="og:description" content="Découvrez la faune sauvage du territoire" />
+        <meta property="og:title" content="{{ territoire.area_name }}"> 
+        <meta name="description" content="Découvrez la faune sauvage du territoire"/>
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ territoire.area_name }}">
+        <meta name="twitter:description" content="Découvrez la faune sauvage du territoire">
 
         <!-- Jquery -->
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
