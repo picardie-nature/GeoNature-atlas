@@ -51,6 +51,7 @@ class AtlasConfig(Schema):
     NOM_APPLICATION = fields.String(missing="Nom de l'application")
     URL_APPLICATION = fields.String(missing="")
     ID_GOOGLE_ANALYTICS = fields.String(missing="UA-xxxxxxx-xx")
+    GOOGLE_SITE_VERIFICATION = fields.String(missing=None)
     GLOSSAIRE = fields.Boolean(missing=False)
     IGNAPIKEY = fields.String(missing="")
     AFFICHAGE_INTRODUCTION = fields.Bool(missing=True)

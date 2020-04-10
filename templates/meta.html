@@ -1,5 +1,8 @@
-<meta name="twitter:url" content="{{ request.url }}">
-<meta name="twitter:site" content="@PicardieNature">
-<meta name="twitter:creator" content="@PicardieNature">
+    <meta name="twitter:url" content="{{ request.url }}">
+    <meta name="twitter:site" content="@PicardieNature">
+    <meta name="twitter:creator" content="@PicardieNature">
+    <meta property="og:url" content="{{ request.url }}">   
+    {% if configuration.GOOGLE_SITE_VERIFICATION %} <meta name="google-site-verification" content="{{configuration.GOOGLE_SITE_VERIFICATION}}" />{% endif %}
+   
 
-<meta property="og:url" content="{{ request.url }}">   
+
