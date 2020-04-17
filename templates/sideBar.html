@@ -2,6 +2,10 @@
   <a href="{{url_for('main.index')}}" id="menu-toggle" data-toggle="tooltip" data-original-title="Retour à l'accueil" data-placement="right">
     <li class="sidebar-brand"><span id="main_icon" class="glyphicon glyphicon-home"></span></li>
   </a>
+  <a href="https://oursin.clicnat.fr" target="_blank" id="menu-toggle" data-toggle="tooltip" data-original-title="OURSIN" data-placement="right">
+    <li class="sidebar-brand" style="padding-top:2px;padding-bottom:2px"><img  class="img-responsive" style="padding:10%" src="{{url_for('static',filename='images/logo_oursin_blanc.png')}}"></li>
+  </a>
+
   {% for page_key, page_values in configuration.STATIC_PAGES.items()|sort(attribute='1.order') %}
     <a href="{{url_for('main.get_staticpages', page=page_key)}}" data-toggle="tooltip"
       data-original-title="{{page_values.title}}" data-placement="right">
