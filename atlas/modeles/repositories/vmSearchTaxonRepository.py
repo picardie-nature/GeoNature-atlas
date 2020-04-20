@@ -35,6 +35,7 @@ def listeTaxonsSearch(session, search, limit=50):
     req = session.query(
         VmSearchTaxon.search_name,
         VmSearchTaxon.cd_ref,
+        VmSearchTaxon.picto,
         func.similarity(VmSearchTaxon.search_name, search).label("idx_trgm"),
     )
 
@@ -47,4 +48,4 @@ def listeTaxonsSearch(session, search, limit=50):
     )
     data = req.all()
 
-    return [{"label": d[0], "value": d[1]} for d in data]
+    return [{"label": d[0], "value": d[1], "picto":d[2]} for d in data]

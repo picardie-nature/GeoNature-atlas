@@ -28,6 +28,7 @@ class VmSearchTaxon(Base):
         Column("cd_ref", Integer, primary_key=True, unique=True),
         Column("cd_nom", Integer),
         Column("search_name", String),
+        Column("picto",String),
         schema="atlas",
         autoload=True,
         autoload_with=engine,

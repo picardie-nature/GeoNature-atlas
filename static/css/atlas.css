@@ -490,7 +490,13 @@ input.ajax-search {
 .search-bar-item {
 	width: 100%;
 	display: inline-block;
+    font-size: 120%;
+    line-height: 1.5;
 	text-decoration: none !important;
+}
+
+.search-bar-item>.pn{ /*picto search-bar*/
+    font-size:110%;
 }
 
 /* Slick */
