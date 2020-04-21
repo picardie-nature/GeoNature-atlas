@@ -33,6 +33,8 @@
 .pn-snake, 
 .pn-frog,
 .pn-dragonfly,
+.pn-ant,
+.pn-bee,
 .pn-bird,
 .pn-owl,
 .pn-bird-of-prey,
@@ -68,6 +70,12 @@
 }
 .pn-dragonfly:before {
   content: "F";
+}
+.pn-ant:before {
+  content: "R";
+}
+.pn-bee:before {
+  content: "Z";
 }
 .pn-bird:before {
   content: "G";
@@ -132,3 +140,6 @@
 .pn-wasp:before {
   content: "Y";
 }
+
+
+
