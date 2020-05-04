@@ -130,7 +130,7 @@ class AtlasConfig(Schema):
     TYPE_DE_REPRESENTATION_MAILLE = fields.String(
         validate=OneOf(["LAST_OBS", "NB_OBS"])
     )
-
+    MIN_NB_OBS_PHENOLOGIE = fields.Integer(missing=100)
     MAP = fields.Nested(MapConfig, missing=dict())
 
     @validates_schema

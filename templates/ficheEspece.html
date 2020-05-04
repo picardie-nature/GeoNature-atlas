@@ -615,7 +615,7 @@
 
             </div>
             {% endif %}
-                <div class="panel panel-default" id="graphBloc" {% if (taxon.taxonSearch.nb_obs or 0) < 100 %} HIDDEN {% endif %}>
+                <div class="panel panel-default" id="graphBloc" {% if (taxon.taxonSearch.nb_obs or 0) < configuration.MIN_NB_OBS_PHENOLOGIE %} HIDDEN {% endif %}>
                     <h3 class="text-center">Signalements mensuels</h3>
                     <div id="phenologyChart"></div>
                 </div>
