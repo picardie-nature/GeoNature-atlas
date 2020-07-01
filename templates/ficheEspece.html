@@ -28,6 +28,8 @@
 
         <meta name="twitter:description" content="Répartion, phénologie et statut en Picardie">
 
+        <!--RSS -->
+        <link rel="alternate" type="application/rss+xml"   title="Flux taxon" href="{{configuration.FEED_URL}}/obs_taxon/{{taxon.taxonSearch.cd_ref}}.rss" />
 
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
@@ -198,6 +200,8 @@
                                 {% endif %}
                         </div>                        
                         <div id="inpnLink">
+
+                            <a href="{{configuration.FEED_URL}}/obs_taxon/{{taxon.taxonSearch.cd_ref}}.rss" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/43/Feed-icon.svg/800px-Feed-icon.svg.png" style="width: 17px;"></a>
                             <a href='https://inpn.mnhn.fr/espece/cd_nom/{{taxon.taxonSearch.cd_ref}}' target="_blank">
                                 <img width="130px" src="{{url_for('static', filename='images/logo_inpn.png') }}"  data-toggle="tooltip" data-original-title="Consultez la fiche espèce sur l'INPN" data-placement="right">
                              </a>

@@ -17,6 +17,9 @@
         <meta name="twitter:title" content="{{ territoire.area_name }}">
         <meta name="twitter:description" content="Découvrez la faune sauvage du territoire">
 
+        <!--RSS -->
+        <link rel="alternate" type="application/rss+xml"   title="Flux territoire" href="{{configuration.FEED_URL}}/obs_territoire/{{territoire.area_code}}.rss" />
+
         <!-- Jquery -->
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-1.12.4.min.js') }}"></script>
         <script type="text/javascript" src="{{url_for('static', filename='lib/jquery-ui.min.js') }}"></script>
@@ -218,6 +221,7 @@
                         <div class="alert alert-warning" role="alert" style="margin-top:10px"> 
                             <p>Les informations données ici représentent l'état actuel des connaissances et <strong>ne peuvent être considérées comme exhaustives</strong>.                     <p>Certaines espèces jugées sensibles peuvent également ne pas apparaître ici.
                        </div>
+                       <div> <a href="{{configuration.FEED_URL}}/obs_territoire/{{territoire.area_code}}.rss" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/43/Feed-icon.svg/800px-Feed-icon.svg.png" style="width: 17px;"></a></div>
                        <!--<br><a href="{{ url_for('api.syntheseObsCommune',insee_com=territoire.insee ) }}"><button type="button" class="btn btn-primary" style="float:right"><span class="fa fa-download"></span>Télécharger la liste des espèces</button></a>-->
                    
 

@@ -132,6 +132,7 @@ class AtlasConfig(Schema):
     )
     MIN_NB_OBS_PHENOLOGIE = fields.Integer(missing=100)
     MAP = fields.Nested(MapConfig, missing=dict())
+    FEED_URL=fields.String(missing='/rss')
 
     @validates_schema
     def validate_url_taxhub(self, data):
