@@ -1,10 +1,6 @@
 @font-face {
-    font-family: picnatpicto1;
-    src: url("fonts/PICNATPICTO_01.otf") format("opentype");
-}
-@font-face {
-    font-family: picnatpicto2;
-    src: url("fonts/PICNATPICTO_02.otf") format("opentype");
+    font-family: picnatpicto2020;
+    src: url("fonts/PICNATPICTO2020.otf") format("opentype");
 }
 
 
@@ -21,17 +17,13 @@
 }
 
 
-.pn-binocular {
-  font-family:"picnatpicto2"
-}
 
-.pn-binocular:before {
-  content: "E";
-}
 
 .pn-fly,
 .pn-snake, 
 .pn-frog,
+.pn-amplexus,
+.pn-newt,
 .pn-dragonfly,
 .pn-ant,
 .pn-bee,
@@ -56,9 +48,10 @@
 .pn-bug,
 .pn-seal,
 .pn-dolphin,
-.pn-wasp
+.pn-wasp,
+.pn-binocular
 {
-  font-family:"picnatpicto1"
+  font-family:"picnatpicto2020"
 }
 .pn-fly:before {
   content: "A";
@@ -68,6 +61,12 @@
 }
 .pn-frog:before {
   content: "C";
+}
+.pn-amplexus:before {
+  content: "\00E1";
+}
+.pn-newt:before { /*triton*/
+  content: "\00DD";
 }
 .pn-dragonfly:before {
   content: "F";
@@ -143,6 +142,9 @@
 }
 .pn-wasp:before {
   content: "Y";
+}
+.pn-binocular:before {
+  content: "\0021";
 }
 
 
