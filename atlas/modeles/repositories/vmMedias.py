@@ -37,12 +37,9 @@ def getFirstPhoto(connection, cd_ref, id):
     sql = """
         SELECT *
         FROM atlas.vm_medias
-        WHERE (
-                cd_ref IN (
-                    SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
-                )
-                OR cd_ref = :thiscdref
-            )
+        CROSS JOIN (SELECT array_agg(find_all_taxons_childs) AS arr FROM atlas.find_all_taxons_childs(:thiscdref)) my_taxon_array
+        WHERE ( cd_ref = ANY(my_taxon_array.arr) 
+                OR cd_ref = :thiscdref )
                 AND id_type=:thisid
         LIMIT 1
     """
