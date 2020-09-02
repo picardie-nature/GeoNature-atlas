@@ -159,9 +159,8 @@ def getObservers(connection, cd_ref):
     sql = """
     SELECT distinct observateurs
     FROM atlas.vm_observations
-    WHERE cd_ref in (
-            SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
-        )
+    CROSS JOIN (SELECT array_agg(find_all_taxons_childs) AS arr FROM atlas.find_all_taxons_childs(:thiscdref)) my_taxon_array
+    WHERE cd_ref = ANY(my_taxon_array.arr) 
         OR cd_ref = :thiscdref
     """
     req = connection.execute(text(sql), thiscdref=cd_ref)

@@ -53,11 +53,9 @@ def getCommunesObservationsChilds(connection, cd_ref):
     sql = """
     SELECT DISTINCT (com.insee) as insee, com.commune_maj, count(id_observation) AS n_obs, max(dateobs) AS last_obs, min(dateobs) AS first_obs
     FROM atlas.vm_communes com
-    JOIN atlas.vm_observations obs
-    ON obs.insee = com.insee
-    WHERE obs.cd_ref in (
-            SELECT * from atlas.find_all_taxons_childs(:thiscdref) UNION SELECT :thiscdref
-        )
+    JOIN atlas.vm_observations obs ON obs.insee = com.insee
+    CROSS JOIN (SELECT array_agg(find_all_taxons_childs) AS arr FROM atlas.find_all_taxons_childs(:thiscdref)) my_taxon_array
+    WHERE obs.cd_ref = ANY(my_taxon_array.arr) OR obs.cd_ref=:thiscdref
     GROUP BY com.insee,com.commune_maj
     ORDER BY com.commune_maj ASC
     """

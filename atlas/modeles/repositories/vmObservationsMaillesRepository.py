@@ -13,9 +13,8 @@ def getObservationsMaillesChilds(connection, cd_ref):
             extract(YEAR FROM o.dateobs) as annee
         FROM atlas.vm_observations_mailles obs
         JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
-        WHERE obs.cd_ref in (
-                SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
-            )
+        CROSS JOIN (SELECT array_agg(find_all_taxons_childs) AS arr FROM atlas.find_all_taxons_childs(:thiscdref)) my_taxon_array
+        WHERE obs.cd_ref = ANY(my_taxon_array.arr)
             OR obs.cd_ref = :thiscdref
         ORDER BY id_maille"""
     observations = connection.execute(text(sql), thiscdref=cd_ref)
@@ -41,9 +40,8 @@ def getObservationsMaillesLastObsChilds(connection, cd_ref):
             count(*) as nb_obs
         FROM atlas.vm_observations_mailles obs
         JOIN atlas.vm_observations o ON o.id_observation = obs.id_observation
-        WHERE obs.cd_ref in (
-                SELECT * FROM atlas.find_all_taxons_childs(:thiscdref)
-            )
+        CROSS JOIN (SELECT array_agg(find_all_taxons_childs) AS arr FROM atlas.find_all_taxons_childs(:thiscdref)) my_taxon_array
+        WHERE obs.cd_ref = ANY(my_taxon_array.arr)
             OR obs.cd_ref = :thiscdref
 	GROUP BY obs.id_maille, obs.geojson_maille
         ORDER BY id_maille"""
