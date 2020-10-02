@@ -16,7 +16,7 @@
 */      //  });
 
 
-
+/*
 svgbis=d3.selectAll("svg");
 
         svgbis.append("g")
@@ -27,7 +27,7 @@ svgbis=d3.selectAll("svg");
             .attr("fill", "#888888")
             .attr("font-size", "10px")
             .style("text-anchor", "end")
-            .text("Altitude(m)");
+            .text("Altitude(m)");*/
 
 
 var phenologyChart =  Morris.Bar({
@@ -41,6 +41,7 @@ var phenologyChart =  Morris.Bar({
                         resize: true,
                         axes: true,
                     });
+/*
 svgContainer = d3.selectAll("svg");
     svgContainer.append("g")
         .append("text")
@@ -51,7 +52,7 @@ svgContainer = d3.selectAll("svg");
             .attr("fill", "#888888")
             .attr("font-size", "10px")
             .style("text-anchor", "end")
-            .text("Observations");
+            .text("Observations");*/
 
 
 
@@ -67,7 +68,7 @@ rect = d3.selectAll("rect");
     d3.select(this).classed("highlight", false);
 
 });
-
+/*
 svgContainer = d3.selectAll("svg");
     svgContainer.append("g")
         .append("text")
@@ -78,4 +79,4 @@ svgContainer = d3.selectAll("svg");
             .attr("fill", "#888888")
             .attr("font-size", "10px")
             .style("text-anchor", "end")
-            .text("Observations");
+            .text("Observations");*/

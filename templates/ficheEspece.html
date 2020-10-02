@@ -84,6 +84,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cal-heatmap/3.6.2/cal-heatmap.min.js" integrity="sha512-WvDQ+Lsg7F7xG1utkL2xHTASXefdby9nrjxnF1tCS8SYw068IoO2hM6Z9mnQXV1ob5yc7u547n5kIBKePY59xg==" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cal-heatmap/3.6.2/cal-heatmap.css" integrity="sha512-Rjtq02zQtzR2NgjItweb6VMG4XRVAdWaWmkXl9DinZMsMdBNQTb7G3TqPO6zt80DEII0GZKsIfGTETNvYNSd4w==" crossorigin="anonymous" />
        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js" integrity="sha512-Izh34nqeeR7/nwthfeE0SI3c8uhFSnqxV0sI9TvTcXiFJkMd6fB644O64BRq2P/LA/+7eRvCw4GmLsXksyTHBg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/locale/fr.min.js" integrity="sha512-RAt2+PIRwJiyjWpzvvhKAG2LEdPpQhTgWfbEkFDCo8wC4rFYh5GQzJBVIFDswwaEDEYX16GEE/4fpeDNr7OIZw==" crossorigin="anonymous"></script>
 
         <!-- CSS Application -->
         <link rel="shortcut icon" href="{{ url_for('static', filename='custom/images/favicon.ico') }}">
@@ -626,9 +628,10 @@
             </div>
             {% endif %}
                 <div class="panel panel-default" id="graphBloc" {% if (taxon.taxonSearch.nb_obs or 0) < configuration.MIN_NB_OBS_PHENOLOGIE %} HIDDEN {% endif %}>
-                    <h3 class="text-center">Signalements mensuels</h3>
-                    <div id="phenologyChart"></div>
-                </div>
+                    <h3 class="text-center">Signalements</h3>
+                    <div id="calendar-heatmap" style="padding-left:1rem;"></div>
+
+            </div>
             <div class="alert alert-warning">
 			Les informations données ici représentent l'état actuel des connaissances et ne peuvent être considérées comme exhaustives.
 		    </div>
@@ -656,6 +659,11 @@
 
     <script src="{{url_for('static', filename='custom/maps-custom.js') }}"></script>
     <script src="{{url_for('static', filename='ficheEspece.js') }}"></script>
+    <script src="{{url_for('static', filename='calendar-heatmap.js') }}"></script>
+    <script>
+                  makeCalHeatmap('#calendar-heatmap',{{taxon.taxonSearch.cd_ref}} );
+    </script>
+
     <script type="text/javascript" src="{{url_for('static', filename='chart.js') }}"></script>
 
     <script src="{{url_for('static', filename='mapGenerator.js') }}"></script>
