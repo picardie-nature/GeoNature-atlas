@@ -24,7 +24,7 @@ function makeCalHeatmap(itemSelector,cd_nom){
 	                        subDomain: "day",
                             data: "https://geonature.clicnat.fr/api/myapi/calendar_heatmap/?cd_nom="+cd_nom,
                             afterLoadData: data_parser,
-                           /* legend:[2, 10, 50, 100,150],
+                            legend:[2, 10, 50, 100,150],/*
                             legendOrientation: "vertical",legendHorizontalPosition: "right",
                             legendVerticalPosition: "center",*/
                             itemName: ["observation", "observations"],
