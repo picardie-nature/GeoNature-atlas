@@ -476,7 +476,9 @@
                                 - {{photo.source}}
                                 {% endif %}
                                 ">
-                                  <div class="slider-size" style="background-image: url({{img_path}})" alt="{{photo.title}} &copy; {{photo.author|striptags}}">
+
+                                  <div class="slider-size" alt="{{photo.title}} &copy; {{photo.author|striptags}}">
+                                                                            <img src="{{img_path}} ">
                                       <div class="carousel-caption">
                                         {{photo.title}} &copy; {{photo.author|striptags}}
                                         {% if photo.licence %}
