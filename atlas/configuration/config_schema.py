@@ -85,6 +85,7 @@ class AtlasConfig(Schema):
     ATTR_HAB = fields.Integer(missing=105)
     ATTR_PHENO = fields.Integer(missing=106)
     ATTR_POP = fields.Integer(missing=107)
+    ATTR_IDENTIFICATION = fields.Integer(missing=108)
     ATTR_MAIN_PHOTO = fields.Integer(missing=1)
     ATTR_OTHER_PHOTO = fields.Integer(missing=2)
     ATTR_LIEN = fields.Integer(missing=3)

@@ -5,12 +5,12 @@ from sqlalchemy.sql import text
 
 
 def getAttributesTaxon(
-    connection, cd_ref, attrDesc, attrComment, attrMilieu, attrChoro, attrConnaissance = None, attrHab = None, attrPheno = None, attrPop = None
+    connection, cd_ref, attrDesc, attrComment, attrMilieu, attrChoro, attrConnaissance = None, attrHab = None, attrPheno = None, attrPop = None, attrIdentification = None
 ):
     sql = """
         SELECT *
         FROM atlas.vm_cor_taxon_attribut
-        WHERE id_attribut IN (:thisattrDesc, :thisattrComment, :thisattrMilieu, :thisattrChoro, :thisattrConnaissance, :thisattrHab,:thisattrPheno,:thisattrPop )
+        WHERE id_attribut IN (:thisattrDesc, :thisattrComment, :thisattrMilieu, :thisattrChoro, :thisattrConnaissance, :thisattrHab,:thisattrPheno,:thisattrPop,:thisattrIdentif  )
         AND cd_ref = :thiscdref
     """
     req = connection.execute(
@@ -23,7 +23,8 @@ def getAttributesTaxon(
         thisattrConnaissance=attrConnaissance,
         thisattrHab = attrHab,
         thisattrPheno = attrPheno,
-        thisattrPop = attrPop
+        thisattrPop = attrPop,
+        thisattrIdentif = attrIdentification
     )
 
     descTaxon = {
@@ -34,7 +35,8 @@ def getAttributesTaxon(
         'connaissance':None,
         'habitat':None,
         'phenologie':None,
-        'populations':None
+        'populations':None,
+        'identification':None
     }
     for r in req:
         if r.id_attribut == attrDesc:
@@ -53,4 +55,6 @@ def getAttributesTaxon(
             descTaxon['phenologie'] = r.valeur_attribut
         elif r.id_attribut == attrPop:
             descTaxon['populations'] = r.valeur_attribut
+        elif r.id_attribut == attrIdentification:
+            descTaxon['identification'] = r.valeur_attribut   
     return descTaxon

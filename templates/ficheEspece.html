@@ -516,6 +516,7 @@
                     <li><a data-toggle="tab" href="#habitats">Habitats</a></li>
                     <li><a data-toggle="tab" href="#phenologie">Phénologie</a></li>
                     <li><a data-toggle="tab" href="#populations">Etat des populations</a></li>
+                    <li><a data-toggle="tab" href="#identification">Identification</a></li>
                     <li><a data-toggle="tab" href="#synonymes">Synonymes</a></li>
                 </ul>
                 {% set non_renseigne = '<small>Non renseignée pour le moment</small>' %}
@@ -536,6 +537,9 @@
                         </div>
                         <div id="populations" class="tab-pane fade">
                               {{ taxonDescription.populations | safe if taxonDescription.populations else non_renseigne | safe }}
+                        </div>
+                        <div id="identification" class="tab-pane fade">
+                              {{ taxonDescription.identification | safe if taxonDescription.identification else non_renseigne | safe }}
                         </div>
                         <div id="synonymes" class="tab-pane fade">
                             {% if synonyme | length == 1 %}

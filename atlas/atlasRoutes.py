@@ -175,7 +175,8 @@ def ficheEspece(cd_ref):
         current_app.config["ATTR_CONNAISSANCE"],
         current_app.config["ATTR_HAB"],
         current_app.config["ATTR_PHENO"],
-        current_app.config["ATTR_POP"]
+        current_app.config["ATTR_POP"],
+        current_app.config["ATTR_IDENTIFICATION"]
     )
     observers = vmObservationsRepository.getObservers(connection, cd_ref)
 
