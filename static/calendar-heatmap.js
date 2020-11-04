@@ -7,7 +7,7 @@ function makeCalHeatmap(itemSelector,cd_nom){
                             var t = new Date(raw_data[d].timestamp);
                             
                             var t = new Date(now.getFullYear(),0,1);
-                            var t2 = t.getTime()/1000 + raw_data[d].doy*24*60*60
+                            var t2 = t.getTime()/1000 + (raw_data[d].doy-1)*24*60*60
                             stats[t2] = raw_data[d].nb_obs;
                         }
                         console.log(stats);
