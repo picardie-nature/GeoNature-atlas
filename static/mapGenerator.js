@@ -13,7 +13,7 @@ mbUrl = 'https://osm.geopicardie.fr/mapproxy/tms/1.0.0/{id}/webmercator/{z}/{x}/
 
 // Map initialization
 firstMapTile = L.tileLayer(configuration.MAP.FIRST_MAP.url, {attribution : configuration.MAP.FIRST_MAP.attribution} );
-orthoMap =  L.tileLayer(configuration.MAP.SECOND_MAP.url, {attribution: configuration.MAP.SECOND_MAP.attribution});
+orthoMap =  L.tileLayer.wms(configuration.MAP.SECOND_MAP.url, {layers:configuration.MAP.SECOND_MAP.layers, attribution: configuration.MAP.SECOND_MAP.attribution});
 var layer_naturalist  = L.tileLayer(mbUrl, {id: 'naturaliste', tms:true, zoomOffset:-1, attribution: mbAttr, maxZoom: 19});
 firstMapTile = layer_naturalist;
 
