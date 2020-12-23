@@ -10,12 +10,13 @@ function generateMap() {
 
 var mbAttr = 'GéoPicardie & contributeurs d&apos;<a href="http://openstreetmap.org">OpenStreetMap</a>',
 mbUrl = 'https://osm.geopicardie.fr/mapproxy/tms/1.0.0/{id}/webmercator/{z}/{x}/{y}.png';
+mbUrl = 'https://osm.geo2france.fr/mapcache/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=naturaliste&STYLE=default&TILEMATRIXSET=webmercator&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fpng'
 
 // Map initialization
-firstMapTile = L.tileLayer(configuration.MAP.FIRST_MAP.url, {attribution : configuration.MAP.FIRST_MAP.attribution} );
+firstMapTile = L.tileLayer.wms(configuration.MAP.FIRST_MAP.url, {layers:configuration.MAP.FIRST_MAP.layers, attribution : configuration.MAP.FIRST_MAP.attribution} );
 orthoMap =  L.tileLayer.wms(configuration.MAP.SECOND_MAP.url, {layers:configuration.MAP.SECOND_MAP.layers, attribution: configuration.MAP.SECOND_MAP.attribution});
-var layer_naturalist  = L.tileLayer(mbUrl, {id: 'naturaliste', tms:true, zoomOffset:-1, attribution: mbAttr, maxZoom: 19});
-firstMapTile = layer_naturalist;
+//var layer_naturalist  = L.tileLayer(mbUrl, {id: 'naturaliste', tms:false, zoomOffset:-1, attribution: mbAttr, maxZoom: 19});
+//firstMapTile = layer_naturalist;
 
 baseMap = {};
 baseMap[configuration.MAP.FIRST_MAP.tileName]=firstMapTile;
