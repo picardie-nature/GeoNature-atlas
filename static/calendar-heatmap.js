@@ -17,7 +17,7 @@ function makeCalHeatmap(itemSelector,cd_nom){
 
                     moment.locale("fr"); 
                     cal.init({
-                            start: new Date(2020, 0),
+                            start: new Date(new Date().getFullYear(), 0),
                             range:12,
                         	itemSelector:itemSelector,
                         	domain: "month",
