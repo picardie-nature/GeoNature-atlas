@@ -277,7 +277,7 @@ def ficheTerritoire(area_code):
     territoire = vmTerritoriesRepository.getTerritorieFromCode(connection, area_code)
     territoire['knoweldgeEvolution'] = vmTerritoriesRepository.getTerritorieKnoweldgeEvolution(connection, area_code)
     groupes1 = list(set([e['grp1'] for e in listTaxons ]))
-    groupes1.sort(key=lambda x: 'zz' if x=='Autre' else x)
+    groupes1.sort(key=lambda x: 'zz' if x=='Autres groupes' else x)
     groupes2 = set([e['grp2'] for e in listTaxons ])
 
     nbObsTotal = sum([ r['nb_obs'] for r in listTaxons ] )

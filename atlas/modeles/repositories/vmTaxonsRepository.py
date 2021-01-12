@@ -69,9 +69,9 @@ def getTaxonsTerritory(connection, area_code):
                 min(date_part('year'::text, o.dateobs)) as first_obs,
                 COUNT(o.id_observation) AS nb_obs, 
                 tx.nom_complet_html, min(t.nom_vern) as nom_vern, tx.lb_nom, tx.classe, tx.ordre, tx.famille,
-                min(COALESCE(gt1.libel,'Autre')) AS grp1,
+                min(COALESCE(gt1.libel,'Autres groupes')) AS grp1,
                 min(gt1.picto) as grp1_picto,
-                min(COALESCE(gt2.libel,'Autre'))  AS grp2,
+                min(COALESCE(gt2.libel,'Autres groupes'))  AS grp2,
                 min(gt2.picto) as grp2_picto,
                 min(t.menace) as menace,
                 bool_or(sensible) as sensible
