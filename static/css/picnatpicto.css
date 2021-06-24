@@ -49,7 +49,16 @@
 .pn-seal,
 .pn-dolphin,
 .pn-wasp,
-.pn-binocular
+.pn-binocular,
+.pn-rarity-d,
+.pn-rarity-e,
+.pn-rarity-rr,
+.pn-rarity-r,
+.pn-rarity-ar,
+.pn-rarity-pc,
+.pn-rarity-ac,
+.pn-rarity-c,
+.pn-rarity-cc
 {
   font-family:"picnatpicto2020"
 }
@@ -146,6 +155,32 @@
 .pn-binocular:before {
   content: "\0021";
 }
-
+.pn-rarity-d:before {
+  content: "\00E7";
+}
+.pn-rarity-e:before {
+  content: "\00F0";
+}
+.pn-rarity-rr:before {
+  content: "\00E8";
+}
+.pn-rarity-r:before {
+  content: "\00E9";
+}
+.pn-rarity-ar:before {
+  content: "\00EA";
+}
+.pn-rarity-pc:before {
+  content: "\00EB";
+}
+.pn-rarity-ac:before {
+  content: "\00EC";
+}
+.pn-rarity-c:before {
+  content: "\00ED";
+}
+.pn-rarity-cc:before {
+  content: "\00EE";
+}
 
 
