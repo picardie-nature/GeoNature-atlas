@@ -50,6 +50,10 @@
 .pn-dolphin,
 .pn-wasp,
 .pn-binocular,
+.pn-scale,
+.pn-exotic-turtle,
+.pn-exotic-parakeet,
+.pn-warning,
 .pn-rarity-d,
 .pn-rarity-e,
 .pn-rarity-rr,
@@ -154,6 +158,18 @@
 }
 .pn-binocular:before {
   content: "\0021";
+}
+.pn-scale:before {
+  content: "\00E6";
+}
+.pn-exotic-turtle:before {
+  content: "\00E3";
+}
+.pn-exotic-parakeet:before {
+  content: "\00E4";
+}
+.pn-warning:before {
+  content: "\00E5";
 }
 .pn-rarity-d:before {
   content: "\00E7";
