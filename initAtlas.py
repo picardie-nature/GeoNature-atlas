@@ -115,6 +115,16 @@ def sortLR(l,attribute,reverse=False):
         return level_redlist.get(val,0)
     return sorted(l, key=sorting, reverse = reverse)
 
+@app.template_filter('indice_libel')
+def indice_libel(v):
+    libels={
+        'CC': 'Très commun', 'C':'Commun', 'AC':'Assez commun', 'PC':'Peu commun', 'AR':'Assez rare', 'R':'Rare','RR':'Très rare', 'E': 'Exceptionnel','D':'Disparu',
+        'EX':'Eteint', 'CR': 'En danger critique d\'extinction', 'CRstar': 'En danger critique d\'extinction, probablement éteint', 'EN' : 'En danger', 'VU':'Vulnérable',
+        'NT':'Quasi menacé', 'LC':'Préoccupation mineure', 'DD' : 'Données insuffisantes',
+        'NE' : 'Non évalué', 'NA': 'Non applicable'
+    }
+    return libels.get(v,None)
+
 if __name__ == "__main__":
     from flask_script import Manager
 

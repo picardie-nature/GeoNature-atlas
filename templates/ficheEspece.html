@@ -191,10 +191,11 @@
                         </div>
                         <div id="badges" style="margin-top:15px;">
                             <div id="listerouge" style="display:inline-block">
+                                <span style="font-size:250%" class="pn pn-rarity-{{ taxon.taxonSearch.rarete | lower }} rarity-badge" data-original-title="{{ taxon.taxonSearch.rarete | indice_libel }}" data-toggle="tooltip"></span>
                                 {% for lr_statut in taxon.taxonSearch.liste_rouge if lr_statut!='NE' %}
                                     <a href="{{taxon.taxonSearch.doc_lr_url}}" target="_blank"> 
                                         <span class="redlistBadge redlist{{lr_statut | replace('*','star')}}" style="font-size:150%" data-toggle="tooltip" data-placement="auto right" data-html=true 
-                                        data-original-title="{{taxon.taxonSearch.doc_lr_citation | replace('\"','\'') | safe   }}">{{lr_statut}}</span>
+                                        data-original-title="{{lr_statut | replace('*','star') | indice_libel   }}">{{lr_statut}}</span>
                                      </a>
                                 {% endfor %}
                             </div>

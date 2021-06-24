@@ -485,6 +485,13 @@ input.ajax-search {
 }
 
 
+.rarity-badge {
+    background-color:#4a4a4a; 
+    color:#FFF;
+    padding-right:5px;
+    padding-left:5px;
+    font-weight: bold;
+}
 
 /* Search bar */
 .search-bar-item {
