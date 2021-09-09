@@ -11,7 +11,7 @@ legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend');
     div.innerHTML += '<b>Dernière observation</b><br>';
     div.innerHTML +='<i style="background:green"></i> Moins de 5 ans<br>'
-    div.innerHTML +='<i style="background:yellow"></i> 5 à 10 ans<br>'
+    div.innerHTML +='<i style="background:gold"></i> 5 à 10 ans<br>'
     div.innerHTML +='<i style="background:red"></i> Plus de 10 ans<br>'
     return div;
 };
@@ -32,7 +32,7 @@ function styleMailleAtlas(feature) {
     if(feature.properties.lastyear <= currentYear - 10){
         fillColor='red' ;
     }else if(feature.properties.lastyear <= currentYear - 5) {
-        fillColor='yellow';
+        fillColor='gold';
     }else{
         fillColor='green';
     }
