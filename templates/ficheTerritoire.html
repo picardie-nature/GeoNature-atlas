@@ -70,7 +70,7 @@
             knoweldgeChart.labels=[] ;
             knoweldgeChart.dataTaxon=[];
             knoweldgeChart.dataOccurence=[];
-            var knoweldgeRawData={{territoire.knoweldgeEvolution[:-1] | tojson| safe }}
+            var knoweldgeRawData={{territoire.knoweldgeEvolution | tojson| safe }}
             knoweldgeRawData.forEach(function(element){
                 knoweldgeChart.labels.push(element.year);
                 knoweldgeChart.dataTaxon.push(element.n_taxon);
