@@ -15,7 +15,8 @@ from .modeles.repositories import (
     vmCorTaxonAttribut,
     vmTaxonsMostView,
     vmReseauxNat,
-    vmTerritoriesRepository
+    vmTerritoriesRepository,
+    pn_news
 )
 from . import utils
 
@@ -119,6 +120,8 @@ def index():
         connection, current_app.config["RANG_STAT"]
     )
 
+    news = list(pn_news.getLastsItems(connection, limit = 3))   
+
     connection.close()
     session.close()
 
@@ -129,6 +132,7 @@ def index():
         stat=stat,
         customStat=customStat,
         customStatMedias=customStatMedias,
+        news = news
     )
 
 

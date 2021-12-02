@@ -119,7 +119,7 @@ class AtlasConfig(Schema):
     )
 
     PARTENAIRES = fields.List(fields.Dict())
-    
+    NEWS_KEYWORDS = fields.List(fields.String(), missing=['Clicnat'])
     AFFICHAGE_MAILLE = fields.Boolean(missing=False)
     ZOOM_LEVEL_POINT = fields.Integer(missing=11)
     LIMIT_CLUSTER_POINT = fields.Integer(missing=1000)

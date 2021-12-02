@@ -64,7 +64,7 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="panel panel-default stat-panel">
 					<div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                             <img src="{{url_for('static', filename='custom/images/logo_picnat.png') }}" style="float:left;margin-right:10px;margin-bottom:10px">
                             <h3 style="margin-top:2px">Bienvenue sur Clicnat.fr</h3>
                             <b>La base collaborative d'observation de la faune sauvage en Picardie</b>
@@ -72,7 +72,22 @@
                                 et des structures partenaires.</p>
                             <b>Vous souhaitez participer ?</b> Vous pouvez à tout moment nous <a href="https://geonature.clicnat.fr">transmettre vos observations</a> de faune sauvage.
                         </div>
-						<div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12 stat-object" style="min-height:150px">
+
+
+						<div class ="col-lg-3 col-md-3 col-sm-3 col-xs-12 stat-object" style="min-height:150px;display:flex">
+							<div class="thumbnail stat-thumbnail" style="width:100%">
+								<span class="fa fa-newspaper" title="En ce moment chez Picardie Nature"></span>	
+                                    <ul>						
+                                    {% for item in news %}
+                                        <li style="float:left"><a href="{{item.link}}">{{item.title}}</a></li>
+                                    {% endfor %}
+                                    </ul>
+							</div>
+						</div>
+
+
+
+						<div class ="col-lg-2 col-md-3 col-sm-3 col-xs-12 stat-object" style="min-height:150px">
 							<div class="thumbnail stat-thumbnail">
 								<span class="fa fa-binoculars"></span>
 								<h1>{{stat.nbTotalObs | pretty}}</h1>
@@ -80,7 +95,7 @@
 								<!--<p><a id="localScroll" href="#DernieresObservations" class="btn btn-default" role="button">Voir les dernières observations</a></p>-->
 							</div>
 						</div>
-						<div class = "col-lg-3 col-md-3 col-sm-3 col-xs-12 stat-object" style="min-height:150px">
+						<div class = "col-lg-2 col-md-2 col-sm-2 col-xs-12 stat-object" style="min-height:150px">
 							<div class="thumbnail stat-thumbnail">
 								<span class="fa fa-paw"></span>
 								<h1>{{stat.nbTotalTaxons | pretty}}</h1>
@@ -99,7 +114,7 @@
 				</div>
 			</div>
 			{% endif %}
-			<div class="col-sm-12" id='toto'>
+			<div class="col-sm-12" id='partner'>
                         <!-- Logos partenaires -->
 			    <div class="panel panel-default stat-panel" style="padding-right:60px;padding-left:60px;"> 
                     <div class="slick-track partenaires-slick" hidden>
@@ -109,6 +124,7 @@
                     </div>
                 </div>
             </div>
+
 			{% if customStatMedias != None and configuration.AFFICHAGE_RANG_STAT %}
 			<!-- Statistiques par rang taxonomique -->
 			<div class="col-sm-12">
