@@ -23,13 +23,7 @@ MAP_2 = {
 
 class SecretSchemaConf(Schema):
     database_connection = fields.String(
-        required=True,
-        validate=Regexp(
-            "^postgresql:\/\/.*:.*@[^:]+:\w+\/\w+$",
-            0,
-            """Database uri is invalid ex:
-             postgresql://monuser:monpass@server:port/db_name""",
-        ),
+        required=True
     )
 
 
