@@ -11,24 +11,25 @@ from .. import utils
 
 
 # With distinct the result in a array not an object, 0: lb_nom, 1: nom_vern
-def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
+def getTaxonsCommunes(connection, insee,species_only=False,grand_public=False):
     sql = """
             SELECT 
 	            cd_ref_sp as cd_ref,max(date_part('year'::text, o.dateobs)) as last_obs, min(date_part('year'::text, o.dateobs)) as first_obs,
                 COUNT(o.id_observation) AS nb_obs, t.nom_complet_html, t.nom_vern, t.lb_nom, t.classe, t.ordre, t.famille,
                 t.group2_inpn, t.patrimonial, t.protection_stricte,  bool_or(t.protected) AS protected ,t.code_lr,t.sort_lr, t.sensible,
-                coalesce(rnat.code_reseau,'autre') as code_reseau_nat, rnat.picto as picto_reseau_nat, rnat.url as url_reseau_nat, coalesce(rgp.code_reseau,'autre') as code_reseau_gp,rgp.picto as picto_reseau_gp
+                coalesce(snat.id_subset::text,'autre') as code_reseau_nat, snat.picto as picto_reseau_nat, rnat.url as url_reseau_nat, coalesce(sgp.id_subset::text,'autre') as code_reseau_gp, sgp.picto as picto_reseau_gp
             FROM atlas.vm_observations o
-            JOIN taxonomie.vm_cd_ref_sp ON taxonomie.vm_cd_ref_sp.cd_nom = o.cd_ref
+            JOIN taxonomie.pn_custom_taxref_tree_sp ttsp ON ttsp.cd_ref = o.cd_ref
             JOIN atlas.vm_taxons t ON t.cd_ref=cd_ref_sp
-            LEFT JOIN pn_reseaux.reseaux rnat ON rnat.id_reseau = t.id_reseau_nat
-            LEFT JOIN pn_reseaux.reseaux rgp ON rgp.id_reseau = t.id_reseau_gp
+            LEFT JOIN pn_custom_taxonomie.pn_custom_reseau rnat ON rnat.id_reseau = t2.id_reseau_nat
+            LEFT JOIN pn_custom_taxonomie.pn_custom_subset snat ON snat.id_subset = rnat.id_subset
+            LEFT JOIN pn_custom_taxonomie.pn_custom_subset sgp ON sgp.id_subset = t2.id_reseau_gp
             WHERE o.insee = :thisInsee AND t.id_rang IN ('ES','SSES')
             GROUP BY cd_ref_sp, t.nom_vern, t.nom_complet_html, t.lb_nom, t.classe, t.ordre, t.famille, t.group2_inpn,
-                t.patrimonial, t.protection_stricte, rgp.picto, rgp.code_reseau, rnat.picto,  rnat.url, rnat.code_reseau, t.code_lr, t.sort_lr, t.sensible
+                t.patrimonial, t.protection_stricte, sgp.picto, sgp.id_subset, snat.picto,  rnat.url, snat.id_subset, t.code_lr, t.sort_lr, t.sensible
             ORDER BY nb_obs DESC    
     """
-    req = connection.execute(text(sql), thisInsee=insee, publicCible=public_cible)
+    req = connection.execute(text(sql), thisInsee=insee, grandPublic=grand_public)
     taxonCommunesList = list()
     nbObsTotal = 0
     for r in req:
@@ -63,27 +64,27 @@ def getTaxonsCommunes(connection, insee,species_only=False,public_cible='NAT'):
 
 def getTaxonsTerritory(connection, area_code):
     sql = """
-            SELECT 
-	            tx.cd_nom as cd_ref,
-                max(date_part('year'::text, o.dateobs)) as last_obs, 
-                min(date_part('year'::text, o.dateobs)) as first_obs,
-                COUNT(o.id_observation) AS nb_obs, 
-                tx.nom_complet_html, min(t.nom_vern) as nom_vern, tx.lb_nom, tx.classe, tx.ordre, tx.famille,
-                min(COALESCE(gt1.libel,'Autres groupes')) AS grp1,
-                min(gt1.picto) as grp1_picto,
-                min(COALESCE(gt2.libel,'Autres groupes'))  AS grp2,
-                min(gt2.picto) as grp2_picto,
-                min(t.menace) as menace,
-                bool_or(sensible) as sensible
-            FROM atlas.vm_observations o
-            JOIN taxonomie.taxref tx ON tx.cd_nom=taxonomie.find_cdref_sp(o.cd_ref)
-            JOIN atlas.vm_taxons2 t ON t.cd_ref=tx.cd_nom
-            JOIN atlas.vm_cor_observations_territories cot ON cot.id_observation=o.id_observation
-            JOIN atlas.vm_territories ter ON ter.id_area=cot.id_area
-            LEFT JOIN atlas.groupes_taxons gt1 ON gt1.id=t.id_grp1
-            LEFT JOIN atlas.groupes_taxons gt2 ON gt2.id=t.id_grp2
-            WHERE ter.area_code = :thisAreaCode AND t.id_rang IN ('ES','SSES')
-            GROUP BY tx.cd_nom
+        SELECT
+            tx.cd_nom as cd_ref,
+            max(date_part('year'::text, o.dateobs)) as last_obs,
+            min(date_part('year'::text, o.dateobs)) as first_obs,
+            COUNT(o.id_observation) AS nb_obs,
+            tx.nom_complet_html, min(t.nom_vern) as nom_vern, tx.lb_nom, tx.classe, tx.ordre, tx.famille,
+            min(COALESCE(gt1.nom,'Autres groupes')) AS grp1,
+            min(gt1.picto) as grp1_picto,
+            min(COALESCE(gt2.nom,'Autres groupes'))  AS grp2,
+            min(gt2.picto) as grp2_picto,
+            min(t.menace) as menace,
+            bool_or(sensible) as sensiblea
+        FROM atlas.vm_observations o
+        JOIN taxonomie.taxref tx ON tx.cd_nom=taxonomie.pn_custom_find_cdref_sp(o.cd_ref)
+        JOIN atlas.vm_taxons2 t ON t.cd_ref=tx.cd_nom
+        JOIN atlas.vm_cor_observations_territories cot ON cot.id_observation=o.id_observation
+        JOIN atlas.vm_territories ter ON ter.id_area=cot.id_area
+        LEFT JOIN pn_custom_taxonomie.pn_custom_subset gt1 ON gt1.id_subset=t.id_grp1
+        LEFT JOIN pn_custom_taxonomie.pn_custom_subset gt2 ON gt2.id_subset=t.id_grp2
+        WHERE ter.area_code = :thisAreaCode AND t.id_rang IN ('ES','SSES')
+        GROUP BY tx.cd_nom;
     """
     req = connection.execute(text(sql), thisAreaCode=area_code)
     taxonList = [ dict(r ) for r in req  ]

@@ -213,7 +213,7 @@ def ficheCommune(insee):
     """session = utils.loadSession()
     connection = utils.engine.connect()
 
-    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee,'GP')
+    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee,True)
     commune = vmCommunesRepository.getCommuneFromInsee(connection, insee)
     communesSearch = vmCommunesRepository.getAllCommunes(session)
     if config.AFFICHAGE_MAILLE:
@@ -229,7 +229,7 @@ def ficheCommune(insee):
         connection, insee
     )
 
-    reseaux = vmReseauxNat.getAllReseaux(connection,public_cible='GP')
+    reseaux = vmReseauxNat.getAllReseaux(connection,grand_public=True')
     reseaux.append({'code_reseau':'autre','nom_reseau':u'Autres espèces','id_reseau':99,'int_sort':99})
     
     data_by_reseau = list()

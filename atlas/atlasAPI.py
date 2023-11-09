@@ -46,7 +46,7 @@ def searchTerritoryAPI():
 def syntheseObsCommune(insee_com):
     render_format = request.args.get('format','csv')
     connection = utils.engine.connect()
-    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee_com,'GP')
+    listTaxons = vmTaxonsRepository.getTaxonsCommunes(connection, insee_com, True)
     taxons = listTaxons['taxons']
     csvfile=StringIO()
     writer=None

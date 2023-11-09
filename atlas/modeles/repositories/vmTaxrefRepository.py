@@ -22,14 +22,15 @@ def searchEspece(connection, cd_ref):
             OR cd_ref = :thiscdref
     )
     SELECT taxref.*, l.*, t2.patrimonial, t2.protection_stricte, t2.code_lr, t22.rarete, t2.protected, t2.sensible, t2.eee, doc_lr.full_citation as doc_lr_citation,doc_lr.doc_url as doc_lr_url,
-            coalesce(rnat.code_reseau,'autre') as code_reseau_nat, rnat.picto as picto_reseau_nat, rnat.url as url_reseau_nat, coalesce(rgp.code_reseau,'autre') as code_reseau_gp,rgp.picto as picto_reseau_gp
+            coalesce(snat.id_subset::text,'autre') as code_reseau_nat, snat.picto as picto_reseau_nat, rnat.url as url_reseau_nat, coalesce(sgp.id_subset::text,'autre') as code_reseau_gp, sgp.picto as picto_reseau_gp
     FROM atlas.vm_taxref taxref
     JOIN limit_obs l ON l.cd_ref = taxref.cd_nom
     LEFT JOIN atlas.vm_taxons t2 ON t2.cd_ref = taxref.cd_ref
     LEFT JOIN atlas.vm_taxons2 t22 ON t22.cd_ref = taxref.cd_ref
-    LEFT JOIN taxonomie.bdc_statuts_doc doc_lr ON doc_lr.cd_doc=t2.cd_doc_lr
-    LEFT JOIN pn_reseaux.reseaux rnat ON rnat.id_reseau = t2.id_reseau_nat
-    LEFT JOIN pn_reseaux.reseaux rgp ON rgp.id_reseau = t2.id_reseau_gp
+    LEFT JOIN taxonomie.bdc_statut_text doc_lr ON doc_lr.cd_doc=t2.cd_doc_lr
+    LEFT JOIN pn_custom_taxonomie.pn_custom_reseau rnat ON rnat.id_reseau = t2.id_reseau_nat
+    LEFT JOIN pn_custom_taxonomie.pn_custom_subset snat ON snat.id_subset = rnat.id_subset
+    LEFT JOIN pn_custom_taxonomie.pn_custom_subset sgp ON sgp.id_subset = t2.id_reseau_gp
     WHERE taxref.cd_nom = :thiscdref
     """
     req = connection.execute(text(sql), thiscdref=cd_ref)

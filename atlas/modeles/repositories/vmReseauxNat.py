@@ -6,14 +6,13 @@ from ...configuration import config
 from sqlalchemy.sql import text
 from .. import utils
 
-def getAllReseaux(connection,public_cible='NAT'):
+def getAllReseaux(connection,grand_public=False):
     sql = """
-        SELECT r.id_reseau, code_reseau, nom,picto FROM pn_reseaux.reseaux r
-        JOIN pn_reseaux.cor_reseau_public rp ON rp.id_reseau=r.id_reseau
+        SELECT s.id_subset, s.id_subset::text, s.nom, s.picto FROM pn_custom_taxonomie.pn_custom_subset s
          """
-    if(public_cible):
-        sql+="WHERE rp.id_nomenclature_type_public=ref_nomenclatures.get_id_nomenclature('TYPE_PUBLIC',:thisPublic)"
-    req = connection.execute(text(sql),thisPublic=public_cible)
+    if(grand_public):
+        sql+="WHERE s.niveau_subset = 0"
+    req = connection.execute(text(sql))
     reseauxList=list()
     for r in req:
         temp = {

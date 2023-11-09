@@ -204,9 +204,9 @@ def statIndex(connection):
     for r in req:
         result['town'] = r.count
 
-    sql = "SELECT COUNT(DISTINCT vm_cd_ref_sp.cd_ref_sp) AS count \
+    sql = "SELECT COUNT(DISTINCT tts.cd_ref_sp) AS count \
     FROM atlas.vm_taxons \
-    JOIN taxonomie.vm_cd_ref_sp ON taxonomie.vm_cd_ref_sp.cd_nom = atlas.vm_taxons.cd_ref"
+    JOIN taxonomie.pn_custom_taxref_tree_sp tts ON tts.cd_ref = atlas.vm_taxons.cd_ref"
     connection.execute(text(sql))
     req = connection.execute(text(sql))
     for r in req:
@@ -232,9 +232,9 @@ def genericStat(connection, tab):
         rang, nomTaxon = list(pair.items())[0]
         sql = """
             SELECT sum(t.nb_obs) AS nb_obs,
-            COUNT (DISTINCT vm_cd_ref_sp.cd_ref_sp) AS nb_taxons
+            COUNT (DISTINCT tts.cd_ref_sp) AS nb_taxons
             FROM atlas.vm_taxons t
-            JOIN taxonomie.vm_cd_ref_sp ON taxonomie.vm_cd_ref_sp.cd_nom = t.cd_ref
+            JOIN taxonomie.pn_custom_taxref_tree_sp tts ON tts.cd_ref = t.cd_ref
             WHERE t.{rang} IN :nomTaxon
         """.format(rang=rang)
         req = connection.execute(text(sql), nomTaxon=tuple(nomTaxon))
