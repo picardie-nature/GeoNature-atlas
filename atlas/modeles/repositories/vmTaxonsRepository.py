@@ -75,7 +75,7 @@ def getTaxonsTerritory(connection, area_code):
             min(COALESCE(gt2.nom,'Autres groupes'))  AS grp2,
             min(gt2.picto) as grp2_picto,
             min(t.menace) as menace,
-            bool_or(sensible) as sensiblea
+            bool_or(sensible) as sensible
         FROM atlas.vm_observations o
         JOIN taxonomie.taxref tx ON tx.cd_nom=taxonomie.pn_custom_find_cdref_sp(o.cd_ref)
         JOIN atlas.vm_taxons2 t ON t.cd_ref=tx.cd_nom
