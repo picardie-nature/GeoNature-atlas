@@ -411,7 +411,7 @@
                                     <tbody>
                                     {% for com in communes %}
                                         <tr>
-                                            <td> <a href = "{{url_for('main.ficheCommune', insee = com.insee)}}">{{com.commune_maj}}</a> <b hidden>>{{com.insee}}</b></td>
+                                            <td> <a href = "{{url_for('main.ficheTerritoire', area_code = com.insee)}}">{{com.commune_maj}}</a> <b hidden>>{{com.insee}}</b></td>
                                              <td>{{com.insee[:2]}}</td>
                                             <td align='center'>{{com.last_obs.strftime('%Y')}}</td>
                                             <td>{{com.n_obs}}</td>
